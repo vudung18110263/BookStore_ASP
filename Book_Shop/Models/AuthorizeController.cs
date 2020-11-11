@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Book_Shop.Models
+{
+    public class AuthorizeController : ActionFilterAttribute
+    {
+        Book_StoreEntities2 db = new Book_StoreEntities2();
+        //phương thức thực thi khi action được gọi
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+
+            User tbus = HttpContext.Current.Session["user"] as User;
+            if (tbus == null || tbus.lever != 1)
+            {
+                filterContext.Result = new RedirectResult("~/Home/Index");
+                return;
+            }
+        }
+    }
+}

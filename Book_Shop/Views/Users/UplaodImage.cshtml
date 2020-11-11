@@ -1,0 +1,33 @@
+﻿@model Book_Shop.Models.User
+
+@{
+    ViewBag.Title = "UplaodImage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/contents/css/jquery-1.11.3.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        setInterval(function () { getimg() }, 3000);
+
+        /* code here */
+    });
+    function getimg() {
+
+        $.ajax({
+            url: "/Promotion/imageName",
+            type: 'Post',
+            success: function (result) {
+
+            },
+            error: function (result) {
+            }
+        });
+    };
+
+
+</script>
+<h2>UplaodImage @ViewBag.Image </h2>
+<img src=@ViewBag.Image  height="200px" width="200px" margin="10px"/>
+
