@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -70,19 +71,32 @@ namespace Book_Shop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,name,image,description,category")] Product product)
         {         
-            if (ModelState.IsValid)
+            if (ModelState.IsValid == false)
             {
-                var f = Request.Files["imagess"];
+                return View(product);
+            }
+            try
+            {
+                var image = Request.Files["image"];
                 var path = Server.MapPath("~/imageProduct/" + product.name + ".PNG");
-                //ViewBag.Dung = f;
-                f.SaveAs(path);
+                image.SaveAs(path);
                 product.image = "/imageProduct/" + product.name + ".PNG";
                 db.Products.Add(product);
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
-
-            return View(product);
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var errors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in errors.ValidationErrors)
+                    {
+                        // get the error message 
+                        string errorMessage = validationError.ErrorMessage;
+                        ViewBag.Result = errorMessage;
+                    }
+                }
+            }
+            return View("Index");
         }
 
         // GET: Products/Edit/5
@@ -107,13 +121,12 @@ namespace Book_Shop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,name,image,description,category")] Product product)
         {
-            ViewBag.Vjpper = product.image;
+            ViewBag.Image = product.image;
             if (ModelState.IsValid)
             {
-                var f = Request.Files["vjpper"];
+                var image = Request.Files["image"];
                 var path = Server.MapPath("~/imageProduct/" + product.name + ".PNG");
-                //ViewBag.Dung = f;
-                f.SaveAs(path);
+                image.SaveAs(path);
                 product.image = "/imageProduct/" + product.name + ".PNG";
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();

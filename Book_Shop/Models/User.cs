@@ -25,8 +25,7 @@ namespace Book_Shop.Models
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public string mail { get; set; }
-        public Nullable<int> lever { get; set; }
-        [Required(ErrorMessage = "Please post your avatar")]
+        public Nullable<int> lever { get; set; } = 2;
         public string avatar { get; set; }
     }
 }

@@ -21,9 +21,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("registration", "registration", "Users")</li>
-                    <li><a data-toggle="modal" href="#dang_nhap"> Đăng nhập</a></li>
-                    @*<li>@Html.ActionLink("Contact", "Contact", "Users")</li>*@
+                    <li>@Html.ActionLink("Register", "Register", "Users")</li>
+                    <li><a data-toggle="modal" href="#dang_nhap">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -44,9 +43,9 @@
                             <label>Username : </label>
                             <input type="text" class="form-control" name="account" id="username" />
                             <label>Password : </label>
-                            <input type="password" class="form-control" name="pass_word" id="password" />
+                            <input type="password" class="form-control" name="password" id="password" />
                             <br />
-                            <a href="/Users/SendMailGetPassWord" class="text-danger">Quên mật khẩu</a>
+                            <a href="/Users/ForgotPassword" class="text-danger">Quên mật khẩu</a>
                         </div>
                         <br />
                         <div id="waiting" style="display: none;">
@@ -120,7 +119,7 @@
                                     //chuyển đến địa chỉ msg_login của controler gửi qua
                                     function () {
                                         window.location.href = '' + msg_login + '';
-                                    }, 500);
+                                    }, 100);
                             }
                         }
                     });
