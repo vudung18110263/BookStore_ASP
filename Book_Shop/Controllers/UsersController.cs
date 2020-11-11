@@ -74,6 +74,29 @@ namespace Book_Shop.Controllers
             }
             return View(user);
         }
+        public ActionResult ChangePassWord()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangePassWord(FormCollection f)
+        {
+            string taikhoan = f["account"].ToString();
+            string matkhaucu = f["password"].ToString();
+            string matlkhaumoi1 = f["passwordNew1"].ToString();
+            string matlkhaumoi2 = f["passwordNew2"].ToString();
+            var us = db.Users.SingleOrDefault(n => n.account == taikhoan && n.pass_word == matkhaucu);
+            if(us != null && matlkhaumoi1==matlkhaumoi2)
+            {
+                us.pass_word = matlkhaumoi1;
+                db.Entry(us).State = EntityState.Modified;
+                db.SaveChanges();
+                ViewBag.Kq = "Change password successfully";
+            }
+            else
+                ViewBag.Kq = "Change password false";
+            return View();
+        }
         public ActionResult Login()
         {
             return View();
