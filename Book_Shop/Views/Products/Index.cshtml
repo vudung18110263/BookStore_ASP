@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Book_Shop.Models.Product>
+﻿@*@model IEnumerable<Book_Shop.Models.Product>*@
+
+@model PagedList.IPagedList<Book_Shop.Models.Product>
+@using PagedList.Mvc;
 
 @{
     Layout = "~/Views/Shared/_layout_Product.cshtml";
@@ -16,16 +19,20 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.name)
+                @*@Html.DisplayNameFor(model => model.name)*@
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.image)
+                @*@Html.DisplayNameFor(model => model.image)*@
+                Image
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.description)
+                @*@Html.DisplayNameFor(model => model.description)*@
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.category)
+                @*@Html.DisplayNameFor(model => model.category)*@
+                Category
             </th>
             <th></th>
         </tr>
@@ -54,5 +61,13 @@
         }
 
     </table>
+    <!-- Thêm mã phân trang -->
+    <br />
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page }))
+    <!-- Kết thúc -->
 </body>
 </html>
+
