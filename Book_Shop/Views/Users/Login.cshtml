@@ -18,20 +18,16 @@
                         <div class="panel-body">
                             @using (Html.BeginForm("Login", "Users", FormMethod.Post))
                             {
-                                @*@Html.HiddenFor(model => model.id)*@
                                 @Html.AntiForgeryToken()
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                @*<form action="/Users/Login" method="post">*@
                                 <div class="form-group col-xs-6">
                                     <label for="name-field">Name</label>
-                                    @*<input type="text" class="form-control" id="name-field" name="Account" placeholder="Your name" >*@
                                     @Html.EditorFor(model => model.account, new { htmlAttributes = new { name = "account", @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.account, "", new { @class = "text-danger" })
                                 </div>
 
                                 <div class="form-group col-xs-6">
                                     <label for="name-field">PassWord</label>
-                                    @*<input type="password" class="form-control" id="name-field" name="Pass_word" placeholder="Password">*@
                                     @Html.EditorFor(model => model.pass_word, new { htmlAttributes = new { name = "pass_word", @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.pass_word, "", new { @class = "text-danger" })
                                 </div>
@@ -43,9 +39,7 @@
                                     <a>@ViewBag.KQ</a>
                                 </div>
                             }
-                                <a>@Html.ActionLink("forget Password", "SendMailGetPassWord", "Users")</a>
-                                @*</form>*@
-                            
+                                <a>@Html.ActionLink("Forgot Password", "ForgotPassword", "Users")</a>
                         </div>
                     </div>
                 </div>

@@ -22,79 +22,81 @@ namespace Book_Shop.Controllers
 
             return View();
         }
-        public ActionResult registration()
+        public ActionResult Register()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult registration(User user)
+        public ActionResult Register(User formValues)
         {
-            if (ModelState.IsValid)
+            var avatar = Request.Files["Avatar"];
+            var user = db.Users.SingleOrDefault(n => n.account == formValues.account);
+            if (user != null)
             {
-                var f = Request.Files["Avatar"];
-                //if (user.account == null || user.pass_word == null || user.mail == null)
-                //    ViewBag.KQ = "Please complete all information";
-                //else if (db.Users.Any(x => x.account == user.account))
-                //    ViewBag.KQ = "Account already exists";
-                //else if (db.Users.Any(x => x.mail == user.mail))
-                //    ViewBag.KQ = "email is already in use";
-                //else 
-                if (f != null && f.ContentLength > 0)
-                {
-                    try
-                    {
-                        var path = Server.MapPath("~/UploadFiles/" + user.account + ".PNG");
-                        //ViewBag.Dung = f;
-                        f.SaveAs(path);
-                        user.avatar = "/UploadFiles/" + user.account + ".PNG";
-                        db.Users.Add(user);
-                        db.SaveChanges();
-                        ViewBag.Kq = "Registration Successfully";
-                    }
-                    catch (DbEntityValidationException ex)
-                    {
-                        foreach (var errors in ex.EntityValidationErrors)
-                        {
-                            foreach (var validationError in errors.ValidationErrors)
-                            {
-                                // get the error message 
-                                string errorMessage = validationError.ErrorMessage;
-                                ViewBag.ErrorLog = errorMessage;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    user.lever = 1;
-                    db.Users.Add(user);
-                    db.SaveChanges();
-                    ViewBag.Kq = " Registration Successfully";
-                }
+                ViewBag.Result = "User existed";
+                return View();
             }
-            return View(user);
-        }
-        public ActionResult ChangePassWord()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult ChangePassWord(FormCollection f)
-        {
-            string taikhoan = f["account"].ToString();
-            string matkhaucu = f["password"].ToString();
-            string matlkhaumoi1 = f["passwordNew1"].ToString();
-            string matlkhaumoi2 = f["passwordNew2"].ToString();
-            var us = db.Users.SingleOrDefault(n => n.account == taikhoan && n.pass_word == matkhaucu);
-            if(us != null && matlkhaumoi1==matlkhaumoi2)
+            try
             {
-                us.pass_word = matlkhaumoi1;
-                db.Entry(us).State = EntityState.Modified;
+                if(avatar.FileName != "" && avatar.ContentLength > 0)
+                {
+                    var path = Server.MapPath("~/UploadFiles/" + formValues.account + ".PNG");
+                    avatar.SaveAs(path);
+                    formValues.avatar = "/UploadFiles/" + formValues.account + ".PNG";
+                }
+                db.Users.Add(formValues);
                 db.SaveChanges();
-                ViewBag.Kq = "Change password successfully";
+                return Redirect("/");
             }
-            else
-                ViewBag.Kq = "Change password false";
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var errors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in errors.ValidationErrors)
+                    {
+                        // get the error message 
+                        string errorMessage = validationError.ErrorMessage;
+                        ViewBag.Result = errorMessage;
+                    }
+                }
+            }
+            return View();
+        }
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(FormCollection form)
+        {
+            string username = form["username"].ToString();
+            string password = form["password"].ToString();
+            string newPassword = form["newPassword"].ToString();
+            string confirmPassword = form["confirmPassword"].ToString();
+            var user = db.Users.SingleOrDefault(n => n.account == username && n.pass_word == password);
+
+            if(user == null )
+            {
+                ViewBag.Error = "User not existed or wrong password";
+                return View();
+            }
+
+            if(username == null || password == null || newPassword == null || confirmPassword == null )
+            {
+                ViewBag.Error = "Fields are required"; 
+                return View();
+            }
+
+            if (newPassword != confirmPassword )
+            {
+                ViewBag.Error = "Password not matched";
+                return View();
+            }
+
+            user.pass_word = newPassword;
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+            ViewBag.Result = "Change password successfully";
             return View();
         }
         public ActionResult Login()
@@ -102,44 +104,49 @@ namespace Book_Shop.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Login(FormCollection f)
+        public ActionResult Login(FormCollection form)
         {
-            string taikhoan = f["username"].ToString();
-            string matkhau = f["password"].ToString();
-            var us = db.Users.SingleOrDefault(n => n.account == taikhoan && n.pass_word == matkhau);
-            //nếu user nhập đúng mật khẩu
-            if (us != null)
+            string username = form["username"].ToString();
+            string password = form["password"].ToString();
+            var us = db.Users.SingleOrDefault(n => n.account == username && n.pass_word == password);
+
+            if (us == null)
             {
-                    Session["user"] = us;
-                    return Content("/Home/Index");
+                return Content("false");
             }
-            return Content("false");
+
+            Session["user"] = us;
+            return Content("/Home/Index");
+
         }
         public ActionResult UplaodImage(string image)
         {
             ViewBag.image = image;
             return View();
         }
-        public ActionResult SendMailGetPassWord(User user)
+        public ActionResult ForgotPassword(User user)
         {
             if (user.account == null)
                 return View();
-            if (db.Users.Any(x => x.account == user.account))
+            if (db.Users.Any(x => x.account == user.account) == false)
             {
-                string a = RandomString(8);
-                var user2 = db.Users.Where(x => x.account == user.account).FirstOrDefault();
-                if (SendView(user2.mail, a))
-                {
-                    user2.pass_word = a;
-                    db.Entry(user2).State = EntityState.Modified;
-                    db.SaveChanges();
-                    ViewBag.Kq = "Email Sent Successfully.";
-                }
-                else
-                    ViewBag.Kq = "Problem while sending email.";
+                ViewBag.Error = "There is no such account ";
+                return View();
             }
-            else
-                ViewBag.Kq = "There is no such account ";
+
+            string randomString = RandomString(8);
+            var user2 = db.Users.Where(x => x.account == user.account).FirstOrDefault();
+            if (SendView(user2.mail, randomString) == false)
+            {
+                ViewBag.Error = "Problem while sending email.";
+                return View();
+            }
+            
+            user2.pass_word = randomString;
+            db.Entry(user2).State = EntityState.Modified;
+            db.SaveChanges();
+            ViewBag.Result = "Email Sent Successfully.";
+
             return View();
         }
         private string RandomString(int size)
