@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Book_Shop.Models;
-using System.Web.Mvc;
+﻿using Book_Shop.Models;
 using PagedList;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Book_Shop.Controllers
 {
@@ -38,7 +35,7 @@ namespace Book_Shop.Controllers
             // 5. Trả về các Link được phân trang theo kích thước và số trang.
             return View(links.ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult About ()
+        public ActionResult About()
         {
             return View();
         }
@@ -46,7 +43,7 @@ namespace Book_Shop.Controllers
         {
             return View();
         }
-        public ActionResult Single(int id)
+        public ActionResult Single(int? id)
         {
             var product = db.Products.Where(x => x.id == id).FirstOrDefault();
             return View(product);

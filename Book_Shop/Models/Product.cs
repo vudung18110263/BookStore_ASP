@@ -11,18 +11,15 @@ namespace Book_Shop.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Product
     {
         public int id { get; set; }
-
-        [Required(ErrorMessage = "Name is requied")]
         public string name { get; set; }
-        [Required(ErrorMessage = "Image is requied")]
         public string image { get; set; }
         public string description { get; set; }
-        [Required(ErrorMessage = "Category is requied")]
         public string category { get; set; }
+        public Nullable<int> price { get; set; }
+        public Nullable<int> rate { get; set; }
     }
 }

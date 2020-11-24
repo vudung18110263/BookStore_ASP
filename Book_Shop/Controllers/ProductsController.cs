@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Book_Shop.Models;
+using PagedList;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using Book_Shop.Models;
-using PagedList;
 
 namespace Book_Shop.Controllers
 {
@@ -70,7 +67,7 @@ namespace Book_Shop.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,name,image,description,category")] Product product)
-        {         
+        {
             if (ModelState.IsValid == false)
             {
                 return View(product);
