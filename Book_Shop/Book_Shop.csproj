@@ -390,6 +390,7 @@
     <Content Include="Views\Store\Index.cshtml" />
     <Content Include="Views\Shared\_Layout_Store.cshtml" />
     <Content Include="Views\Store\About.cshtml" />
+    <Content Include="Views\Store\Products.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
