@@ -46,5 +46,9 @@ namespace Book_Shop.Controllers
         {
             return View();
         }
+        public ActionResult Single()
+        {
+            return View();
+        }
     }
 }
