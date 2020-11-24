@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Book_Shop.Models;
+﻿using Book_Shop.Models;
+using System;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
-using System.IO;
+using System.Linq;
 using System.Text;
 using System.Web.Helpers;
-using System.Data.Entity;
-using System.Web.Http.Results;
+using System.Web.Mvc;
 
 namespace Book_Shop.Controllers
 {
@@ -38,7 +34,7 @@ namespace Book_Shop.Controllers
             }
             try
             {
-                if(avatar.FileName != "" && avatar.ContentLength > 0)
+                if (avatar.FileName != "" && avatar.ContentLength > 0)
                 {
                     var path = Server.MapPath("~/UploadFiles/" + formValues.account + ".PNG");
                     avatar.SaveAs(path);
@@ -75,19 +71,19 @@ namespace Book_Shop.Controllers
             string confirmPassword = form["confirmPassword"].ToString();
             var user = db.Users.SingleOrDefault(n => n.account == username && n.pass_word == password);
 
-            if(user == null )
+            if (user == null)
             {
                 ViewBag.Error = "User not existed or wrong password";
                 return View();
             }
 
-            if(username == null || password == null || newPassword == null || confirmPassword == null )
+            if (username == null || password == null || newPassword == null || confirmPassword == null)
             {
-                ViewBag.Error = "Fields are required"; 
+                ViewBag.Error = "Fields are required";
                 return View();
             }
 
-            if (newPassword != confirmPassword )
+            if (newPassword != confirmPassword)
             {
                 ViewBag.Error = "Password not matched";
                 return View();
@@ -141,7 +137,7 @@ namespace Book_Shop.Controllers
                 ViewBag.Error = "Problem while sending email.";
                 return View();
             }
-            
+
             user2.pass_word = randomString;
             db.Entry(user2).State = EntityState.Modified;
             db.SaveChanges();
@@ -161,7 +157,7 @@ namespace Book_Shop.Controllers
             }
             return builder.ToString();
         }
-        private bool SendView(string EMAIL,string a)
+        private bool SendView(string EMAIL, string a)
         {
             try
             {
@@ -181,7 +177,7 @@ namespace Book_Shop.Controllers
                 WebMail.From = "tranhanam1999hn@gmail.com";
 
                 //Send email  
-                WebMail.Send(to: EMAIL, subject: "Change Your password", body: "New you password " + a, cc:null, bcc:null, isBodyHtml: true);
+                WebMail.Send(to: EMAIL, subject: "Change Your password", body: "New you password " + a, cc: null, bcc: null, isBodyHtml: true);
                 return true; //"Email Sent Successfully.";
             }
             catch (Exception)

@@ -285,7 +285,7 @@
     </div>
     <!-- //footer -->
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
     <script>
         $(document).ready(function () {
             $(".dropdown").hover(
@@ -317,7 +317,7 @@
         });
     </script>
     <!-- //here ends scrolling icon -->
-    <script src="js/minicart.js"></script>
+    <script src="~/Scripts/minicart.js"></script>
     <script>
         paypal.minicart.render();
 
@@ -338,6 +338,18 @@
             }
         });
 
+    </script>
+    <script src='~/Scripts/okzoom.js'></script>
+    <script>
+        $(function () {
+            $('#example').okzoom({
+                width: 400,
+                height: 400,
+                border: "1px solid black",
+                shadow: "0 0 5px #000",
+                round: false,
+            });
+        });
     </script>
 </body>
 </html>
