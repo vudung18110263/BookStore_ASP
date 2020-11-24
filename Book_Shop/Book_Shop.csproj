@@ -362,6 +362,7 @@
     <Content Include="Scripts\script.js" />
     <Content Include="Scripts\waypoints.min.js" />
     <Content Include="Views\blocks\header.html" />
+    <Content Include="Views\Store\Mail.cshtml" />
     <None Include="Views\Store\Single.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

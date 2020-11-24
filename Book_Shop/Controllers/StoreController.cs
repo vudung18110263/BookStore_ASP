@@ -51,5 +51,9 @@ namespace Book_Shop.Controllers
             var product = db.Products.Where(x => x.id == id).FirstOrDefault();
             return View(product);
         }
+        public ActionResult Mail()
+        {
+            return View();
+        }
     }
 }
