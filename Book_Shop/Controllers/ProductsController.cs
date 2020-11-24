@@ -96,7 +96,7 @@ namespace Book_Shop.Controllers
                     }
                 }
             }
-            return View("Index");
+            return View();
         }
 
         // GET: Products/Edit/5

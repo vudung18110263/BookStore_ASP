@@ -388,6 +388,8 @@
     <Content Include="Views\Users\ForgotPassword.cshtml" />
     <Content Include="Views\Users\ChangePassword.cshtml" />
     <Content Include="Views\Store\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout_Store.cshtml" />
+    <Content Include="Views\Store\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
