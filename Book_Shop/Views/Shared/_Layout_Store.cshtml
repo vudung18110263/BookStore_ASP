@@ -103,7 +103,7 @@
             <div class="w3ls_logo_products_left1">
                 <ul class="special_items">
                     <li><a href="events.html">Events</a><i>/</i></li>
-                    <li><a href="about.html">About Us</a><i>/</i></li>
+                    <li>@Html.ActionLink("About Us", "About", "Store")<i>/</i></li>
                     <li><a href="products.html">Best Deals</a><i>/</i></li>
                     <li><a href="services.html">Services</a></li>
                 </ul>
@@ -118,6 +118,9 @@
         </div>
     </div>
     <!-- //header -->
+    <!-- products-breadcrumb -->
+    @RenderSection("products_breadcrumb", required: false)
+    <!-- //products-breadcrumb -->
     <!-- banner -->
     <div class="banner">
         <div class="w3l_banner_nav_left">
@@ -194,7 +197,7 @@
                 <h3>information</h3>
                 <ul class="w3_footer_grid_list">
                     <li><a href="events.html">Events</a></li>
-                    <li><a href="about.html">About Us</a></li>
+                    <li>@Html.ActionLink("About_", "About", "Store")</li>
                     <li><a href="products.html">Best Deals</a></li>
                     <li><a href="services.html">Services</a></li>
                     <li><a href="short-codes.html">Short Codes</a></li>
