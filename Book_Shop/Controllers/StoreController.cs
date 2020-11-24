@@ -46,9 +46,10 @@ namespace Book_Shop.Controllers
         {
             return View();
         }
-        public ActionResult Single()
+        public ActionResult Single(int id)
         {
-            return View();
+            var product = db.Products.Where(x => x.id == id).FirstOrDefault();
+            return View(product);
         }
     }
 }

@@ -2,7 +2,8 @@
     ViewBag.Title = "Single";
     Layout = "~/Views/Shared/_Layout_Store.cshtml";
 }
-
+@using Book_Shop.Models
+@model Book_Shop.Models.Product
 
 <!--
 author: W3layouts
@@ -16,7 +17,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="container">
             <ul>
                 <li><i class="fa fa-home" aria-hidden="true"></i>@Html.ActionLink("Home", "Index", "Store")<span>|</span></li>
-                <li>Single Page</li>
+                <li>Single Page @Model.name </li>
             </ul>
         </div>
     </div>
