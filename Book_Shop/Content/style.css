@@ -166,7 +166,7 @@ ul.dropdown-menu.drp-mnu li a i {
     text-decoration: none;
     text-transform: uppercase;
     display: block;
-    background: url(../images/img-sp.png) no-repeat 54px 6px;
+    background: url(../images/nxb5.png) no-repeat 54px 6px;
     line-height: 1;
     height: 97px;
 }
@@ -303,7 +303,7 @@ ul.dropdown-menu.drp-mnu li a i {
 	margin-bottom: 5em;
 }
 .w3l_banner_nav_right_banner{
-	background:url(../images/1.jpg) no-repeat 0px 0px;
+	background:url(../images/books-we-love-3.png) no-repeat right 0px;
 	background-size:cover;
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
@@ -311,7 +311,7 @@ ul.dropdown-menu.drp-mnu li a i {
 	-ms-background-size:cover;
 }
 .w3l_banner_nav_right_banner1{
-	background:url(../images/2.jpg) no-repeat 0px 0px;
+	background:url(../images/1-2.jpeg) no-repeat right 0px;
 	background-size:cover;
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
@@ -319,7 +319,7 @@ ul.dropdown-menu.drp-mnu li a i {
 	-ms-background-size:cover;
 }
 .w3l_banner_nav_right_banner2{
-	background:url(../images/3.jpg) no-repeat 0px 0px;
+	background:url(../images/1-1.jpg) no-repeat center 0px;
 	background-size:cover;
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
@@ -1234,7 +1234,7 @@ button.submit.check_out{
 	padding-top: 7em;
 }
 .w3l_banner_nav_right_banner3{
-	background:url(../images/12.jpg) no-repeat 0px 0px;
+	background:url(../images/12-1.jpg) no-repeat 0px 0px;
 	background-size:cover;
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
@@ -3004,7 +3004,7 @@ input.checkbox:checked:after {
 	}
 	.w3ls_logo_products_left h1 a {
 		font-size: 1.3em;
-		background: url(../images/img-sp.png) no-repeat 43px -3px;
+		background: url(../images/nxb5.png) no-repeat 43px -3px;
 		height: 88px;
 	}
 	.w3ls_logo_products_left1 ul.phone_email li:last-child {
@@ -3192,7 +3192,7 @@ input.checkbox:checked:after {
 	}
 	.w3ls_logo_products_left h1 a {
 		font-size: 1.2em;
-		background: url(../images/img-sp.png) no-repeat 38px -9px;
+		background: url(../images/nxb5.png) no-repeat 38px -9px;
 		height: 83px;
 	}
 	.w3ls_logo_products_left1 ul.phone_email li {
@@ -3507,7 +3507,7 @@ input.checkbox:checked:after {
 	}
 	.w3ls_logo_products_left h1 a {
 		font-size: 1em;
-		background: url(../images/img-sp.png) no-repeat 28px -17px;
+		background: url(../images/nxb5.png) no-repeat 28px -17px;
 		height: 74px;
 	}
 	.w3ls_logo_products_left1 {
@@ -3618,7 +3618,7 @@ input.checkbox:checked:after {
 	}
 	.w3ls_logo_products_left h1 a {
 		font-size: 1.2em;
-		background: url(../images/img-sp.png) no-repeat 38px -8px;
+		background: url(../images/nxb5.png) no-repeat 38px -8px;
 		height: 85px;
 	}
 	ul.dropdown-menu.drp-mnu {
@@ -3998,7 +3998,7 @@ input.checkbox:checked:after {
 	}
 	.w3ls_logo_products_left h1 a {
 		font-size: 1em;
-		background: url(../images/img-sp.png) no-repeat 28px -18px;
+		background: url(../images/nxb5.png) no-repeat 28px -18px;
 		height: 75px;
 	}
 	.w3ls_logo_products_left1 ul.special_items li i {
