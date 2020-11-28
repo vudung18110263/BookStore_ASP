@@ -102,20 +102,18 @@ namespace Book_Shop.Controllers
         [HttpPost]
         public ActionResult Login(FormCollection form)
         {
-            string username = form["account"].ToString();
-            string password = form["pass_word"].ToString();
+            string username = form["username"].ToString();
+            string password = form["password"].ToString();
             var user = db.Users.SingleOrDefault(n => n.account == username && n.pass_word == password);
 
             if (user == null)
             {
-                ViewBag.KQ = "false";
-                return View();
+                
+                return Content("false");
             }
 
-            Session["account"] = user.account;
-            Session["Email"] = user.mail;
-            Session["idUser"] = user.id;
-            return RedirectToAction("Index", "Store");
+            Session["user"] = user;
+            return Content("/");
 
         }
         [HttpPost]
