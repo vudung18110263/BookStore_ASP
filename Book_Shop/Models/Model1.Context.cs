@@ -16,7 +16,7 @@ namespace Book_Shop.Models
     public partial class Book_StoreEntities2 : DbContext
     {
         public Book_StoreEntities2()
-            : base("name=Book_StoreEntities")
+            : base("name=Book_StoreEntities2")
         {
         }
     
