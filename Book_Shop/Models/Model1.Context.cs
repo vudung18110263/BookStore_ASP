@@ -16,7 +16,7 @@ namespace Book_Shop.Models
     public partial class Book_StoreEntities2 : DbContext
     {
         public Book_StoreEntities2()
-            : base("name=Book_StoreEntities2")
+            : base("name=Book_StoreEntities")
         {
         }
     
@@ -25,7 +25,9 @@ namespace Book_Shop.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }

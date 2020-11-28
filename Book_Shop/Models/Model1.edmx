@@ -4,7 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Book_StoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Book_StoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="id" />
@@ -17,6 +24,16 @@
           <Property Name="price" Type="int" />
           <Property Name="rate" Type="int" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="id" />
@@ -27,15 +44,32 @@
           <Property Name="mail" Type="varchar" MaxLength="50" />
           <Property Name="lever" Type="int" />
           <Property Name="avatar" Type="varchar" MaxLength="255" />
+          <Property Name="shippingAddress" Type="varchar" MaxLength="500" />
+          <Property Name="payment" Type="varchar" MaxLength="26" />
+          <Property Name="promocodes" Type="varchar" MaxLength="20" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'PK_Product_Category' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="PK_Product_Category" />-->
         <EntityContainer Name="Book_StoreModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Book_StoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="id" />
@@ -48,6 +82,16 @@
           <Property Name="price" Type="Int32" />
           <Property Name="rate" Type="Int32" />
         </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="id" />
@@ -58,9 +102,15 @@
           <Property Name="mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="lever" Type="Int32" />
           <Property Name="avatar" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="shippingAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="payment" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
+          <Property Name="promocodes" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="Book_StoreEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Book_StoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Users" EntityType="Self.User" />
         </EntityContainer>
       </Schema>
@@ -68,17 +118,36 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Book_StoreModelStoreContainer" CdmEntityContainer="Book_StoreEntities2">
+        <EntityContainerMapping StorageEntityContainer="Book_StoreModelStoreContainer" CdmEntityContainer="Book_StoreEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="Book_StoreModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="Book_StoreModel.Product">
               <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="rate" ColumnName="rate" />
-                <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Book_StoreModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -91,6 +160,10 @@
                 <ScalarProperty Name="mail" ColumnName="mail" />
                 <ScalarProperty Name="lever" ColumnName="lever" />
                 <ScalarProperty Name="avatar" ColumnName="avatar" />
+                <ScalarProperty Name="shippingAddress" ColumnName="shippingAddress" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="promocodes" ColumnName="promocodes" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
