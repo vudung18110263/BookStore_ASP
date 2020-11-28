@@ -102,17 +102,27 @@ namespace Book_Shop.Controllers
         [HttpPost]
         public ActionResult Login(FormCollection form)
         {
-            string username = form["username"].ToString();
-            string password = form["password"].ToString();
-            var us = db.Users.SingleOrDefault(n => n.account == username && n.pass_word == password);
+            string username = form["account"].ToString();
+            string password = form["pass_word"].ToString();
+            var user = db.Users.SingleOrDefault(n => n.account == username && n.pass_word == password);
 
-            if (us == null)
+            if (user == null)
             {
-                return Content("false");
+                ViewBag.KQ = "false";
+                return View();
             }
 
-            Session["user"] = us;
-            return Content("/Home/Index");
+            Session["account"] = user.account;
+            Session["Email"] = user.mail;
+            Session["idUser"] = user.id;
+            return RedirectToAction("Index", "Store");
+
+        }
+        [HttpPost]
+        public ActionResult logout()
+        {
+            Session.Clear();//remove session
+            return RedirectToAction("Login");
 
         }
         public ActionResult UplaodImage(string image)
