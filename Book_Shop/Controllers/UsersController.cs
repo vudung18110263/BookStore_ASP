@@ -36,9 +36,9 @@ namespace Book_Shop.Controllers
             {
                 if (avatar.FileName != "" && avatar.ContentLength > 0)
                 {
-                    var path = Server.MapPath("~/UploadFiles/" + formValues.account + ".PNG");
+                    var path = Server.MapPath("~/UploadFiles/" + formValues.id + ".PNG");
                     avatar.SaveAs(path);
-                    formValues.avatar = "/UploadFiles/" + formValues.account + ".PNG";
+                    formValues.avatar = "/UploadFiles/" + formValues.id + ".PNG";
                 }
                 db.Users.Add(formValues);
                 db.SaveChanges();
