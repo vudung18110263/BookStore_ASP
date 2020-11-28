@@ -39,9 +39,14 @@ namespace Book_Shop.Controllers
         {
             return View();
         }
-        public ActionResult Products()
+        public ActionResult Products(int? page)
         {
-            return View();
+            if (page == null) page = 1;
+            var links = (from l in db.Products
+                         select l).OrderBy(x => x.id);
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+            return View(links.ToPagedList(pageNumber, pageSize));
         }
         public ActionResult Single(int? id)
         {
