@@ -75,9 +75,9 @@ namespace Book_Shop.Controllers
             try
             {
                 var image = Request.Files["image"];
-                var path = Server.MapPath("~/imageProduct/" + product.name + ".PNG");
+                var path = Server.MapPath("~/imageProduct/" + product.id + ".PNG");
                 image.SaveAs(path);
-                product.image = "/imageProduct/" + product.name + ".PNG";
+                product.image = "/imageProduct/" + product.id + ".PNG";
                 db.Products.Add(product);
                 db.SaveChanges();
             }
@@ -122,9 +122,9 @@ namespace Book_Shop.Controllers
             if (ModelState.IsValid)
             {
                 var image = Request.Files["image"];
-                var path = Server.MapPath("~/imageProduct/" + product.name + ".PNG");
+                var path = Server.MapPath("~/imageProduct/" + product.id + ".PNG");
                 image.SaveAs(path);
-                product.image = "/imageProduct/" + product.name + ".PNG";
+                product.image = "/imageProduct/" + product.id + ".PNG";
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
