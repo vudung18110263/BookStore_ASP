@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Web.Helpers;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Book_Shop.Controllers
@@ -113,7 +114,7 @@ namespace Book_Shop.Controllers
             }
 
             Session["user"] = user;
-            return Content("/");
+            return Content("");
 
         }
         [HttpPost]

@@ -45,16 +45,18 @@
             <tr>
                 <th class="admin__header">Description</th>
                 <td>
-                    @Html.TextAreaFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextAreaFor(model => model.description, new { htmlAttributes = new { @class = "form-control " } })
                     @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
                 </td>
             </tr>
             <tr>
                 <th class="admin__header">Category</th>
                 <td>
-                    @Html.EditorFor(model => model.category, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.category, "", new { @class = "text-danger" })
-                </td>
+                    @if (ViewBag.Categories != null)
+                    {
+                        @Html.DropDownListFor(model => model.category, new SelectList(ViewBag.Categories, "name", "name", ViewBag.Categories[0].name))
+                    }
+                </td>   
             </tr>
             <tr>
                 <th class="admin__header">Price</th>

@@ -42,10 +42,10 @@
         @using (Html.BeginForm("Delete", "Products", FormMethod.Post, new { style = "margin-left: auto" }))
         {
             @Html.AntiForgeryToken()
-                
+
             <div class="pagination">
-                <a href="/Products/Index" class="action-link"><input type="submit" value="Delete" /></a>
                 <a href="/Products/Index" class="action-link">Back to list</a>
+                <a href="/Products/Index" class="action-link"><input type="submit" value="Delete" /></a>
             </div>
         }
     </div>

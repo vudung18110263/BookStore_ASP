@@ -67,6 +67,10 @@
     border: 1px solid rgb(255, 255, 255, 0);
     border-bottom: 1px solid #ccc;
 }
+.word-break {
+    width: 20% !important;
+    word-break: break-word !important;
+}
 .admin__table tr:last-child td {
     border-bottom: none;
 }

@@ -58,6 +58,8 @@ namespace Book_Shop.Controllers
         // GET: Products/Create
         public ActionResult Create()
         {
+            var categories = db.Categories.ToList();
+            ViewBag.Categories = categories;
             return View();
         }
 

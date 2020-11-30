@@ -22,14 +22,14 @@
         <table class="admin__table">
             <thead class="">
                 <tr class="admin__header">
-                    <th class="admin__header-topleft">ID</th>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Image</th>
                     <th>Description</th>
                     <th>Category</th>
                     <th>Price</th>
                     <th>Rate</th>
-                    <th class="admin__header-topright">Action</th>
+                    <th class="action-cell">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,7 +39,7 @@
                         <td>@Html.DisplayFor(modelItem => item.id)</td>
                         <td>@Html.DisplayFor(modelItem => item.name)</td>
                         <td><img width="80px" height="80px" src="@Html.DisplayFor(modelItem => item.image)" /></td>
-                        <td>@Html.DisplayFor(modelItem => item.description)</td>
+                        <td class="word-break">@Html.DisplayFor(modelItem => item.description)</td>
                         <td>@Html.DisplayFor(modelItem => item.category)</td>
                         <td>@Html.DisplayFor(modelItem => item.price)</td>
                         <td>@Html.DisplayFor(modelItem => item.rate)</td>
