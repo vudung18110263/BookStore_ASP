@@ -7,6 +7,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/admintable.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -24,6 +25,7 @@
                     <li>@Html.ActionLink("Register", "Register", "Users")</li>
                     <li><a data-toggle="modal" href="#dang_nhap">Login</a></li>
                     <li>@Html.ActionLink("Products", "Index", "Products")</li>
+                    <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
                 </ul>
             </div>
         </div>
@@ -119,7 +121,7 @@
                                 setTimeout(
                                     //chuyển đến địa chỉ msg_login của controler gửi qua
                                     function () {
-                                        window.location.href = '' + msg_login + '';
+                                        window.location.href = window.location.pathname;
                                     }, 100);
                             }
                         }
