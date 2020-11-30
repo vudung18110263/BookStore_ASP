@@ -4,7 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-}
 
 <!DOCTYPE html>
 
@@ -15,51 +14,38 @@
 </head>
 <body>
     <h3>Are you sure you want to delete this?</h3>
-    <div>
-        <h4>Product</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.image)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.image)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.description)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.description)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.category)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.category)
-            </dd>
-
-        </dl>
-
-        @using (Html.BeginForm())
+    <div class="admin__layout">
+        <table class="admin__table">
+            <thead>
+                <tr class="admin__header">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(model => model.id)</td>
+                    <td>@Html.DisplayFor(model => model.name)</td>
+                    <td><img width="120px" height="120px" src="@Html.DisplayFor(model => model.image)" /></td>
+                    <td>@Html.DisplayFor(model => model.description)</td>
+                    <td>@Html.DisplayFor(model => model.category)</td>
+                    <td>@Html.DisplayFor(model => model.price)</td>
+                    <td>@Html.DisplayFor(model => model.rate)</td>
+                </tr>
+            </tbody>
+        </table>
+        @using (Html.BeginForm("Delete", "Products", FormMethod.Post, new { style = "margin-left: auto" }))
         {
             @Html.AntiForgeryToken()
-
-            <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" /> |
-                @Html.ActionLink("Back to List", "Index")
+                
+            <div class="pagination">
+                <a href="/Products/Index" class="action-link"><input type="submit" value="Delete" /></a>
+                <a href="/Products/Index" class="action-link">Back to list</a>
             </div>
         }
     </div>

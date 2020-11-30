@@ -14,57 +14,70 @@
 <body>
     @using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { encType = "multipart/form-data" }))
     {
+
         @Html.AntiForgeryToken()
-        
-        <div class="form-horizontal">
-            <h4>Product</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.id)
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*@Html.HiddenFor(model => model.id)*@
+    <div class="admin__layout">
+        <table class="admin__table table-vertical">
+            <tr>
+                <th class="admin__header">ID</th>
+                <td>@Html.DisplayFor(model => model.id, new { htmlAttributes = new { @class = "form-control" } })</td>
+            </tr>
+            <tr>
+                <th class="admin__header">Name</th>
+                <td>
                     @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.image, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <img src="@Html.DisplayFor(model => model.image)" height="100px" width="100px" />
-                    <input type="file" value=@(ViewBag.Image) name="image" />
+                </td>
+            </tr>
+            <tr>
+                <th class="admin__header">Image</th>
+                <td class="image-field">
+                    <img src="@Html.DisplayFor(model => model.image)" height="120px" width="120px" />
+                    <label for="file-upload" class="custom-file-upload action-link">
+                        Upload file
+                    </label>
+                    <input id="file-upload" type="file" value=@(ViewBag.Image) name="image" />
                     @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+            </tr>
+            <tr>
+                <th class="admin__header">Description</th>
+                <td>
+                    @Html.TextAreaFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                </td>
+            </tr>
+            <tr>
+                <th class="admin__header">Category</th>
+                <td>
                     @Html.EditorFor(model => model.category, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.category, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
-            </div>
+                </td>
+            </tr>
+            <tr>
+                <th class="admin__header">Price</th>
+                <td>
+                    @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <th class="admin__header">Rate</th>
+                <td>
+                    @Html.EditorFor(model => model.rate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.rate, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+        </table>
+        <div class="pagination">
+            <a class="action-link"><input type="submit" value="Save" /></a>
+            <a href="/Products/Index" class="action-link">Back to list</a>
         </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
     </div>
+     }
+
+    
 </body>
 </html>

@@ -108,7 +108,7 @@ namespace Book_Shop.Controllers
 
             if (user == null)
             {
-                
+
                 return Content("false");
             }
 
