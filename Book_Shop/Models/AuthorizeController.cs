@@ -13,9 +13,11 @@ namespace Book_Shop.Models
             User tbus = HttpContext.Current.Session["user"] as User;
             if (tbus == null || tbus.lever != 1)
             {
-                filterContext.Result = new RedirectResult("~/Home/Index");
+                filterContext.Result = new RedirectResult("/");
                 return;
             }
+            filterContext.Result = new RedirectResult("~/Home/Index");
+            return;
         }
     }
 }
