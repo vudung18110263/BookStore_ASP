@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "GetData";
+    Layout = "~/Views/Shared/_Layout_Store.cshtml";
+}
+<div>asdasdsd</div>
+<script>
+    $(document).ready(function () {
+        // Handler for .ready() called.
+        $.get("~/Store/GetData/", function (data) { console.log(data); });
+    });
+</script>
+

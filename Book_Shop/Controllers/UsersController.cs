@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Web.Helpers;
+using System.Web;
 using System.Web.Mvc;
 using Common;
 
@@ -37,9 +38,9 @@ namespace Book_Shop.Controllers
             {
                 if (avatar.FileName != "" && avatar.ContentLength > 0)
                 {
-                    var path = Server.MapPath("~/UploadFiles/" + formValues.account + ".PNG");
+                    var path = Server.MapPath("~/UploadFiles/" + formValues.id + ".PNG");
                     avatar.SaveAs(path);
-                    formValues.avatar = "/UploadFiles/" + formValues.account + ".PNG";
+                    formValues.avatar = "/UploadFiles/" + formValues.id + ".PNG";
                 }
                 db.Users.Add(formValues);
                 db.SaveChanges();
@@ -108,12 +109,12 @@ namespace Book_Shop.Controllers
 
             if (user == null)
             {
-                
+
                 return Content("false");
             }
 
             Session["user"] = user;
-            return Content("/");
+            return Content("");
 
         }
         [HttpPost]

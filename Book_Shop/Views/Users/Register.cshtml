@@ -15,9 +15,9 @@
                             <div class="panel-body">
                                 @if (@ViewBag.Result != null)
                                 {
-                                <div class="alert alert-danger">@ViewBag.Result</div>
+                                    <div class="alert alert-danger">@ViewBag.Result</div>
                                 }
-                                
+
                                 @using (Html.BeginForm("Register", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                 {
                                     @Html.AntiForgeryToken()
@@ -29,9 +29,14 @@
                                     </div>
                                     <div class="form-group col-xs-6">
                                         <label for="name-field">Password</label>
-                                        @Html.EditorFor(model => model.pass_word, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                                        @Html.EditorFor(model => model.pass_word, new { htmlAttributes = new { @class = "form-control", @type = "password", @id = "password" } })
                                         @Html.ValidationMessageFor(model => model.pass_word, "", new { @class = "text-danger" })
                                     </div>
+                                    @*<div class="form-group col-xs-6">
+                <label for="name-field">confirm password</label>
+                @Html.EditorFor(model => model.pass_word, new { htmlAttributes = new { @class = "form-control", @type = "password"  ,@id = "Confirm_password" } })
+                @Html.ValidationMessageFor(model => model.pass_word, "", new { @class = "text-danger" })
+            </div>*@
                                     <div class="form-group col-xs-6">
                                         <label for="name-field">Email</label>
                                         @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "form-control" } })
@@ -41,6 +46,21 @@
                                         <label for="name-field">Avatar</label>
                                         @Html.EditorFor(model => model.avatar, new { htmlAttributes = new { @type = "file", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.avatar, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group col-xs-6">
+                                        <label for="name-field">Phone numbers</label>
+                                        @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group col-xs-6">
+                                        <label for="name-field">shipping Address</label>
+                                        @Html.EditorFor(model => model.shippingAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.shippingAddress, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group col-xs-6">
+                                        <label for="name-field">id payment (may be empty)</label>
+                                        @Html.EditorFor(model => model.payment, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.payment, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="form-group col-xs-12">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block" onclick="console.log(ViewBag.Dung)">Submit</button>
@@ -53,4 +73,19 @@
             </div>
         </div>
     </body>
+@*<script>
+    var password = document.getElementById("password")
+        , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+</script>*@
 

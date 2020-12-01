@@ -9,7 +9,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Grocery Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+    <meta name="keywords" content="Grocery Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
           Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
     <script type="application/x-javascript">
         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
@@ -18,8 +18,10 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Content/style.css" rel="stylesheet" type="text/css" media="all" />
     <!-- font-awesome icons -->
-    <link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" media="all" />
+    @*<link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" media="all" />*@
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
     <!-- //font-awesome icons -->
+    <link href="~/Content/headercart2.css" rel="stylesheet" type="text/css" media="all" />
     <!-- js -->
     <script src="~/Scripts/jquery-1.11.1.min.js"></script>
     <!-- //js -->
@@ -29,21 +31,18 @@
     <script type="text/javascript" src="~/Scripts/move-top.js"></script>
     <script type="text/javascript" src="~/Scripts/easing.js"></script>
     <script type="text/javascript">
-	jQuery(document).ready(function($) {
-		$(".scroll").click(function(event){
-			event.preventDefault();
-			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-		});
-	});
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            });
+        });
     </script>
     <!-- start-smoth-scrolling -->
 </head>
 <body>
     <!-- header -->
     <div class="agileits_header">
-        @*<div class="w3l_offers">
-                <a href="products.html">Today's special Offers !</a>
-            </div>*@
         <div class="w3l_search">
             <form action="#" method="post">
                 <input type="text" name="Product" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="">
@@ -51,13 +50,24 @@
             </form>
         </div>
         <div class="product_list_header">
-            <form action="#" method="post" class="last">
-                <fieldset>
-                    <input type="hidden" name="cmd" value="_cart" />
-                    <input type="hidden" name="display" value="1" />
-                    <input type="submit" name="submit" value="View your cart" class="button" />
-                </fieldset>
-            </form>
+            <div class="header__cart">
+                <div class="header__cart-wrap">
+                    <i class="header__cart-icon fas fa-shopping-cart"></i>
+                    <span class="header__cart-notice">0</span>
+
+                    <div class="header__cart-list ">
+                        <!--No cart:có thêm class header__cart-list--no-cart-->
+                        <img src="./assets/image/no_cart.png" alt="" class="header__cart-no-cart-img">
+
+                        <!-- Có sản phẩm trong giỏ hàng -->
+                        <h4 class="header__cart-heading">Sản phẩm đã thêm</h4>
+                        <ul class="header__cart-list-item">
+                        </ul>
+                        <a href="Store/Checkout" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="w3l_header_right">
             <ul>
@@ -405,7 +415,7 @@
                                 setTimeout(
                                     //chuyển đến địa chỉ msg_login của controler gửi qua
                                     function () {
-                                        window.location.href = '' + msg_login + '';
+                                        window.location.href = window.location.pathname;
                                     }, 100);
                             }
                         }
@@ -421,5 +431,98 @@
             $("#waiting").hide();
         });
     </script>
+    <script>
+        function getCart(data) {
+            $('.header__cart-list-item').html("")
+            let totalQuantity = 0
+            let totalAmount = 0
+            $('.header__cart-notice').html("0")
+            $('#cartCheckout').html("")
+            $('#checkoutBasket').html("")
+            let i = 1
+            data.forEach(item => {
+                totalQuantity += item.quantity
+
+                let product = `<li class="header__cart-item">
+                                    <img src="${item.product.image}" alt="" class="header__cart-img">
+                                    <div class="header__cart-item-info">
+                                        <div class="header__cart-item-head">
+                                            <h5 class="header__cart-item-name">${item.product.name}</h5>
+                                            <div class="header__cart-item-price-wrap">
+                                                <span class="header__cart-item-price">${item.product.price}</span>
+                                                <span class="header__cart-item-multiply">x</span>
+                                                <span class="header__cart-item-qnt">${item.quantity}</span>
+                                            </div>
+                                        </div>
+                                        <div class="header__cart-item-body">
+                                            <span class="header__cart-item-description">
+                                                Phân loại hàng: Bạc
+                                            </span>
+                                            <span class="header__cart-item-remove">Xóa</span>
+                                        </div>
+                                    </div>
+                                </li>`
+                $('.header__cart-list-item').append(product)
+                $('.header__cart-notice').html(totalQuantity)
+
+                let productInCheckout = `<tr class="rem1">
+                                <td class="invert">${i}</td>
+                                <td class="invert-image"><a href="Store/Single?id=${item.product.id}"><img width="48px" height="48px" src="${item.product.image}" alt=" " class="img-responsive"></a></td>
+                                <td class="invert">
+                                    <div class="quantity">
+                                        <div class="quantity-select">
+                                            <div class="entry value-minus" onclick="minusFromCart(${item.product.id})">&nbsp;</div>
+                                            <div class="entry value"><span>${item.quantity}</span></div>
+                                            <div class="entry value-plus active" onclick="addToCart(${item.product.id})">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="invert">${item.product.name}</td>
+                                <td class="invert">${(item.product.price * item.quantity)}</td>
+
+                            </tr>`
+                $('#cartCheckout').append(productInCheckout)
+
+                let checkoutBasket = `<li> ${item.product.name} <i> -</i> <span>${item.quantity * item.product.price} </span></li>`
+                $('#checkoutBasket').append(checkoutBasket)
+                totalAmount += item.quantity * item.product.price
+                ++i
+            })
+            let checkoutTotal = `<li> Total <i> -</i><span id="checkoutTotal">${totalAmount}</span></li>`
+            $('#checkoutBasket').append(checkoutTotal)
+        }
+        $(document).ready(function () {
+            $.get("/Store/GetCart", function (data) {
+                getCart(data)
+            });
+        });
+        function addToCart(id) {
+            fetch('/Store/AddToCart', {
+                'method': 'post',
+                'body': JSON.stringify({
+                    'id': id
+                }),
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json()).then(data => {
+                getCart(data)
+            })
+        }
+        function minusFromCart(id) {
+            fetch('/Store/MinusFromCart', {
+                'method': 'post',
+                'body': JSON.stringify({
+                    'id': id
+                }),
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json()).then(data => {
+                getCart(data)
+            })
+        }
+    </script>
+
 </body>
 </html>

@@ -7,3 +7,13 @@ create table Users (
 	lever int,
 	avatar varchar(255)
 )
+
+
+
+/*them 28/11/2020*/
+
+alter table Users 
+add shippingAddress varchar(500),
+payment varchar(26),
+promocodes varchar(20),
+phone varchar(20)
