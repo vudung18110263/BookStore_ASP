@@ -58,7 +58,11 @@ namespace Book_Shop.Controllers
         {
             return View();
         }
-
+        public ActionResult Info(int? id)
+        {
+            var users = db.Users.Where(x => x.id == id).FirstOrDefault();
+            return View(users);
+        }
         public partial class itemInCart
         {
             public Product product { get; set; }

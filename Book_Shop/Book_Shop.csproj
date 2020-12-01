@@ -420,6 +420,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Users\Register.cshtml" />
+    <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Users\UplaodImage.cshtml" />
     <Content Include="Views\Shared\_layout_Product.cshtml" />
     <Content Include="Views\Products\Create.cshtml" />
