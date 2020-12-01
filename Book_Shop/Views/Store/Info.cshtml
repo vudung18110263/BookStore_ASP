@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Info";
+    Layout = "~/Views/Shared/_Layout_Store.cshtml";
+}
+@model Book_Shop.Models.User
+@using PagedList.Mvc; 
+
+<!-- products-breadcrumb -->
+@section products_breadcrumb
+    {
+    <div class="products-breadcrumb">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i>@Html.ActionLink("Home", "Index", "Store")<span>|</span></li>
+                <li>Infomation</li>
+            </ul>
+        </div>
+    </div>
+}
+<!-- //products-breadcrumb -->
+<!-- banner -->
+@section w3l_banner_nav_right
+{
+    <!-- info -->
+    <div class="mail">
+        <h3>Infomation</h3>
+        <div class="agileinfo_mail_grids">
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputAvatar">Avatar</label><br>
+                        <img src="~/images/4-1.jpg" width="200" height="250" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputID">ID</label>
+                        <input type="text" value="" class="form-control" id="inputID" placeholder="ID">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputPhone">Phone</label>
+                        <input type="text" value="@Html.DisplayNameFor(model => model.phone)" class="form-control" id="inputPhone" placeholder="Phone">
+                        
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputAccount">Account</label>
+                        <input type="text" value="@Html.DisplayNameFor(model => model.account)" class="form-control" id="inputAccount" placeholder="Account">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputPassword4">Password</label>
+                        <input type="text" class="form-control" id="inputPassword4" placeholder="Password">
+                    </div>
+                    <div class="form-group col-md-7">
+                        <label for="inputPayment">Payment</label>
+                        <img class="img_payment"  src="~/images/card.png" style="height: 15px" />
+                        <input type="text" value="@Html.DisplayNameFor(model => model.payment)" class="form-control" id="inputPayment" placeholder="Payment">
+                    </div>
+                    <div class="form-group col-md-7">
+                        <label for="inputEmail4">Email</label>
+                        <input type="text" value="@Html.DisplayNameFor(model => model.mail)" class="form-control" id="inputEmail4" placeholder="Email">
+                    </div>
+                    <div class="form-group col-md-7">
+                        <label for="inputAddress">Address</label>
+                        <input type="text" value="@Html.DisplayNameFor(model => model.shippingAddress)" class="form-control" id="inputAddress" placeholder="Address">
+                    </div>
+                </div>
+            </form>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+}

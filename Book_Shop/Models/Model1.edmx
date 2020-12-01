@@ -107,7 +107,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
           <Property Name="promocodes" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="Book_StoreEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Book_StoreEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
@@ -118,7 +118,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Book_StoreModelStoreContainer" CdmEntityContainer="Book_StoreEntities">
+        <EntityContainerMapping StorageEntityContainer="Book_StoreModelStoreContainer" CdmEntityContainer="Book_StoreEntities2">
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="Book_StoreModel.Category">
               <MappingFragment StoreEntitySet="Category">
