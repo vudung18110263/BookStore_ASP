@@ -386,6 +386,8 @@
     <Content Include="Views\blocks\header.html" />
     <Content Include="Views\Store\Mail.cshtml" />
     <Content Include="Views\Store\Info.cshtml" />
+    <Content Include="Views\Store\Purchase.cshtml" />
+    <Content Include="Views\Shared\_Layout_Purchase.cshtml" />
     <None Include="Views\Store\Single.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
