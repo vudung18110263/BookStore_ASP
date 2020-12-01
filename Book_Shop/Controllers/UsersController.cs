@@ -5,7 +5,9 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Web.Helpers;
+using System.Web;
 using System.Web.Mvc;
+using Common;
 
 namespace Book_Shop.Controllers
 {
@@ -92,8 +94,7 @@ namespace Book_Shop.Controllers
             user.pass_word = newPassword;
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
-            ViewBag.Result = "Change password successfully";
-            return View();
+            return RedirectToAction("Index", "Store");
         }
         public ActionResult Login()
         {
@@ -108,12 +109,12 @@ namespace Book_Shop.Controllers
 
             if (user == null)
             {
-                
+
                 return Content("false");
             }
 
             Session["user"] = user;
-            return Content("/");
+            return Content("");
 
         }
         [HttpPost]
@@ -149,9 +150,8 @@ namespace Book_Shop.Controllers
             user2.pass_word = randomString;
             db.Entry(user2).State = EntityState.Modified;
             db.SaveChanges();
-            ViewBag.Result = "Email Sent Successfully.";
 
-            return View();
+            return RedirectToAction("Index", "Store");
         }
         private string RandomString(int size)
         {
@@ -165,27 +165,27 @@ namespace Book_Shop.Controllers
             }
             return builder.ToString();
         }
-        private bool SendView(string EMAIL, string a)
+        private bool SendView(string EMAIL, string newPassWord)
         {
             try
             {
-                //Configuring webMail class to send emails  
-                //gmail smtp server  
-                WebMail.SmtpServer = "smtp.gmail.com";
-                //gmail port to send emails  
-                WebMail.SmtpPort = 587;
-                WebMail.SmtpUseDefaultCredentials = true;
-                //sending emails with secure protocol  
-                WebMail.EnableSsl = true;
-                //EmailId used to send emails from application  
-                WebMail.UserName = "tranhanam1999hn@gmail.com";
-                WebMail.Password = "0898546564";
+                ////Configuring webMail class to send emails  
+                ////gmail smtp server  
+                //WebMail.SmtpServer = "smtp.gmail.com";
+                ////gmail port to send emails  
+                //WebMail.SmtpPort = 587;
+                //WebMail.SmtpUseDefaultCredentials = true;
+                ////sending emails with secure protocol  
+                //WebMail.EnableSsl = true;
+                ////EmailId used to send emails from application  
+                //WebMail.UserName = "tranhanam1999hn@gmail.com";
+                //WebMail.Password = "0898546564";
 
-                //Sender email address.  
-                WebMail.From = "tranhanam1999hn@gmail.com";
-
-                //Send email  
-                WebMail.Send(to: EMAIL, subject: "Change Your password", body: "New you password " + a, cc: null, bcc: null, isBodyHtml: true);
+                ////Sender email address.  
+                //WebMail.From = "tranhanam1999hn@gmail.com";
+                ////Send email  ()
+                new MailHelper().SendMail(EMAIL, "Change Your password", "New you password " + newPassWord, "");
+                //WebMail.Send(to: EMAIL, subject: "Change Your password", body: "New you password " + newPassWord, cc: null, bcc: null, isBodyHtml: true);
                 return true; //"Email Sent Successfully.";
             }
             catch (Exception)
