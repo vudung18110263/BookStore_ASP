@@ -25,40 +25,43 @@ namespace Book_Shop.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Register(User formValues)
+        public ActionResult Register(FormCollection form)
         {
+            string username = form["username"].ToString();
+            string password = form["password"].ToString();
+            string confirmPassword = form["confirmPassword"].ToString();
+            string email = form["email"].ToString();
+            string phone = form["phone"].ToString();
+            string address = form["address"].ToString();
+            string payment = form["payment"].ToString();
+            string avatarPath = "";
+            if (form["payment"].ToString() == null)
+            {
+                payment = "";
+            }
             var avatar = Request.Files["Avatar"];
-            var user = db.Users.SingleOrDefault(n => n.account == formValues.account);
+
+            var user = db.Users.SingleOrDefault(n => n.account == username);
             if (user != null)
             {
                 ViewBag.Result = "User existed";
                 return View();
             }
-            try
+            if (password == confirmPassword)
             {
-                if (avatar.FileName != "" && avatar.ContentLength > 0)
-                {
-                    var path = Server.MapPath("~/UploadFiles/" + formValues.id + ".PNG");
-                    avatar.SaveAs(path);
-                    formValues.avatar = "/UploadFiles/" + formValues.id + ".PNG";
-                }
-                db.Users.Add(formValues);
-                db.SaveChanges();
-                return Redirect("/");
+                ViewBag.Result = "Password not matched";
+                return View();
             }
-            catch (DbEntityValidationException ex)
+            if (avatar.FileName != "" && avatar.ContentLength > 0)
             {
-                foreach (var errors in ex.EntityValidationErrors)
-                {
-                    foreach (var validationError in errors.ValidationErrors)
-                    {
-                        // get the error message 
-                        string errorMessage = validationError.ErrorMessage;
-                        ViewBag.Result = errorMessage;
-                    }
-                }
+                var path = Server.MapPath("~/UploadFiles/" + user.id + ".PNG");
+                avatar.SaveAs(path);
+                avatarPath = "/UploadFiles/" + user.id + ".PNG";
             }
-            return View();
+            User newUser = new User() { account = username, pass_word = password, lever = 2, mail = email, phone = phone, avatar = avatarPath, payment = payment, shippingAddress = address };
+            db.Users.Add(newUser);
+            db.SaveChanges();
+            return Redirect("/");
         }
         public ActionResult ChangePassword()
         {

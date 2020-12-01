@@ -1,0 +1,49 @@
+﻿.register__layout {
+    display: flex;
+    justify-content: center;
+    margin: 18px;
+
+}
+.register__table {
+    width: 90%;
+}
+.register__table td {
+    padding: 12px 18px; 
+}
+.register__table tr>td:first-child {
+    width: 30%;
+}
+.register__table td > label {
+    width: 100%;
+    margin: auto;
+    text-align: right;
+    font-weight: 600;
+    color: gray;
+}
+.register__table input {
+    border-radius: 8px;
+}
+.register__table #avatar-label {
+    display: inline;
+    border: 1px solid #84C639;
+    border-radius: 6px;
+    padding: 4px;
+    background: #84C639;
+    color: white;
+    margin-left: 4px;
+    font-weight: 400 ;
+}
+.register__btn {
+    border: 1px solid #84C639;
+    border-radius: 4px;
+    background: #84C639;
+    color: white;
+}
+#blah {
+    border: 2px solid gray;
+    padding: 1px;
+    border-radius: 999px;
+}
+.register__required {
+    color: red !important;
+}
