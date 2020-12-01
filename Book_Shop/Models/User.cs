@@ -11,24 +11,18 @@ namespace Book_Shop.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class User
     {
         public int id { get; set; }
-        [Required(ErrorMessage = "Don't leave it blank")]
         public string account { get; set; }
-        [Required(ErrorMessage = "Don't leave it blank")]
         public string pass_word { get; set; }
-        [Required(ErrorMessage = "Don't leave it blank")]
         public string mail { get; set; }
         public Nullable<int> lever { get; set; }
         public string avatar { get; set; }
-        [Required(ErrorMessage = "Don't leave it blank")]
         public string shippingAddress { get; set; }
         public string payment { get; set; }
         public string promocodes { get; set; }
-        [Required(ErrorMessage = "Don't leave it blank")]
         public string phone { get; set; }
     }
 }
