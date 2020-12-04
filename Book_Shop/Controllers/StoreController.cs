@@ -58,11 +58,13 @@ namespace Book_Shop.Controllers
         {
             return View();
         }
-        public ActionResult Info(int? id)
+        public ActionResult Info()
         {
-            var users = db.Users.Where(x => x.id == id).FirstOrDefault();
-            return View(users);
-        }
+            var temp = Session["userId"].ToString();
+            int id = int.Parse(temp);
+            var user = db.Users.Where(x => x.id == id).FirstOrDefault();
+            return View(user); 
+        }   
         public partial class itemInCart
         {
             public Product product { get; set; }

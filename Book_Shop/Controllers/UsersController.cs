@@ -33,12 +33,12 @@ namespace Book_Shop.Controllers
             string email = form["email"].ToString();
             string phone = form["phone"].ToString();
             string address = form["address"].ToString();
-            string payment = form["payment"].ToString();
+            //int payment = form["payment"];
             string avatarPath = "";
-            if (form["payment"].ToString() == null)
-            {
-                payment = "";
-            }
+            //if (form["payment"].ToString() == null)
+            //{
+            //    payment = null;
+            //}
             var avatar = Request.Files["Avatar"];
 
             var user = db.Users.SingleOrDefault(n => n.account == username);
@@ -58,7 +58,7 @@ namespace Book_Shop.Controllers
                 avatar.SaveAs(path);
                 avatarPath = "/UploadFiles/" + user.id + ".PNG";
             }
-            User newUser = new User() { account = username, pass_word = password, lever = 2, mail = email, phone = phone, avatar = avatarPath, payment = payment, shippingAddress = address };
+            User newUser = new User() { account = username, pass_word = password, lever = 2, mail = email, phone = phone, avatar = avatarPath, paymentId = null, address = address };
             db.Users.Add(newUser);
             db.SaveChanges();
             return Redirect("/");
@@ -115,8 +115,7 @@ namespace Book_Shop.Controllers
 
                 return Content("false");
             }
-
-            Session["user"] = user;
+            Session["userId"] = user.id;
             return Content("");
 
         }
