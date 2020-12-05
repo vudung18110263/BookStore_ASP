@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout_Store.cshtml";
 }
 @model Book_Shop.Models.User
-@using PagedList.Mvc; 
+@using PagedList.Mvc;
 
 <!-- products-breadcrumb -->
 @section products_breadcrumb
@@ -20,6 +20,11 @@
 }
 <!-- //products-breadcrumb -->
 <!-- banner -->
+<style>
+    #avatarInfo {
+        border: 1px solid black;
+    }
+</style>
 @section w3l_banner_nav_right
 {
     <!-- info -->
@@ -30,7 +35,9 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="inputAvatar">Avatar</label><br>
-                        <img src="~/images/4-1.jpg" width="200" height="250" />
+                        <div id="avatarInfo">
+                            <img src="@Html.DisplayFor(model => model.avatar)" width="200" height="200" />
+                        </div>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputID">ID</label>
@@ -38,29 +45,29 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="inputPhone">Phone</label>
-                        <input type="text" value="@Html.DisplayNameFor(model => model.phone)" class="form-control" id="inputPhone" placeholder="Phone">
-                        
+                        <input type="text" value="@Html.DisplayFor(model => model.phone)" class="form-control" id="inputPhone" placeholder="Phone">
+
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputAccount">Account</label>
-                        <input type="text" value="@Html.DisplayNameFor(model => model.account)" class="form-control" id="inputAccount" placeholder="Account">
+                        <input type="text" value="@Html.DisplayFor(model => model.account)" class="form-control" id="inputAccount" placeholder="Account">
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputPassword4">Password</label>
-                        <input type="text" class="form-control" id="inputPassword4" placeholder="Password">
-                    </div>
+                    @*<div class="form-group col-md-4">
+                            <label for="inputPassword4">Password</label>
+                            <input type="text" class="form-control" id="inputPassword4" placeholder="Password">
+                        </div>*@
                     <div class="form-group col-md-7">
                         <label for="inputPayment">Payment</label>
-                        <img class="img_payment"  src="~/images/card.png" style="height: 15px" />
-                        <input type="text" value="@Html.DisplayNameFor(model => model.paymentId)" class="form-control" id="inputPayment" placeholder="Payment">
+                        <img class="img_payment" src="@Model.avatar" style="height: 15px" />
+                        <input type="text" value="@Html.DisplayFor(model => model.paymentId)" class="form-control" id="inputPayment" placeholder="Payment">
                     </div>
                     <div class="form-group col-md-7">
                         <label for="inputEmail4">Email</label>
-                        <input type="text" value="@Html.DisplayNameFor(model => model.mail)" class="form-control" id="inputEmail4" placeholder="Email">
+                        <input type="text" value="@Html.DisplayFor(model => model.mail)" class="form-control" id="inputEmail4" placeholder="Email">
                     </div>
                     <div class="form-group col-md-7">
                         <label for="inputAddress">Address</label>
-                        <input type="text" value="@Html.DisplayNameFor(model => model.address)" class="form-control" id="inputAddress" placeholder="Address">
+                        <input type="text" value="@Html.DisplayFor(model => model.address)" class="form-control" id="inputAddress" placeholder="Address">
                     </div>
                 </div>
             </form>
