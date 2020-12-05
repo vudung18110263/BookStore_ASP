@@ -9,7 +9,7 @@ namespace Book_Shop.Controllers
     public class StoreController : Controller
     {
         // GET: Store
-        private Book_StoreEntities2 db = new Book_StoreEntities2();
+        private Book_StoreEntities db = new Book_StoreEntities();
 
         // GET: Products
         public ActionResult Index(int? page)
@@ -127,6 +127,10 @@ namespace Book_Shop.Controllers
             return Json(Session["cart"], JsonRequestBehavior.AllowGet);
         }
         public ActionResult Checkout()
+        {
+            return View();
+        }
+        public ActionResult Purchase()
         {
             return View();
         }

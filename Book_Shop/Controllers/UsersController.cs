@@ -13,7 +13,7 @@ namespace Book_Shop.Controllers
 {
     public class UsersController : Controller
     {
-        private Book_StoreEntities2 db = new Book_StoreEntities2();
+        private Book_StoreEntities db = new Book_StoreEntities();
         // GET: Users
         public ActionResult Index()
         {
@@ -58,7 +58,7 @@ namespace Book_Shop.Controllers
                 avatar.SaveAs(path);
                 avatarPath = "/UploadFiles/" + user.id + ".PNG";
             }
-            User newUser = new User() { account = username, pass_word = password, lever = 2, mail = email, phone = phone, avatar = avatarPath, payment = payment, shippingAddress = address };
+            User newUser = new User() { account = username, pass_word = password, lever = 2, mail = email, phone = phone, avatar = avatarPath, paymentId = null, address = address };
             db.Users.Add(newUser);
             db.SaveChanges();
             return Redirect("/");

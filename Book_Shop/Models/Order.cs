@@ -12,29 +12,25 @@ namespace Book_Shop.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Order
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Order()
         {
-            this.Orders = new HashSet<Order>();
-            this.Products = new HashSet<Product>();
+            this.Order_Product = new HashSet<Order_Product>();
         }
     
         public int id { get; set; }
-        public string account { get; set; }
-        public string pass_word { get; set; }
-        public string mail { get; set; }
-        public Nullable<int> lever { get; set; }
-        public string avatar { get; set; }
-        public string address { get; set; }
-        public Nullable<int> paymentId { get; set; }
-        public string phone { get; set; }
+        public int userid { get; set; }
+        public int promoid { get; set; }
+        public string status { get; set; }
+        public System.DateTime date { get; set; }
+        public string shippingAddess { get; set; }
+        public string payment { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
-        public virtual Payment Payment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Order_Product> Order_Product { get; set; }
+        public virtual PromoCode PromoCode { get; set; }
+        public virtual User User { get; set; }
     }
 }
