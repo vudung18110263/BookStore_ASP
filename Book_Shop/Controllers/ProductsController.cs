@@ -9,15 +9,13 @@ using System.Web.Mvc;
 
 namespace Book_Shop.Controllers
 {
-    [AuthorizeController]
     public class ProductsController : Controller
     {
-        private Book_StoreEntities2 db = new Book_StoreEntities2();
+        private Book_StoreEntities db = new Book_StoreEntities();
 
         // GET: Products
         public ActionResult Index(int? page)
         {
-
             // 1. Tham số int? dùng để thể hiện null và kiểu int
             // page có thể có giá trị là null và kiểu int.
 
@@ -27,7 +25,7 @@ namespace Book_Shop.Controllers
             // 3. Tạo truy vấn, lưu ý phải sắp xếp theo trường nào đó, ví dụ OrderBy
             // theo LinkID mới có thể phân trang.
             var links = (from l in db.Products
-                         select l).OrderBy(x => x.id);
+                         select l).Include(p => p.User).OrderBy(x => x.id);
 
             // 4. Tạo kích thước trang (pageSize) hay là số Link hiển thị trên 1 trang
             int pageSize = 3;
@@ -60,6 +58,7 @@ namespace Book_Shop.Controllers
         {
             var categories = db.Categories.ToList();
             ViewBag.Categories = categories;
+            ViewBag.authorId = new SelectList(db.Users, "id", "account");
             return View();
         }
 
@@ -68,34 +67,22 @@ namespace Book_Shop.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,name,image,description,category,price,rate")] Product product)
+        public ActionResult Create([Bind(Include = "id,name,image,description,category,price,rate,stock,authorId")] Product product)
         {
             if (ModelState.IsValid == false)
             {
                 return View(product);
             }
-            try
-            {
-                var image = Request.Files["image"];
-                var path = Server.MapPath("~/imageProduct/" + product.id + ".PNG");
-                image.SaveAs(path);
-                product.image = "/imageProduct/" + product.id + ".PNG";
-                db.Products.Add(product);
-                db.SaveChanges();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                foreach (var errors in ex.EntityValidationErrors)
-                {
-                    foreach (var validationError in errors.ValidationErrors)
-                    {
-                        // get the error message 
-                        string errorMessage = validationError.ErrorMessage;
-                        ViewBag.Result = errorMessage;
-                    }
-                }
-            }
-            return View();
+            db.Products.Add(product);
+            db.SaveChanges();
+            var image = Request.Files["image"];
+            var path = Server.MapPath("~/imageProduct/" + product.id + ".PNG");
+            image.SaveAs(path);
+            product.image = "/imageProduct/" + product.id + ".PNG";
+            db.Entry(product).State = EntityState.Modified;
+            db.SaveChanges();
+            ViewBag.authorId = new SelectList(db.Users, "id", "account", product.authorId);
+            return RedirectToAction("Index");
         }
 
         // GET: Products/Edit/5
@@ -110,6 +97,7 @@ namespace Book_Shop.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.authorId = new SelectList(db.Users, "id", "account", product.authorId);
             return View(product);
         }
 
@@ -118,7 +106,7 @@ namespace Book_Shop.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,name,image,description,category")] Product product)
+        public ActionResult Edit([Bind(Include = "id,name,image,description,category,price,rate,stock,authorId")] Product product)
         {
             ViewBag.Image = product.image;
             if (ModelState.IsValid)
@@ -131,6 +119,7 @@ namespace Book_Shop.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.authorId = new SelectList(db.Users, "id", "account", product.authorId);
             return View(product);
         }
 

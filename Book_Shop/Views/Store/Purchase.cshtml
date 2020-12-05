@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Purchase";
+    Layout = "~/Views/Shared/_Layout_Purchase.cshtml";
+}
+@*----------------- Add model ----------------------*@
+@model Book_Shop.Models.Order_Product
+@using PagedList.Mvc;
+@*--------------------------------------------------*@
+
+    <div class="">
+        <div class="purchase-list-sp">
+            @* Mấy cái này t add đại có gì m đổ data lại cho đúng *@
+            <div class="purchase-list-sp1">
+                <span>Tài khoản khách hàng:</span>
+                <span>@Html.DisplayNameFor(model => model.Order.User.account)</span>
+            </div>
+            <div class="purchase-list-sp2">
+                <span>ID Đơn hàng:</span>
+                <span id="">@Html.DisplayNameFor(model => model.orderId)</span>
+            </div>
+        </div>
+        <div class="purchase-list-page__wrapper purchase-boder1" role="main">
+            <div class="purchase-list-page__tabs-container">
+                <div class="sp1">
+                    <img src="~/images/nxb5.png" width="100px" height="100px"/>
+                    <span id="sp_name">Tên sản phẩm khá là dài và giả sử là rất dài</span>
+                    <span id="sp_sol"><strong>x1</strong></span>
+                </div>
+                <div class="sp2">
+                    <span>100.000 đ</span>
+                </div>
+                <div class="sp3">
+                    <span><strong>Đã giao</strong></span>
+                </div>
+                <div class="sp4">
+                    <span>Giao hàng tiết kiệm</span>
+                </div>
+                <div class="sp5">
+                    <a>Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    </div>

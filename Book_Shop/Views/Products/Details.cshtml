@@ -1,48 +1,42 @@
 ﻿@model Book_Shop.Models.Product
 
 @{
+    ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 
-<!DOCTYPE html>
+<div class="admin__layout">
+    <table class="admin__table">
+        <thead>
+            <tr class="admin__header">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Rate</th>
+                <th>Stock</th>
+                <th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(model => model.id)</td>
+                <td>@Html.DisplayFor(model => model.name)</td>
+                <td><img width="120px" height="120px" src="@Html.DisplayFor(model => model.image)" /></td>
+                <td>@Html.DisplayFor(model => model.description)</td>
+                <td>@Html.DisplayFor(model => model.category)</td>
+                <td>@Html.DisplayFor(model => model.price)</td>
+                <td>@Html.DisplayFor(model => model.rate)</td>
+                <td>@Html.DisplayFor(model => model.stock)</td>
+                <td>@Html.DisplayFor(model => model.User.account)</td>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div class="admin__layout">
-        <table class="admin__table">
-            <thead>
-                <tr class="admin__header">
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Image</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Rate</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@Html.DisplayFor(model => model.id)</td>
-                    <td>@Html.DisplayFor(model => model.name)</td>
-                    <td><img width="120px" height="120px" src="@Html.DisplayFor(model => model.image)" /></td>
-                    <td>@Html.DisplayFor(model => model.description)</td>
-                    <td>@Html.DisplayFor(model => model.category)</td>
-                    <td>@Html.DisplayFor(model => model.price)</td>
-                    <td>@Html.DisplayFor(model => model.rate)</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="pagination">
-            <a href="/Products/Edit/@Model.id" class="action-link">Edit</a>
-            <a href="/Products/Index" class="action-link">Back to list</a>
-        </div>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <a href="/Products/Edit/@Model.id" class="action-link">Edit</a>
+        <a href="/Products/Index" class="action-link">Back to list</a>
     </div>
-
-</body>
-</html>
+</div>

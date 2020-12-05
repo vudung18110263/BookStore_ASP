@@ -1,0 +1,426 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Grocery Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+          Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+               function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //for-mobile-apps -->
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- font-awesome icons -->
+    <link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- //font-awesome icons -->
+    <!-- js -->
+    <script src="~/Scripts/jquery-1.11.1.min.js"></script>
+    <!-- //js -->
+    <link href='//fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="~/Scripts/move-top.js"></script>
+    <script type="text/javascript" src="~/Scripts/easing.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            });
+        });
+    </script>
+    <!-- start-smoth-scrolling -->
+    <style>
+        .boders {
+            border: 1px solid black;
+            margin-bottom: 30px;
+        }
+
+        .purchase-list-page__tab--selected {
+            color: #ee4d2d;
+            border-bottom: 2px solid #ee4d2d;
+        }
+
+        .purchase-boder {
+            border: 1px solid rgba(0,0,0,.8);
+            background-color: lightgrey;
+        }
+
+        .purchase-boder1 {
+            border-left: 1px solid rgba(0,0,0,.8);
+            border-right: 1px solid rgba(0,0,0,.8);
+            border-bottom: 1px solid rgba(0,0,0,.8);
+        }
+
+        .sp1 {
+            width: 348.39px;
+            display: flex;
+            justify-items: center;
+            justify-content: center;
+            line-height: 20px;
+            padding-left: 30px;
+            margin-right: 26px;
+        }
+
+        #sp_name {
+            width: 280px;
+            height: 100px;
+            margin: 30px 0 0 10px;
+        }
+        #sp_sol {
+            width: 10px;
+            height: 100px;
+            margin: 30px 0 0 10px;
+        }
+
+        .sp2 {
+            width: 198.25px;
+            padding: 40px 60px;
+            margin-right: 30px;
+        }
+
+        .sp3 {
+            padding: 40px 60px;
+            margin-left: 2px;
+        }
+
+        .sp4 {
+            padding: 40px 30px 40px 50px;
+        }
+
+        .sp5 {
+            padding: 40px 10px;
+        }
+
+        .tb {
+            display: inline-flex;
+            padding: 10px 250px 10px 50px;
+        }
+
+        .tb1 {
+            padding: 10px 60px;
+        }
+
+        .tb2 {
+            padding: 10px 5px;
+        }
+
+        .purchase-list-page__tab {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            font-size: 1rem;
+            line-height: 1.1875rem;
+            padding: 1rem 0;
+            color: rgba(0,0,0,.8);
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -moz-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -moz-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -moz-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+
+        .purchase-list-page__tab, .purchase-list-page__tabs-container {
+            overflow: hidden;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-item-align: center;
+            justify-items: center;
+        }
+
+            .purchase-list-page__tab:focus, .purchase-list-page__tab:hover {
+                border-bottom: 2px solid #ee4d2d;
+            }
+
+        .purchase-list-page__tab-label {
+            color: black;
+        }
+
+            .purchase-list-page__tab-label:focus, .purchase-list-page__tab-label:hover {
+                color: #ee4d2d;
+            }
+
+        .purchase-list-page__search-bar {
+            padding: 10px 50px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        div {
+            display: block;
+        }
+
+        :root {
+            --tooltipBgColor: rgba(0, 0, 0, 0.8);
+        }
+
+        .space {
+            padding: 10px 0px;
+        }
+
+        .purchase-list-sp {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            border: 1px solid rgba(0, 0, 0, 0.8);
+        }
+
+        .purchase-list-sp1, .purchase-list-sp2 {
+            padding: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- header -->
+    <div class="agileits_header">
+        @*<div class="w3l_offers">
+                <a href="products.html">Today's special Offers !</a>
+            </div>*@
+        <div class="w3l_search">
+            <form action="#" method="post">
+                <input type="text" name="Product" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="">
+                <input type="submit" value=" ">
+            </form>
+        </div>
+        <div class="product_list_header">
+            <form action="#" method="post" class="last">
+                <fieldset>
+                    <input type="hidden" name="cmd" value="_cart" />
+                    <input type="hidden" name="display" value="1" />
+                    <input type="submit" name="submit" value="View your cart" class="button" />
+                </fieldset>
+            </form>
+        </div>
+        <div class="w3l_header_right">
+            <ul>
+                <li class="dropdown profile_details_drop">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+                    <div class="mega-dropdown-menu">
+                        <div class="w3ls_vegetables">
+                            <ul class="dropdown-menu drp-mnu">
+                                <li><a data-toggle="modal" href="#dang_nhap">Login</a></li>
+                                <li style="font-size: 16px">@Html.ActionLink("Sign Up", "Register", "Users")</li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="w3l_header_right1">
+            <h2>@Html.ActionLink("Contact Us", "Mail", "Store")</h2>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <!-- script-for sticky-nav -->
+    <script>
+        $(document).ready(function () {
+            var navoffeset = $(".agileits_header").offset().top;
+            $(window).scroll(function () {
+                var scrollpos = $(window).scrollTop();
+                if (scrollpos >= navoffeset) {
+                    $(".agileits_header").addClass("fixed");
+                } else {
+                    $(".agileits_header").removeClass("fixed");
+                }
+            });
+        });
+    </script>
+    <!-- //script-for sticky-nav -->
+    <div class="logo_products">
+        <div class="container">
+            <div class="w3ls_logo_products_left">
+                @*<h1><a href="index.html"><span>Grocery</span> Store</a></h1>*@
+                <h1><a href="/Store/Index"><img src="~/images/nxb5.png" style="width: inherit; height:inherit" /></a></h1>
+            </div>
+            <div class="w3ls_logo_products_left1">
+                <ul class="special_items">
+                    <li><a href="events.html">Events</a><i>/</i></li>
+                    <li>@Html.ActionLink("About Us", "About", "Store")<i>/</i></li>
+                    <li><a href="products.html">Best Deals</a><i>/</i></li>
+                    <li><a href="services.html">Services</a></li>
+                </ul>
+            </div>
+            <div class="w3ls_logo_products_left1">
+                <ul class="phone_email">
+                    <li><i class="fa fa-phone" aria-hidden="true"></i>(+0123) 234 567</li>
+                    <li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:store@grocery.com">store@grocery.com</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <!-- //header -->
+    <div class="container boders">
+        <div class="purchase-list-page__wrapper" role="main">
+            <div class="purchase-list-page__tabs-container">
+                <div class="purchase-list-page__tab">
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Tất cả</a>
+                </div>
+                <div class="purchase-list-page__tab">
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Chờ xác nhận</a>
+                </div>
+                <div class="purchase-list-page__tab">
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Chờ lấy hàng</a>
+                </div>
+                <div class="purchase-list-page__tab">
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Đang giao</a>
+                </div>
+                <div class="purchase-list-page__tab">
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Đã giao</a>
+                </div>
+                <div class="purchase-list-page__tab">
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Đã Hủy</a>
+                </div>
+                <div class="purchase-list-page__tab">
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Trả hàng/Hoàn tiền</a>
+                </div>
+            </div>
+        </div>
+        <div class="purchase-list-page__search-bar">
+            <input autocomplete="off" placeholder="Tìm kiếm đơn hàng" value="">
+            <div class="">
+                <button>Xuất</button>
+            </div>
+        </div>
+        <div class="purchase-list-page__search-bar">
+            <div class="purchase_sl">
+                <strong>
+                    <span>119</span>
+                    <span>Đơn hàng</span>
+                </strong>
+            </div>
+        </div>
+        <div class="purchase-list-page__wrapper" role="main">
+            <div class="purchase-list-page__tabs-container purchase-boder">
+                <span class="tb">Sản phẩm</span>
+                <span class="tb1">Tổng đơn hàng</span>
+                <span class="tb1">Trạng thái</span>
+                <span class="tb1">Vận chuyển</span>
+                <span class="tb2">Thao tác</span>
+            </div>
+        </div>
+
+        <div class="space"> </div>
+        <div>
+            @RenderBody()
+        </div>
+        <div class="space"> </div>
+    </div>
+    <!-- newsletter -->
+    <div class="newsletter">
+        <div class="container">
+            <div class="w3agile_newsletter_left">
+                <h3>sign up for our newsletter</h3>
+            </div>
+            <div class="w3agile_newsletter_right">
+                <form action="#" method="post">
+                    <input type="email" name="Email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
+                    <input type="submit" value="subscribe now">
+                </form>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <!-- //newsletter -->
+    <!-- footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="col-md-3 w3_footer_grid">
+                <h3>information</h3>
+                <ul class="w3_footer_grid_list">
+                    <li><a href="events.html">Events</a></li>
+                    <li>@Html.ActionLink("About_", "About", "Store")</li>
+                    <li><a href="products.html">Best Deals</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="short-codes.html">Short Codes</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 w3_footer_grid">
+                <h3>policy info</h3>
+                <ul class="w3_footer_grid_list">
+                    <li><a href="faqs.html">FAQ</a></li>
+                    <li><a href="privacy.html">privacy policy</a></li>
+                    <li><a href="privacy.html">terms of use</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 w3_footer_grid">
+                <h3>what in stores</h3>
+                <ul class="w3_footer_grid_list">
+                    <li><a href="pet.html">Pet Food</a></li>
+                    <li><a href="frozen.html">Frozen Snacks</a></li>
+                    <li><a href="kitchen.html">Kitchen</a></li>
+                    <li><a href="products.html">Branded Foods</a></li>
+                    <li><a href="household.html">Households</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 w3_footer_grid">
+                <h3>twitter posts</h3>
+                <ul class="w3_footer_grid_list1">
+                    <li>
+                        <label class="fa fa-twitter" aria-hidden="true"></label><i>01 day ago</i><span>
+                            Non numquam <a href="#">http://sd.ds/13jklf#</a>
+                            eius modi tempora incidunt ut labore et
+                            <a href="#">http://sd.ds/1389kjklf#</a>quo nulla.
+                        </span>
+                    </li>
+                    <li>
+                        <label class="fa fa-twitter" aria-hidden="true"></label><i>02 day ago</i><span>
+                            Con numquam <a href="#">http://fd.uf/56hfg#</a>
+                            eius modi tempora incidunt ut labore et
+                            <a href="#">http://fd.uf/56hfg#</a>quo nulla.
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+            <div class="agile_footer_grids">
+                <div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+                    <div class="w3_footer_grid_bottom">
+                        <h4>100% secure payments</h4>
+                        <img src="~/images/card.png" alt=" " class="img-responsive" />
+                    </div>
+                </div>
+                <div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+                    <div class="w3_footer_grid_bottom">
+                        <h5>connect with us</h5>
+                        <ul class="agileits_social_icons">
+                            <li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                            <li><a href="#" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            <li><a href="#" class="dribbble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="wthree_footer_copy">
+                <p>© 2016 Grocery Store. All rights reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

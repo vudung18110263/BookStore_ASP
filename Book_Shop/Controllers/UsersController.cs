@@ -13,7 +13,7 @@ namespace Book_Shop.Controllers
 {
     public class UsersController : Controller
     {
-        private Book_StoreEntities2 db = new Book_StoreEntities2();
+        private Book_StoreEntities db = new Book_StoreEntities();
         // GET: Users
         public ActionResult Index()
         {
