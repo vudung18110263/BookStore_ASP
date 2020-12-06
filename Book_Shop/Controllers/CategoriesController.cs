@@ -12,7 +12,7 @@ namespace Book_Shop.Controllers
 {
     public class CategoriesController : Controller
     {
-        private Book_StoreEntities db = new Book_StoreEntities();
+        private Book_StoreEntities2 db = new Book_StoreEntities2();
 
         // GET: Categories
         public ActionResult Index()

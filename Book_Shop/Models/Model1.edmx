@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Book_StoreModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Book_StoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="id" />
@@ -165,7 +165,7 @@
         <!--Errors Found During Generation:
 warning 6035: The relationship 'PK_Product_Category' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="PK_Product_Category" />-->
-        <EntityContainer Name="Book_StoreModel2StoreContainer">
+        <EntityContainer Name="Book_StoreModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Product" EntityType="Self.Order_Product" Schema="dbo" store:Type="Tables" />
@@ -203,7 +203,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Book_StoreModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Book_StoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="id" />
@@ -406,45 +406,15 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             <End Role="Users" EntitySet="Users" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Book_StoreModel2StoreContainer" CdmEntityContainer="Book_StoreEntities2">
+        <EntityContainerMapping StorageEntityContainer="Book_StoreModelStoreContainer" CdmEntityContainer="Book_StoreEntities2">
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="Book_StoreModel2.Category">
+            <EntityTypeMapping TypeName="Book_StoreModel.Category">
               <MappingFragment StoreEntitySet="Category">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -452,7 +422,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="Book_StoreModel2.Order">
+            <EntityTypeMapping TypeName="Book_StoreModel.Order">
               <MappingFragment StoreEntitySet="Order">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
@@ -465,7 +435,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Order_Product">
-            <EntityTypeMapping TypeName="Book_StoreModel2.Order_Product">
+            <EntityTypeMapping TypeName="Book_StoreModel.Order_Product">
               <MappingFragment StoreEntitySet="Order_Product">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="orderId" ColumnName="orderId" />
@@ -476,7 +446,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Payments">
-            <EntityTypeMapping TypeName="Book_StoreModel2.Payment">
+            <EntityTypeMapping TypeName="Book_StoreModel.Payment">
               <MappingFragment StoreEntitySet="Payment">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -486,7 +456,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="Book_StoreModel2.Product">
+            <EntityTypeMapping TypeName="Book_StoreModel.Product">
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -501,7 +471,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PromoCodes">
-            <EntityTypeMapping TypeName="Book_StoreModel2.PromoCode">
+            <EntityTypeMapping TypeName="Book_StoreModel.PromoCode">
               <MappingFragment StoreEntitySet="PromoCode">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -511,7 +481,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Book_StoreModel2.sysdiagram">
+            <EntityTypeMapping TypeName="Book_StoreModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -522,7 +492,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="Book_StoreModel2.User">
+            <EntityTypeMapping TypeName="Book_StoreModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="account" ColumnName="account" />
@@ -536,13 +506,6 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Book_StoreModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Book_StoreModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Book_StoreModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Book_StoreModel.Store.sp_helpdiagramdefinition" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Book_StoreModel.Store.sp_helpdiagrams" />
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Book_StoreModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Book_StoreModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

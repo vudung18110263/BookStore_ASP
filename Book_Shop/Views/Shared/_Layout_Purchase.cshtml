@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-
+@model List<Book_Shop.Models.Order_Detail>
 <!DOCTYPE html>
 
 <html>
@@ -73,6 +73,7 @@
             height: 100px;
             margin: 30px 0 0 10px;
         }
+
         #sp_sol {
             width: 10px;
             height: 100px;
@@ -83,6 +84,12 @@
             width: 198.25px;
             padding: 40px 60px;
             margin-right: 30px;
+        }
+
+        .Price {
+            color: #ee4d2d;
+            font-size: 1.875rem;
+            line-height: 2rem;
         }
 
         .sp3 {
@@ -276,25 +283,25 @@
         <div class="purchase-list-page__wrapper" role="main">
             <div class="purchase-list-page__tabs-container">
                 <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Tất cả</a>
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=ALL">Tất cả</a>
                 </div>
                 <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Chờ xác nhận</a>
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=PENDING">Chờ xác nhận</a>
                 </div>
                 <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Chờ lấy hàng</a>
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=GETTING">Chờ lấy hàng</a>
                 </div>
                 <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Đang giao</a>
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=SHIPPING">Đang giao</a>
                 </div>
                 <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Đã giao</a>
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=DONE">Đã giao</a>
                 </div>
                 <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Đã Hủy</a>
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=CANCELED">Đã Hủy</a>
                 </div>
                 <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase">Trả hàng/Hoàn tiền</a>
+                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=REFUND">Trả hàng/Hoàn tiền</a>
                 </div>
             </div>
         </div>
@@ -307,8 +314,8 @@
         <div class="purchase-list-page__search-bar">
             <div class="purchase_sl">
                 <strong>
-                    <span>119</span>
-                    <span>Đơn hàng</span>
+                    <span>@ViewBag.Count</span>
+                    <span> Order</span>
                 </strong>
             </div>
         </div>

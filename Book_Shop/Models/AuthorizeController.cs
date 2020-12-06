@@ -6,7 +6,7 @@ namespace Book_Shop.Models
 {
     public class AuthorizeController : ActionFilterAttribute
     {
-        Book_StoreEntities db = new Book_StoreEntities();
+        Book_StoreEntities2 db = new Book_StoreEntities2();
         //phương thức thực thi khi action được gọi
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
