@@ -176,6 +176,7 @@ namespace Book_Shop.Controllers
                     }
                     Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL.ToString());
                     result.Add(order_Detail);
+                    ViewBag.Count = result.Count();
                 }
                 return View(result);
             }
