@@ -149,11 +149,11 @@ namespace Book_Shop.Controllers
                 int priceALL;
                 if (Status == "ALL")
                 {
-                    listorder = (from l in db.Orders select l).Where(x => x.userid == idUser).ToList();
+                    listorder = db.Orders.Where(x => x.userid == idUser).ToList();
                 }
                 else
                 {
-                    listorder = (from l in db.Orders select l).Where(x => x.status == Status && x.userid == idUser).ToList();
+                    listorder = db.Orders.Where(x => x.status == Status && x.userid == idUser).ToList();
                 }
                 List<Order_Detail> result = new List<Order_Detail>();//orderDetail khởi tạo trong folder model
 
@@ -164,7 +164,7 @@ namespace Book_Shop.Controllers
                     List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
                     OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();
                     Product product = new Product();
-                    listOrderPro = (from o in db.Order_Product select o).Where(x => x.orderId == item.id).ToList();
+                    listOrderPro = db.Order_Product.Where(x => x.orderId == item.id).ToList();
                     priceALL = 0;
 
                     foreach (var itemOrderPro in listOrderPro)
