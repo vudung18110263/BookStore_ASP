@@ -9,7 +9,7 @@ namespace Book_Shop.Controllers
     public class StoreController : Controller
     {
         // GET: Store
-        private Book_StoreEntities db = new Book_StoreEntities();
+        private Book_StoreEntities2 db = new Book_StoreEntities2();
 
         // GET: Products
         public ActionResult Index(int? page)
@@ -132,9 +132,57 @@ namespace Book_Shop.Controllers
         {
             return View();
         }
-        public ActionResult Purchase()
+        public ActionResult Purchase(string Status)
         {
-            return View();
+            if (Session["userId"] == null)//kiem tra dang nhập ?
+                return View();
+            //lấy userid trên session
+            var temp = Session["userId"].ToString(); 
+            int idUser = int.Parse(temp);
+
+            if (Status == null)
+                Status = "ALL";
+            try
+            {
+                //khởi tạo các đối tượng
+                List<Order> listorder = new List<Order>();//danh sách các order
+                int priceALL;
+                if (Status == "ALL")
+                {
+                    listorder = (from l in db.Orders select l).Where(x => x.userid == idUser).ToList();
+                }
+                else
+                {
+                    listorder = (from l in db.Orders select l).Where(x => x.status == Status && x.userid == idUser).ToList();
+                }
+                List<Order_Detail> result = new List<Order_Detail>();//orderDetail khởi tạo trong folder model
+
+                foreach (var item in listorder)
+                {
+                    //khởi tạo các temp
+                    List<Order_Product> listOrderPro = new List<Order_Product>();
+                    List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
+                    OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();
+                    Product product = new Product();
+                    listOrderPro = (from o in db.Order_Product select o).Where(x => x.orderId == item.id).ToList();
+                    priceALL = 0;
+
+                    foreach (var itemOrderPro in listOrderPro)
+                    {
+                        product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
+                        orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
+                        listorderProJoinProducts.Add(orderProJoinProduct);
+                        priceALL = priceALL + itemOrderPro.price;
+                    }
+                    Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL.ToString());
+                    result.Add(order_Detail);
+                }
+                return View(result);
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

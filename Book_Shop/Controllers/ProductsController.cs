@@ -11,7 +11,7 @@ namespace Book_Shop.Controllers
 {
     public class ProductsController : Controller
     {
-        private Book_StoreEntities db = new Book_StoreEntities();
+        private Book_StoreEntities2 db = new Book_StoreEntities2();
 
         // GET: Products
         public ActionResult Index(int? page)
