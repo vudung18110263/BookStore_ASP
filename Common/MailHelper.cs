@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Configuration;
 using System.Net;
 using System.Net.Mail;
@@ -11,7 +7,7 @@ namespace Common
 {
     public class MailHelper
     {
-        public void SendMail(String toEmailAddress, String subject, String content,String fromEmailDisplayName)
+        public void SendMail(String toEmailAddress, String subject, String content, String fromEmailDisplayName)
         {
             var fromEmailAddress = ConfigurationManager.AppSettings["FromEmailAddress"].ToString();
             var fromEmailPassPassword = ConfigurationManager.AppSettings["FromEmailPassword"].ToString();
