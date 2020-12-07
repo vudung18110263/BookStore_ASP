@@ -19,7 +19,7 @@ namespace Book_Shop.Models
         public int productId { get; set; }
         public int quantity { get; set; }
         public int price { get; set; }
-
+    
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }
     }
