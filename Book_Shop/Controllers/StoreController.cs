@@ -63,8 +63,8 @@ namespace Book_Shop.Controllers
             var temp = Session["userId"].ToString();
             int id = int.Parse(temp);
             var user = db.Users.Where(x => x.id == id).FirstOrDefault();
-            return View(user); 
-        }   
+            return View(user);
+        }
         public partial class itemInCart
         {
             public Product product { get; set; }
@@ -97,6 +97,7 @@ namespace Book_Shop.Controllers
             }
             // Nếu chưa có thì thêm vào giỏ hàng
             Product product = db.Products.SingleOrDefault(n => n.id == productId);
+            product = new Product(product);
             itemInCart item = new itemInCart() { product = product, quantity = 1 };
             cart.Add(item);
             return Json(cart, JsonRequestBehavior.AllowGet);
@@ -137,7 +138,7 @@ namespace Book_Shop.Controllers
             if (Session["userId"] == null)//kiem tra dang nhập ?
                 return View();
             //lấy userid trên session
-            var temp = Session["userId"].ToString(); 
+            var temp = Session["userId"].ToString();
             int idUser = int.Parse(temp);
 
             if (Status == null)

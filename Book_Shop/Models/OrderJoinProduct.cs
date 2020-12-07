@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Book_Shop.Models
+﻿namespace Book_Shop.Models
 {
     public class OrderProJoinProduct
     {
@@ -19,9 +14,9 @@ namespace Book_Shop.Models
         public string categoryProduct { get; set; }
 
         public OrderProJoinProduct() { }
-        public OrderProJoinProduct(Order_Product order_Product,Product product)
+        public OrderProJoinProduct(Order_Product order_Product, Product product)
         {
-            id= order_Product.id;
+            id = order_Product.id;
             orderId = order_Product.orderId;
             productId = order_Product.productId;
             quantity = order_Product.quantity;

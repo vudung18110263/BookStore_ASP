@@ -1,13 +1,10 @@
 ﻿using Book_Shop.Models;
+using Common;
 using System;
 using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web.Helpers;
-using System.Web;
 using System.Web.Mvc;
-using Common;
 
 namespace Book_Shop.Controllers
 {
