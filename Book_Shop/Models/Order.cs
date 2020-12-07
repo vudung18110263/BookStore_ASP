@@ -22,7 +22,7 @@ namespace Book_Shop.Models
     
         public int id { get; set; }
         public int userid { get; set; }
-        public int promoid { get; set; }
+        public Nullable<int> promoid { get; set; }
         public string status { get; set; }
         public System.DateTime date { get; set; }
         public string shippingAddess { get; set; }
