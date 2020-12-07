@@ -40,6 +40,10 @@ namespace Book_Shop.Controllers
         {
             return View();
         }
+        public ActionResult Detail()
+        {
+            return View();
+        }
         public ActionResult Products(int? page)
         {
             if (page == null) page = 1;
