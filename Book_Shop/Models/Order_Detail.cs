@@ -23,7 +23,7 @@ namespace Book_Shop.Models
         {
             id = orther.id;
             userid = orther.userid;
-            promoid = orther.promoid;
+            promoid = (int)orther.promoid;
             status = orther.status;
             date = orther.date;
             shippingAddess = orther.shippingAddess;

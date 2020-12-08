@@ -17,8 +17,11 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Content/style.css" rel="stylesheet" type="text/css" media="all" />
     <!-- font-awesome icons -->
-    <link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" media="all" />
+    @*<link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" media="all" />*@
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
     <!-- //font-awesome icons -->
+    <link href="~/Content/headercart2.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/register.css" rel="stylesheet" type="text/css" media="all" />
     <!-- js -->
     <script src="~/Scripts/jquery-1.11.1.min.js"></script>
     <!-- //js -->
@@ -156,17 +159,18 @@
             justify-items: center;
         }
 
-            .purchase-list-page__tab:focus, .purchase-list-page__tab:hover {
-                border-bottom: 2px solid #ee4d2d;
-            }
-
         .purchase-list-page__tab-label {
             color: black;
         }
 
-            .purchase-list-page__tab-label:focus, .purchase-list-page__tab-label:hover {
-                color: #ee4d2d;
-            }
+        .purchase-list-page__tab-label:focus, .purchase-list-page__tab-label:hover {
+            color: #ee4d2d;
+            width: inherit;
+        }
+        .purchase-list-page__tab:focus, .purchase-list-page__tab:visited, .purchase-list-page__tab:hover {
+            border-bottom: 2px solid #ee4d2d;
+            color: #ee4d2d;
+        }
 
         .purchase-list-page__search-bar {
             padding: 10px 50px 30px;
@@ -188,13 +192,10 @@
 
         .purchase-list-sp {
             display: flex;
-            justify-content: space-between;
-            padding: 0 10px;
-            border: 1px solid rgba(0, 0, 0, 0.8);
         }
 
         .purchase-list-sp1, .purchase-list-sp2 {
-            padding: 10px 0;
+            padding: 10px 50px 10px 0px;
         }
     </style>
 </head>
@@ -202,9 +203,6 @@
 <body>
     <!-- header -->
     <div class="agileits_header">
-        @*<div class="w3l_offers">
-                <a href="products.html">Today's special Offers !</a>
-            </div>*@
         <div class="w3l_search">
             <form action="#" method="post">
                 <input type="text" name="Product" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="">
@@ -212,13 +210,24 @@
             </form>
         </div>
         <div class="product_list_header">
-            <form action="#" method="post" class="last">
-                <fieldset>
-                    <input type="hidden" name="cmd" value="_cart" />
-                    <input type="hidden" name="display" value="1" />
-                    <input type="submit" name="submit" value="View your cart" class="button" />
-                </fieldset>
-            </form>
+            <div class="header__cart">
+                <div class="header__cart-wrap">
+                    <i class="header__cart-icon fas fa-shopping-cart"></i>
+                    <span class="header__cart-notice">0</span>
+
+                    <div class="header__cart-list ">
+                        <!--No cart:có thêm class header__cart-list--no-cart-->
+                        <img src="./assets/image/no_cart.png" alt="" class="header__cart-no-cart-img">
+
+                        <!-- Có sản phẩm trong giỏ hàng -->
+                        <h4 class="header__cart-heading">Sản phẩm đã thêm</h4>
+                        <ul class="header__cart-list-item">
+                        </ul>
+                        <a href="Store/Checkout" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="w3l_header_right">
             <ul>
@@ -227,8 +236,10 @@
                     <div class="mega-dropdown-menu">
                         <div class="w3ls_vegetables">
                             <ul class="dropdown-menu drp-mnu">
-                                <li><a data-toggle="modal" href="#dang_nhap">Login</a></li>
+                                <li><a style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Login</a></li>
                                 <li style="font-size: 16px">@Html.ActionLink("Sign Up", "Register", "Users")</li>
+                                <li style="font-size: 16px">@Html.ActionLink("Infofmation", "Info", "Store")</li>
+                                <li style="font-size: 16px">@Html.ActionLink("Information Order", "PurChase", "Store")></li>
                             </ul>
                         </div>
                     </div>
@@ -252,6 +263,7 @@
                     $(".agileits_header").removeClass("fixed");
                 }
             });
+
         });
     </script>
     <!-- //script-for sticky-nav -->
@@ -279,61 +291,8 @@
         </div>
     </div>
     <!-- //header -->
-    <div class="container boders">
-        <div class="purchase-list-page__wrapper" role="main">
-            <div class="purchase-list-page__tabs-container">
-                <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=ALL">Tất cả</a>
-                </div>
-                <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=PENDING">Chờ xác nhận</a>
-                </div>
-                <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=GETTING">Chờ lấy hàng</a>
-                </div>
-                <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=SHIPPING">Đang giao</a>
-                </div>
-                <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=DONE">Đã giao</a>
-                </div>
-                <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=CANCELED">Đã Hủy</a>
-                </div>
-                <div class="purchase-list-page__tab">
-                    <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=REFUND">Trả hàng/Hoàn tiền</a>
-                </div>
-            </div>
-        </div>
-        <div class="purchase-list-page__search-bar">
-            <input autocomplete="off" placeholder="Tìm kiếm đơn hàng" value="">
-            <div class="">
-                <button>Xuất</button>
-            </div>
-        </div>
-        <div class="purchase-list-page__search-bar">
-            <div class="purchase_sl">
-                <strong>
-                    <span>@ViewBag.Count</span>
-                    <span> Order</span>
-                </strong>
-            </div>
-        </div>
-        <div class="purchase-list-page__wrapper" role="main">
-            <div class="purchase-list-page__tabs-container purchase-boder">
-                <span class="tb">Sản phẩm</span>
-                <span class="tb1">Tổng đơn hàng</span>
-                <span class="tb1">Trạng thái</span>
-                <span class="tb1">Vận chuyển</span>
-                <span class="tb2">Thao tác</span>
-            </div>
-        </div>
-
-        <div class="space"> </div>
-        <div>
-            @RenderBody()
-        </div>
-        <div class="space"> </div>
+    <div>
+        @RenderBody()
     </div>
     <!-- newsletter -->
     <div class="newsletter">
@@ -428,6 +387,219 @@
             </div>
         </div>
     </div>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".dropdown").hover(
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+                    $(this).toggleClass('open');
+                },
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+                    $(this).toggleClass('open');
+                }
+            );
+        });
+    </script>
+    <!-- here stars scrolling icon -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /*
+                var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+                };
+            */
 
+            $().UItoTop({ easingType: 'easeOutQuart' });
+
+        });
+    </script>
+    <!-- //here ends scrolling icon -->
+    <script src="~/Scripts/minicart.js"></script>
+    <script>
+        paypal.minicart.render();
+
+        paypal.minicart.cart.on('checkout', function (evt) {
+            var items = this.items(),
+                len = items.length,
+                total = 0,
+                i;
+
+            // Count the number of each item in the cart
+            for (i = 0; i < len; i++) {
+                total += items[i].get('quantity');
+            }
+
+            if (total < 3) {
+                alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
+                evt.preventDefault();
+            }
+        });
+
+    </script>
+    <script src='~/Scripts/okzoom.js'></script>
+    <script>
+        $(function () {
+            $('#example').okzoom({
+                width: 400,
+                height: 400,
+                border: "1px solid black",
+                shadow: "0 0 5px #000",
+                round: false,
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#frm-login").submit(function (e) {
+                if ($("#username").val() == '') {
+                    $('#err_login').html('<div class="alert alert-danger">Username chưa nhập</div>');
+                    $("#username").focus();
+                    return false;
+                }
+                else if ($("#password").val() == '') {
+                    $('#err_login').html('<div class="alert alert-danger">Password chưa nhập</div>');
+                    $("#password").focus();
+                    return false;
+                }
+                else {
+                    var form_data_login = {
+                        username: $("#username").val(),
+                        password: $("#password").val()
+                    };
+                    $.ajax({
+                        url: '/Users/Login',
+                        type: 'POST',
+                        async: true,
+                        data: form_data_login,
+                        success: function (msg_login) {
+                            //alert(msg);
+                            if (msg_login == 'false') {
+                                $('#err_login').html('<div class="alert alert-danger">Tên hoặc mật khẩu không chính xác</div>');
+                                $("#password").val("");
+                                $("#password").focus();
+                                return false;
+                            }
+                            else {
+                                $("#login_here").hide();
+                                $(".modal-footer").hide();
+
+                                $('#err_login').html('<div class="alert alert-success"><strong>Đăng nhập thành công</strong><span> Hệ thống tự chuyển sau vài giây ...</span></div>');
+                                setTimeout(
+                                    //chuyển đến địa chỉ msg_login của controler gửi qua
+                                    function () {
+                                        window.location.href = window.location.pathname;
+                                    }, 100);
+                            }
+                        }
+                    });
+                    return false;
+                }
+            });
+        })
+        //Load wating bar
+        $(document).ajaxStart(function () {
+            $("#waiting").show();
+        }).ajaxStop(function () {
+            $("#waiting").hide();
+        });
+    </script>
+    <script>
+        function getCart(data) {
+            $('.header__cart-list-item').html("")
+            let totalQuantity = 0
+            let totalAmount = 0
+            $('.header__cart-notice').html("0")
+            $('#cartCheckout').html("")
+            $('#checkoutBasket').html("")
+            let i = 1
+            data.forEach(item => {
+                totalQuantity += item.quantity
+
+                let product = `<li class="header__cart-item">
+                                            <img src="${item.product.image}" alt="" class="header__cart-img">
+                                            <div class="header__cart-item-info">
+                                                <div class="header__cart-item-head">
+                                                    <h5 class="header__cart-item-name">${item.product.name}</h5>
+                                                    <div class="header__cart-item-price-wrap">
+                                                        <span class="header__cart-item-price">${item.product.price}</span>
+                                                        <span class="header__cart-item-multiply">x</span>
+                                                        <span class="header__cart-item-qnt">${item.quantity}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="header__cart-item-body">
+                                                    <span class="header__cart-item-description">
+                                                        Phân loại hàng: Bạc
+                                                    </span>
+                                                    <span class="header__cart-item-remove">Xóa</span>
+                                                </div>
+                                            </div>
+                                        </li>`
+                $('.header__cart-list-item').append(product)
+                $('.header__cart-notice').html(totalQuantity)
+
+                let productInCheckout = `<tr class="rem1">
+                                        <td class="invert">${i}</td>
+                                        <td class="invert-image"><a href="Store/Single?id=${item.product.id}"><img width="48px" height="48px" src="${item.product.image}" alt=" " class="img-responsive"></a></td>
+                                        <td class="invert">
+                                            <div class="quantity">
+                                                <div class="quantity-select">
+                                                    <div class="entry value-minus" onclick="minusFromCart(${item.product.id})">&nbsp;</div>
+                                                    <div class="entry value"><span>${item.quantity}</span></div>
+                                                    <div class="entry value-plus active" onclick="addToCart(${item.product.id})">&nbsp;</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="invert">${item.product.name}</td>
+                                        <td class="invert">${(item.product.price * item.quantity)}</td>
+
+                                    </tr>`
+                $('#cartCheckout').append(productInCheckout)
+
+                let checkoutBasket = `<li> ${item.product.name} <i> -</i> <span>${item.quantity * item.product.price} </span></li>`
+                $('#checkoutBasket').append(checkoutBasket)
+                totalAmount += item.quantity * item.product.price
+                ++i
+            })
+            let checkoutTotal = `<li> Total <i> -</i><span id="checkoutTotal">${totalAmount}</span></li>`
+            $('#checkoutBasket').append(checkoutTotal)
+        }
+        $(document).ready(function () {
+            $.get("/Store/GetCart", function (data) {
+                getCart(data)
+            });
+        });
+        function addToCart(id) {
+            fetch('/Store/AddToCart', {
+                'method': 'post',
+                'body': JSON.stringify({
+                    'id': id
+                }),
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json()).then(data => {
+                getCart(data)
+            })
+        }
+        function minusFromCart(id) {
+            fetch('/Store/MinusFromCart', {
+                'method': 'post',
+                'body': JSON.stringify({
+                    'id': id
+                }),
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json()).then(data => {
+                getCart(data)
+            })
+        }
+    </script>
 </body>
 </html>
