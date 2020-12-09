@@ -17,13 +17,13 @@ namespace Book_Shop.Models
         public string PriceALl { get; set; }
 
         public string UserMail { get; set; }
-        public string UserAccount { get; set; }
+        public string UserFullName { get; set; }
         public Order_Detail() { }
         public Order_Detail(Order orther, List<OrderProJoinProduct> ListOrtherProduct, string priceALl)
         {
             id = orther.id;
             userid = orther.userid;
-            promoid = orther.promoid;
+            promoid = (int)orther.promoid;
             status = orther.status;
             date = orther.date;
             shippingAddess = orther.shippingAddess;
@@ -31,7 +31,7 @@ namespace Book_Shop.Models
             orderProduct = ListOrtherProduct;
             PriceALl = priceALl;
             var user = db.Users.Where(x => x.id == orther.userid).FirstOrDefault();
-            UserAccount = user.account;
+            UserFullName = user.fullname;
             UserMail = user.mail;
         }
 

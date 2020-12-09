@@ -40,6 +40,26 @@ namespace Book_Shop.Controllers
         {
             return View();
         }
+        public ActionResult CheckProdcutQuantity(string view)
+        {
+            List<string> notification = new List<string>();
+            List<itemInCart> cart = Session["cart"] as List<itemInCart>;
+            foreach(var item in cart)
+            {
+                var product = db.Products.Where(x => x.id == item.product.id).FirstOrDefault();
+                if(product.stock<item.quantity)
+                {
+                    notification.Add("san pham :"+product.name +" chi con lai :" + product.stock);
+                }    
+            }
+            if (notification.Count > 0)
+            {
+                ViewBag.KQ = notification;
+                return View("Checkout");
+            }
+            else
+                return View("Purchase");
+        }
         public ActionResult Products(int? page)
         {
             if (page == null) page = 1;

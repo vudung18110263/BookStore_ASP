@@ -44,13 +44,13 @@
             </div>
             <div class="col-md-8 address_form_agile">
                 <h4>Add a new Details</h4>
-                <form action="payment.html" method="post" class="creditly-card-form agileinfo_form">
+                <form action="#" method="post" class="creditly-card-form agileinfo_form">
                     <section class="creditly-wrapper wthree, w3_agileits_wrapper">
                         <div class="information-wrapper">
                             <div class="first-row form-group">
                                 <div class="controls">
                                     <label class="control-label">Full name: </label>
-                                    <input class="billing-address-name form-control" type="text" name="name" placeholder="Full name">
+                                    <input class="billing-address-name form-control" type="text" name="name" disabled="disabled" placeholder="Full name">
                                 </div>
                                 <div class="w3_agileits_card_number_grids">
                                     <div class="w3_agileits_card_number_grid_left">
@@ -80,13 +80,27 @@
 
                                     </select>
                                 </div>
+                                <div class="controls">
+                                <label class="control-label"> payment options: </label>
+                                    <select class="form-control option-w3ls">
+                                        <option>ready cash</option>
+                                    </select>
+                                </div>
                             </div>
                             <button class="submit check_out">Delivery to this Address</button>
                         </div>
                     </section>
                 </form>
+                @if (ViewBag.KQ != null)
+                {
+                    foreach (var item in ViewBag.KQ)
+                    {
+                        <a coler="red">@item</a>
+                        <br />
+                    }
+                }
                 <div class="checkout-right-basket">
-                    <a href="payment.html">Make a Payment <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                    <a href="/Store/CheckProdcutQuantity?view=Checkout">Make a Payment <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
                 </div>
             </div>
 
