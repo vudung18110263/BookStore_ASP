@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Book_Shop.Models
@@ -8,7 +9,7 @@ namespace Book_Shop.Models
         private Book_StoreEntities2 db = new Book_StoreEntities2();
         public int id { get; set; }
         public int userid { get; set; }
-        public int promoid { get; set; }
+        public int? promoid { get; set; }
         public string status { get; set; }
         public System.DateTime date { get; set; }
         public string shippingAddess { get; set; }
@@ -23,7 +24,7 @@ namespace Book_Shop.Models
         {
             id = orther.id;
             userid = orther.userid;
-            promoid = (int)orther.promoid;
+            promoid = orther.promoid;
             status = orther.status;
             date = orther.date;
             shippingAddess = orther.shippingAddess;

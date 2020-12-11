@@ -40,7 +40,6 @@
         });
     </script>
     <!-- start-smoth-scrolling -->
-
 </head>
 <body>
     <!-- header -->
@@ -51,6 +50,27 @@
                 <input type="submit" value=" ">
             </form>
         </div>
+        <div class="w3l_header_right1">
+            <h2>@Html.ActionLink("Contact Us", "Mail", "Store")</h2>
+        </div>
+        <div class="w3l_header_right">
+            <ul>
+                <li class="dropdown profile_details_drop">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+                    <div class="mega-dropdown-menu">
+                        <div class="w3ls_vegetables">
+                            <ul class="dropdown-menu drp-mnu">
+                                <li><a style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Login</a></li>
+                                <li style="font-size: 16px">@Html.ActionLink("Sign Up", "Register", "Users")</li>
+                                <li style="font-size: 16px">@Html.ActionLink("Infofmation", "Info", "Store")</li>
+                                <li style="font-size: 16px">@Html.ActionLink("Information Order", "PurChase", "Store")></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
         <div class="product_list_header">
             <div class="header__cart">
                 <div class="header__cart-wrap">
@@ -70,26 +90,6 @@
                 </div>
             </div>
 
-        </div>
-        <div class="w3l_header_right">
-            <ul>
-                <li class="dropdown profile_details_drop">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
-                    <div class="mega-dropdown-menu">
-                        <div class="w3ls_vegetables">
-                            <ul class="dropdown-menu drp-mnu">
-                                <li><a style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Login</a></li>
-                                <li style="font-size: 16px">@Html.ActionLink("Sign Up", "Register", "Users")</li>
-                                <li style="font-size: 16px">@Html.ActionLink("Infofmation", "Info", "Store")</li>
-                                <li style="font-size: 16px">@Html.ActionLink("Information Order", "PurChase", "Store")></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="w3l_header_right1">
-            <h2>@Html.ActionLink("Contact Us", "Mail", "Store")</h2>
         </div>
         <div class="clearfix"> </div>
     </div>

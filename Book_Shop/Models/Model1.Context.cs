@@ -15,8 +15,6 @@ namespace Book_Shop.Models
     
     public partial class Book_StoreEntities2 : DbContext
     {
-        internal object orders;
-
         public Book_StoreEntities2()
             : base("name=Book_StoreEntities2")
         {

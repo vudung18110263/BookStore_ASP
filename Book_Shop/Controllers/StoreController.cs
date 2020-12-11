@@ -70,7 +70,7 @@ namespace Book_Shop.Controllers
                 var product = db.Products.Where(x => x.id == item.product.id).FirstOrDefault();
                 if (product.stock < item.quantity)
                 {
-                    notification = notification + "san pham :" + product.name + " chi con lai :" + product.stock + "\n";
+                    return notification = notification + "san pham :" + product.name + " chi con lai :" + product.stock + "\n";
                 }
             }
             return notification;
@@ -98,12 +98,10 @@ namespace Book_Shop.Controllers
             DateTime myDateTime = DateTime.Now;
             string Date = myDateTime.Date.ToString("yyyy-MM-dd");
             //tao order
-            if (promoID == "")
-                promoID = null;
+            
             Order order = new Order()
             {
                 userid = userID,
-                promoid = Convert.ToInt32(promoID),
                 status = "PENDING",
                 date = myDateTime.Date,
                 shippingAddess = ShippingAddress,
@@ -111,6 +109,8 @@ namespace Book_Shop.Controllers
             };
             db.Orders.Add(order);
             db.SaveChanges();
+            if (promoID != null)
+                order.promoid = Convert.ToInt32(promoID);
             //tao orderprodcut
             List<itemInCart> cart = Session["cart"] as List<itemInCart>;
             foreach(var item in cart)
