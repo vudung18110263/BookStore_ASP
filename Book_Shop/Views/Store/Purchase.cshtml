@@ -5,60 +5,439 @@
 @*----------------- Add model ----------------------*@
 @using PagedList.Mvc;
 @*--------------------------------------------------*@
-<div class="">
-    @if (Model != null)
-    {
-        foreach (var item in Model)
-        {
-            <div class="purchase-list-sp">
-                <div class="purchase-list-sp1">
-                    <span>Tài khoản khách hàng:</span>
-                    <span>@item.UserFullName</span>
-                </div>
-                <div class="purchase-list-sp2">
-                    <span>Mã Đơn hàng:</span>
-                    <span id="">@item.id</span>
+
+    <style>
+        strong {
+            font-weight: bold;
+        }
+
+        p {
+            margin: 0.75rem 0 0;
+        }
+
+        h1 {
+            font-size: 0.75rem;
+            font-weight: normal;
+            margin: 0;
+            padding: 0;
+        }
+
+        input,
+        button {
+            border: 0 none;
+            outline: 0 none;
+        }
+
+        button {
+            background-color: #666;
+            color: #fff;
+        }
+
+            button:hover,
+            button:focus {
+                background-color: #555;
+            }
+
+        .product-frame,
+        .basket-module,
+        .basket-labels,
+        .basket-product {
+            width: 100%;
+        }
+
+        input,
+        button,
+        .basket,
+        .basket-module,
+        .basket-labels,
+        .item,
+        .price,
+        .quantity,
+        .subtotal,
+        .basket-product,
+        .product-image,
+        .product-details {
+            float: left;
+        }
+
+            .price:before,
+            .subtotal:before,
+            .subtotal-value:before,
+            .total-value:before,
+            .promo-value:before {
+                content: 'đ';
+            }
+
+        .hide {
+            display: none;
+        }
+
+        main {
+            clear: both;
+            font-size: 0.75rem;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 1rem 0;
+            width: 960px;
+        }
+
+        .basket,
+        aside {
+            padding: 0 1rem;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .basket {
+            width: 100%;
+        }
+
+        .basket-module {
+            color: #111;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.3125rem;
+        }
+
+        .promo-code-field {
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+            text-transform: uppercase;
+            transition: all 0.2s linear;
+            width: 48%;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -o-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        }
+
+            .promo-code-field:hover,
+            .promo-code-field:focus {
+                border: 1px solid #999;
+            }
+
+        .promo-code-cta {
+            border-radius: 4px;
+            font-size: 0.625rem;
+            margin-left: 0.625rem;
+            padding: 0.6875rem 1.25rem 0.625rem;
+        }
+
+        .basket-labels {
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            margin-top: 1.625rem;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            color: #111;
+            display: inline-block;
+            padding: 0.625rem 0;
+        }
+
+            li.price:before,
+            li.subtotal:before {
+                content: '';
+            }
+
+        .item {
+            width: 40%;
+        }
+
+        .price,
+        .quantity,
+        .subtotal {
+            width: 10%;
+        }
+
+        .subtotal {
+            text-align: right;
+        }
+
+        .remove {
+            bottom: 1.125rem;
+            float: right;
+            position: absolute;
+            right: 0;
+            text-align: right;
+            width: 45%;
+        }
+
+            .remove a, .remove button {
+                background-color: transparent;
+                color: #777;
+                float: none;
+                text-decoration: underline;
+                text-transform: uppercase;
+            }
+
+        .item-heading {
+            padding-left: 4.375rem;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .basket-product {
+            border-bottom: 1px solid #ccc;
+            padding: 1rem 0;
+            position: relative;
+        }
+
+        .product-image {
+            width: 35%;
+        }
+
+        .product-details {
+            width: 65%;
+        }
+
+        .product-frame {
+            border: 1px solid #aaa;
+        }
+
+        .product-details {
+            padding: 0 1.5rem;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .quantity-field {
+            background-color: #ccc;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            font-size: 0.625rem;
+            padding: 2px;
+            width: 3.75rem;
+        }
+
+        aside {
+            float: right;
+            position: relative;
+            width: 30%;
+        }
+
+        .summary {
+            background-color: #eee;
+            border: 1px solid #aaa;
+            padding: 1rem;
+            position: fixed;
+            width: 250px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .summary-total-items {
+            color: #666;
+            font-size: 0.875rem;
+            text-align: center;
+        }
+
+        .summary-subtotal,
+        .summary-total {
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            clear: both;
+            margin: 1rem 0;
+            overflow: hidden;
+            padding: 0.5rem 0;
+        }
+
+        .subtotal-title,
+        .subtotal-value,
+        .total-title,
+        .total-value,
+        .promo-title,
+        .promo-value {
+            color: #111;
+            float: left;
+            width: 50%;
+        }
+
+        .summary-promo {
+            -webkit-transition: all .3s ease;
+            -moz-transition: all .3s ease;
+            -o-transition: all .3s ease;
+            transition: all .3s ease;
+        }
+
+        .promo-title {
+            float: left;
+            width: 70%;
+        }
+
+        .promo-value {
+            color: #8B0000;
+            float: left;
+            text-align: right;
+            width: 30%;
+        }
+
+        .summary-delivery {
+            padding-bottom: 3rem;
+        }
+
+        .subtotal-value,
+        .total-value {
+            text-align: right;
+        }
+
+        .total-title {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .summary-checkout {
+            display: block;
+        }
+
+        .checkout-cta {
+            display: block;
+            float: none;
+            font-size: 0.75rem;
+            text-align: center;
+            text-transform: uppercase;
+            padding: 0.625rem 0;
+            width: 100%;
+        }
+
+        .summary-delivery-selection {
+            background-color: #ccc;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            display: block;
+            font-size: 0.625rem;
+            height: 34px;
+            width: 100%;
+        }
+
+        .boder-2 {
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .Order_nb {
+            float: right;
+            background-color: #aaa;
+            margin-right: 50px;
+            width: 80px;
+            height: 30px;
+        }
+    </style>
+
+<div class="container boders">
+    <div class="space"> </div>
+    <div class="purchase-list-page__wrapper boder-2" role="main">
+        <div class="purchase-list-page__tabs-container">
+            <div class="purchase-list-page__tab">
+                <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=ALL"><strong>All</strong></a>
+            </div>
+            <div class="purchase-list-page__tab">
+                <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=PENDING"><strong>Confirming</strong></a>
+            </div>
+            <div class="purchase-list-page__tab">
+                <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=GETTING"><strong>Getting</strong></a>
+            </div>
+            <div class="purchase-list-page__tab">
+                <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=SHIPPING"><strong>Shipping</strong></a>
+            </div>
+            <div class="purchase-list-page__tab">
+                <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=DONE"><strong>Done</strong></a>
+            </div>
+            <div class="purchase-list-page__tab">
+                <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=CANCELED"><strong>Cancelled</strong></a>
+            </div>
+            <div class="purchase-list-page__tab">
+                <a class="purchase-list-page__tab-label" href="/Store/Purchase?Status=REFUND"><strong>Returns/Refund</strong></a>
+            </div>
+        </div>
+    </div>
+    <div class="purchase-list-page__search-bar">
+        
+    </div>
+    
+    <div>
+        <div class="basket">
+            <div class="basket-module">
+                <input id="promo-code" type="text" name="promo-code" maxlength="5" class="promo-code-field" placeholder="Search product">
+                <button class="promo-code-cta">Search</button>
+                <div class="Order_nb">
+                    <strong>
+                        <span>@ViewBag.Count</span>
+                        <span> Order</span>
+                    </strong>
                 </div>
             </div>
-            <div class="purchase-list-page__wrapper purchase-boder1" role="main">
-                @foreach (var item2 in item.orderProduct)
+            <div class="basket-labels">
+                <ul>
+                    <li class="item item-heading">Item</li>
+                    <li class="price">Price</li>
+                    <li class="quantity">Quantity</li>
+                    <li class="quantity">Status</li>
+                    <li class="quantity">Transport</li>
+                    <li class="subtotal">Subtotal</li>
+                </ul>
+            </div>
+            <div class="basket-product">
+                @if (Model != null)
                 {
-                    <div class="purchase-list-page__tabs-container">
-                        <div class="sp1">
-                            <img src="@(item2.imageProduct)" width="100px" height="100px" />
-                            <span id="sp_name">@item2.nameProduct</span>
-                            <span id="sp_sol"><strong>x1</strong></span>
+                    foreach (var item in Model)
+                    {
+                        <div class="purchase-list-sp">
+                            <div class="purchase-list-sp1">
+                                <span>Tài khoản khách hàng:</span>
+                                <span>@item.UserAccount</span>
+                            </div>
+                            <div class="purchase-list-sp2">
+                                <span>Mã Đơn hàng:</span>
+                                <span id="">@item.id</span>
+                            </div>
                         </div>
-                        <div class="sp2">
-                            <span>@item2.price</span>
-                        </div>
-                        <div class="sp3">
-                            <span><strong>@item.status</strong></span>
-                        </div>
-                        <div class="sp4">
-                            <span>Giao hàng tiết kiệm</span>
-                        </div>
-                        <div class="sp5">
-                        </div>
-                    </div>
+                        <div>
+                        @foreach (var item2 in item.orderProduct)
+                        {
+                            <div class="item">
+                                <div class="product-image">
+                                    <img src="@(item2.imageProduct)" @*src="http://placehold.it/120x166"*@ alt="Placholder Image 2" class="product-frame">
+                                </div>
+                                <div class="product-details">
+                                    <h1><strong><span class="item-quantity">@item2.nameProduct</span></strong></h1>
+                                    <p><strong>Navy, Size 18</strong></p>
+                                    <p>Product Code - 232321939</p>
+                                </div>
+                            </div>
+                            <div class="price">@item2.price</div>
+                            <div class="quantity">
+                                <span class="">1</span>
+                            </div>
+                            <div class="quantity">
+                                <span class="">@item.status</span>
+                            </div>
+                            <div class="quantity">
+                                <span class="">Giao hàng tiết kiệm</span>
+                            </div>
+                            <div class="subtotal">@item.PriceALl đ</div>
+                            <div class="remove">
+                                <a href="/Store/Detail">Xem chi tiết</a>
+                                <button>Remove</button>
+                            </div>
+
+                        }</div>
+                    }
                 }
             </div>
-            <div class="purchase-list-page__wrapper purchase-boder1" role="main">
-                <div class="purchase-list-page__tabs-container">
-                    <div class="sp1"></div>
-                    <div class="sp2"></div>
-                    <div class="sp3">
-                        <span>Tổng tiền :</span>
-                    </div>
-                    <div class="sp4 Price">
-                        <span font-size="1.875rem">@item.PriceALl VND</span>
-                    </div>
-                    <div class="sp5">
-                        <a>Xem chi tiết</a>
-                    </div>
-                </div>
-            </div>
-            <br>
-        }
-    }
+        </div>
+    </div>
+    <div class="space"> </div>
 </div>

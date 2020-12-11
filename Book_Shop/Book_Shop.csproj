@@ -442,6 +442,7 @@
     <Content Include="Views\Order_Product\Details.cshtml" />
     <Content Include="Views\Order_Product\Edit.cshtml" />
     <Content Include="Views\Order_Product\Index.cshtml" />
+    <Content Include="Views\Store\Detail.cshtml" />
     <None Include="Views\Store\Single.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
