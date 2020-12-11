@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-@model List<Book_Shop.Models.Order_Detail>
+
 <!DOCTYPE html>
 
 <html>
@@ -129,7 +129,6 @@
             user-select: none;
             font-size: 1rem;
             line-height: 1.1875rem;
-            padding: 1rem 0;
             color: rgba(0,0,0,.8);
             -webkit-box-flex: 1;
             -webkit-flex: 1;
@@ -162,11 +161,15 @@
         .purchase-list-page__tab-label {
             color: #555;
             font-weight: 500;
+            display: block; 
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            padding: 1rem 0;
         }
 
         .purchase-list-page__tab-label:focus, .purchase-list-page__tab-label:hover {
             color: #ee4d2d;
-            width: inherit;
         }
         .purchase-list-page__tab:focus, .purchase-list-page__tab:visited, .purchase-list-page__tab:hover {
             border-bottom: 2px solid #ee4d2d;
@@ -210,6 +213,27 @@
                 <input type="submit" value=" ">
             </form>
         </div>
+        <div class="w3l_header_right1">
+            <h2>@Html.ActionLink("Contact Us", "Mail", "Store")</h2>
+        </div>
+        <div class="w3l_header_right">
+            <ul>
+                <li class="dropdown profile_details_drop">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding: 0"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+                    <div class="mega-dropdown-menu">
+                        <div class="w3ls_vegetables">
+                            <ul class="dropdown-menu drp-mnu">
+                                <li><a style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Login</a></li>
+                                <li style="font-size: 16px">@Html.ActionLink("Sign Up", "Register", "Users")</li>
+                                <li style="font-size: 16px">@Html.ActionLink("Infofmation", "Info", "Store")</li>
+                                <li style="font-size: 16px">@Html.ActionLink("Information Order", "PurChase", "Store")></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
         <div class="product_list_header">
             <div class="header__cart">
                 <div class="header__cart-wrap">
@@ -229,26 +253,6 @@
                 </div>
             </div>
 
-        </div>
-        <div class="w3l_header_right">
-            <ul>
-                <li class="dropdown profile_details_drop">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
-                    <div class="mega-dropdown-menu">
-                        <div class="w3ls_vegetables">
-                            <ul class="dropdown-menu drp-mnu">
-                                <li><a style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Login</a></li>
-                                <li style="font-size: 16px">@Html.ActionLink("Sign Up", "Register", "Users")</li>
-                                <li style="font-size: 16px">@Html.ActionLink("Infofmation", "Info", "Store")</li>
-                                <li style="font-size: 16px">@Html.ActionLink("Information Order", "PurChase", "Store")></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="w3l_header_right1">
-            <h2>@Html.ActionLink("Contact Us", "Mail", "Store")</h2>
         </div>
         <div class="clearfix"> </div>
     </div>

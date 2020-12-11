@@ -1,6 +1,8 @@
 ﻿using Book_Shop.Models;
 using PagedList;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -39,6 +41,92 @@ namespace Book_Shop.Controllers
         public ActionResult About()
         {
             return View();
+        }
+        //public ActionResult CheckProdcutQuantity(string view)
+        //{
+        //    List<string> notification = new List<string>();
+        //    List<itemInCart> cart = Session["cart"] as List<itemInCart>;
+        //    foreach (var item in cart)
+        //    {
+        //        var product = db.Products.Where(x => x.id == item.product.id).FirstOrDefault();
+        //        if (product.stock < item.quantity)
+        //        {
+        //            notification.Add("san pham :" + product.name + " chi con lai :" + product.stock);
+        //        }
+        //    }
+        //    if (notification.Count > 0)
+        //    {
+        //        ViewBag.KQ = notification;
+        //        return View(view);
+        //    }
+        //    else
+        //        return View("Purchase");
+        //} 
+        public string CheckProdcutQuantity(List<itemInCart> cart)
+        {
+            string notification ="";
+            foreach (var item in cart)
+            {
+                var product = db.Products.Where(x => x.id == item.product.id).FirstOrDefault();
+                if (product.stock < item.quantity)
+                {
+                    return notification = notification + "san pham :" + product.name + " chi con lai :" + product.stock + "\n";
+                }
+            }
+            return notification;
+        }
+        public ActionResult CheckoutProdcut(FormCollection form)
+        {
+            List<itemInCart> cart = Session["cart"] as List<itemInCart>;
+            string Notification = CheckProdcutQuantity(cart);
+            if (Notification != "")
+                return RedirectToAction("Checkout2", "Store", new { notification = Notification });
+
+            string idPromo="";
+            var temp = Session["userId"].ToString();
+            int Userid = int.Parse(temp);
+            string promoCode = form["Promode"].ToString();
+            string ShipAddress = form["Address"];
+            var promode = db.PromoCodes.Where(x => x.code == promoCode).FirstOrDefault();
+            if (promode != null)
+                idPromo = (promode.id).ToString();
+            return RedirectToAction("Pay", "Store", new { userID = Userid, promoID = idPromo, ShippingAddress= ShipAddress });
+        }
+        public ActionResult Pay(int userID,string promoID,string ShippingAddress )
+        {
+            string Payment = "cash";
+            DateTime myDateTime = DateTime.Now;
+            string Date = myDateTime.Date.ToString("yyyy-MM-dd");
+            //tao order
+            
+            Order order = new Order()
+            {
+                userid = userID,
+                status = "PENDING",
+                date = myDateTime.Date,
+                shippingAddess = ShippingAddress,
+                payment = Payment
+            };
+            db.Orders.Add(order);
+            db.SaveChanges();
+            if (promoID != null)
+                order.promoid = Convert.ToInt32(promoID);
+            //tao orderprodcut
+            List<itemInCart> cart = Session["cart"] as List<itemInCart>;
+            foreach(var item in cart)
+            {
+                Order_Product order_Product = new Order_Product { 
+                    orderId = order.id, 
+                    productId = item.product.id, 
+                    price = (int)item.product.price, 
+                    quantity = item.quantity,
+                };
+                item.product.stock -= item.quantity;
+                db.Entry(item.product).State = EntityState.Modified;
+                db.Order_Product.Add(order_Product);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index","Store");
         }
         public ActionResult Detail()
         {
@@ -135,7 +223,30 @@ namespace Book_Shop.Controllers
         }
         public ActionResult Checkout()
         {
-            return View();
+            ViewBag.Userid = true;
+            if (Session["userId"] == null)
+            {
+                ViewBag.Userid = false;
+                return View();
+            }
+            var temp = Session["userId"].ToString();
+            int id = int.Parse(temp);
+            var user = db.Users.Where(x => x.id == id).FirstOrDefault();
+            return View(user);
+        }
+        public ActionResult Checkout2(string notification )
+        {
+            ViewBag.KQ = MvcHtmlString.Create(notification.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None).Aggregate((a, b) => a + "<br />" + b));
+            ViewBag.Userid = true;
+            if (Session["userId"] == null)
+            {
+                ViewBag.Userid = false;
+                return View("Checkout");
+            }
+            var temp = Session["userId"].ToString();
+            int id = int.Parse(temp);
+            var user = db.Users.Where(x => x.id == id).FirstOrDefault();
+            return View("Checkout",user);
         }
         public ActionResult Purchase(string Status)
         {

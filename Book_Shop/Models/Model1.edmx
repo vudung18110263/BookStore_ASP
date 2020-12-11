@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Book_StoreModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Book_StoreModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="id" />
@@ -79,6 +79,7 @@
           <Property Name="address" Type="varchar" MaxLength="500" />
           <Property Name="paymentId" Type="int" />
           <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="fullname" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Order_Product_Order">
           <End Role="Order" Type="Self.Order" Multiplicity="1" />
@@ -188,8 +189,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Book_StoreModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -279,6 +279,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
           <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Users" FromRole="Users" ToRole="Order" />
           <NavigationProperty Name="Payment" Relationship="Self.FK_Users_Payment" FromRole="Users" ToRole="Payment" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Product_Users" FromRole="Users" ToRole="Product" />
+          <Property Name="fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Order_Product_Order">
           <End Role="Order" Type="Self.Order" Multiplicity="1" />
@@ -461,6 +462,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="Book_StoreModel2.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="account" ColumnName="account" />
                 <ScalarProperty Name="pass_word" ColumnName="pass_word" />

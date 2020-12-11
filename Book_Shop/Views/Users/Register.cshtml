@@ -22,7 +22,7 @@
         <div class="alert alert-danger">@ViewBag.Result</div>
     }
     <h2>Welcome to our website</h2>
-    <form class="register__layout" action="Users/Register" method="post" enctype="multipart/form-data">
+    <form class="register__layout" action="/Users/Register" method="post" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <table class="register__table">
