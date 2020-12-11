@@ -601,5 +601,10 @@
             })
         }
     </script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const statusParam = urlParams.get('Status');
+        $(`#${statusParam}`).addClass("purchase-list-page__tab--selected")
+    </script>
 </body>
 </html>

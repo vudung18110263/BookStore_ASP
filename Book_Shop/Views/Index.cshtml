@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .chart__layout {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .chart__wrapper {
+        width: 100%;
+        height: 100%;
+        border: 1px solid rbga(0,0,0,0);
+        border-radius: 12px;
+        margin: 12px 24px;
+        padding: 12px;
+        color: gray;
+        font-size: 16px;
+        font-weight: 600;
+        box-shadow: 0 0 12px 6px #e0e0e0;
+        background-color: white;
+    }
+
+        .chart__wrapper button {
+            border: 1px solid #007bff;
+            background-color: #007bff;
+            color: white !important;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            padding: 6px 16px;
+            border-radius: 6px;
+        }
+
+    .chart__size {
+        width: 100%;
+        height: 100%;
+        margin: 12px 0;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script>
+    Chart.defaults.global.responsive = false;
+
+    // Chuyển thành array ["Economic", "English"]
+    let barLabels = @Html.Raw(Json.Encode(ViewData["barLabels"]));
+    let barData = @Html.Raw(Json.Encode(ViewData["barData"]));
+    const mappedBarData = barData.map((data, index) => {
+        const randomLineColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}`
+        return {
+            label: barLabels[index],
+            backgroundColor: [`${randomLineColor}, 0.1)`],
+            borderColor: [`${randomLineColor}, 0.9)`],
+            borderWidth: 1,
+            data: [data]
+        }
+    })
+    const barChartData = {
+        labels: [""],
+        datasets: mappedBarData
+    };
+    /* -------------- */
+
+    let lineLabels = @Html.Raw(Json.Encode(ViewData["lineLabels"]));
+    let lineData = @Html.Raw(Json.Encode(ViewData["lineData"]));
+    const randomLineColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}`
+    const lineChartData = {
+        labels: lineLabels,
+        datasets: [{
+            label: `Year ${new Date().getFullYear()}`,
+            fill: true,
+            borderColor: [`${randomLineColor}, 0.8)`],
+            backgroundColor: [`${randomLineColor}, 0.1)`],
+            data: lineData
+        }]
+    };
+    /* ------------- */
+
+    window.onload = function () {
+        const ctxBar = document.getElementById("barcanvas").getContext("2d");
+        window.myBar = new Chart(ctxBar, {
+                type: 'bar',
+                data: barChartData,
+        });
+        const ctxLine = document.getElementById("linecanvas").getContext("2d");
+        window.myLine = new Chart(ctxLine, {
+            type: 'line',
+            data: lineChartData,
+        });
+    }
+</script>
+<div class="chart__layout">
+    <div class="chart__wrapper">
+        <canvas class="chart__size" id="barcanvas"></canvas>
+
+        <button type="button" onclick="backsale()">Back</button>
+        <button type="button" onclick="nextsale()">Next</button>
+    </div>
+    <div class="chart__wrapper">
+        <canvas class="chart__size" id="usedChart"></canvas>
+        <button type="button" onclick="backused()">Back</button>
+        <button type="button" onclick="nextused()">Next</button>
+    </div>
+</div>
+<div class="chart__layout">
+    <div class="chart__wrapper">
+        <canvas class="chart__size" id="barcanvas"></canvas>
+
+        <button type="button" onclick="backsale()">Back</button>
+        <button type="button" onclick="nextsale()">Next</button>
+    </div>
+    <div class="chart__wrapper">
+        <canvas class="chart__size" id="linecanvas"></canvas>
+        <button type="button" onclick="backused()">Back</button>
+        <button type="button" onclick="nextused()">Next</button>
+    </div>
+</div>
+<div style="text-align: center">
+
+</div>
