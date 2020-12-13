@@ -60,12 +60,18 @@
                     <div class="mega-dropdown-menu">
                         <div class="w3ls_vegetables">
                             <ul class="dropdown-menu drp-mnu">
-                                <li><a style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Login</a></li>
-                                <li style="font-size: 16px">@Html.ActionLink("Sign Up", "Register", "Users")</li>
-                                <li style="font-size: 16px">@Html.ActionLink("Infofmation", "Info", "Store")</li>
-                                <li style="font-size: 16px">@Html.ActionLink("Information Order", "PurChase", "Store")></li>
-                            </ul>
-                        </div>
+                                @if (Session["userId"] != null)
+                                {
+                                    <li style="font-size: 16px">@Html.ActionLink("Infofmation", "Info", "Store")</li>
+                                    <li style="font-size: 16px">@Html.ActionLink("Information Order", "PurChase", "Store")</li>
+                                    <li style="font-size: 16px">@Html.ActionLink("Log out", "logout", "Users")</li>
+                                }
+                                else
+                                {
+                                    <li><a style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Login</a></li>
+                                    <li style="font-size: 16px">@Html.ActionLink("Sign Up", "Register", "Users")</li>
+                                }
+</div>
                     </div>
                 </li>
             </ul>
