@@ -26,11 +26,16 @@
             <tr>
                 <th class="admin__header">Image</th>
                 <td class="image-field">
-                    <img src="@Html.DisplayFor(model => model.image)" height="120px" width="120px" />
+                    <img id="blah" height="120px" width="120px"  />
+                    <label for="imgInp" id="avatar-label" class="custom-file-upload action-link">
+                        Upload file
+                        <input type="file" name="image" id="imgInp" style="display: none;" />
+                    </label>
+                    @*<img src="@Html.DisplayFor(model => model.image)" height="120px" width="120px" />
                     <label for="file-upload" class="custom-file-upload action-link">
                         Upload file
                     </label>
-                    <input id="file-upload" type="file" name="image" />
+                    <input id="file-upload" type="file" name="image" />*@
                     @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
                 </td>
             </tr>
@@ -85,3 +90,4 @@
         </div>
     </div>
 }
+    

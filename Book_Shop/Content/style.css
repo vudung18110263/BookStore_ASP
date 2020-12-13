@@ -47,9 +47,12 @@ span.glyphicon.glyphicon-shopping-cart.my-cart-icon.my-cart-icon-affix {
     width: 850px;
 	margin:75px auto 30px;
 }
+.snipcart-thumb {
+	text-align: center;
+}
 .snipcart-thumb a {
-    display: block;
-    text-align: center;
+	display: block;
+	text-align: center;
 }
 .my-cart-icon-affix i {
     background: #84C639 !important;
@@ -874,6 +877,14 @@ button.submit.check_out{
 	background:transparent;
 	overflow: hidden;
 	z-index: 0;
+}
+.hover-tien {
+	border-radius: 6px;
+}
+.hover-tien:hover {
+	transform: scale(1.005);
+	box-shadow: 0 0 6px 4px #e0e0e0;
+	transition: all 0.4s;
 }
 /* Shine */
 .hover14 figure {
@@ -2377,10 +2388,10 @@ ul.wmuSliderPagination {
 }
 
 .starRating:not(old) > label {
-    float: right;
+    float: left;
     background: url(../images/star.png);
     background-size: contain;
-    margin-right: 2px;
+    margin-left: 2px;
 }
 
 .starRating:not(old) > label:before{
@@ -2390,7 +2401,7 @@ ul.wmuSliderPagination {
   height          : 16px;
   background      : url(../images/star1.png);
   background-size : contain;
-  opacity         : 0;
+  opacity         : 1;
   transition      : opacity 0.2s linear;
 }
 

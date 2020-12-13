@@ -345,6 +345,7 @@
         padding: 0.5rem 0;
     }
 </style>
+
 <div class="container">
     <div class="space"> </div>
     <div class="purchase-list-page__wrapper boder-2" role="main">
@@ -422,7 +423,7 @@
                                 </div>
                                 <div class="price">@item2.price</div>
                                 <div class="quantity">
-                                    <span class="">1</span>
+                                    <span class="">@item2.quantity</span>
                                 </div>
                                 <div class="quantity">
                                     <span class="">@item.status</span>
@@ -433,7 +434,6 @@
                                 <div class="subtotal">@item.PriceALl</div>
                                 <div class="remove">
                                     <a href="/Store/Detail">Xem chi tiết</a>
-                                    <button>Remove</button>
                                 </div>
 
                             }
@@ -445,3 +445,9 @@
     </div>
     <div class="space"> </div>
 </div>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get('Status');
+    $(`#${myParam}`).addClass('purchase-list-page__tab--selected')
+    if (!myParam) $('#ALL').addClass('purchase-list-page__tab--selected')
+</script>

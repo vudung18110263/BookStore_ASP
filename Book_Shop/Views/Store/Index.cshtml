@@ -5,6 +5,19 @@
 @model PagedList.IPagedList<Book_Shop.Models.Product>
 @using PagedList.Mvc;
 
+@section products_breadcrumb {
+    <div class="products-breadcrumb">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i>@Html.ActionLink("Home", "Index", "Store")<span>|</span></li>
+                @if (Request.QueryString["category"] != null)
+                {
+                    <li>@Model[0].category</li>
+                }
+            </ul>
+        </div>
+    </div>
+}
 
 <!-- banner -->
 @section w3l_banner_nav_right
@@ -54,12 +67,12 @@
     </script>
     <!-- //flexSlider -->
 }
-@foreach( var item in Model)
-{
-    <button onclick="addToCart(@item.id)">@item.name</button>
-}
+@*@foreach( var item in Model)
+    {
+        <button onclick="addToCart(@item.id)">@item.name</button>
+    }*@
 <!-- banner -->
-<div class="banner_bottom">
+<div class="banner_bottom" style="padding-top: 0 !important">
     <div class="wthree_banner_bottom_left_grid_sub">
     </div>
     <div class="wthree_banner_bottom_left_grid_sub1">
@@ -94,39 +107,27 @@
 <!-- top-brands -->
 <div class="top-brands">
     <div class="container">
-        <h3>Hot Offers</h3>
+        <h3> @(Request.QueryString["category"] == null ? "Hot Offers" : Model[0].category)</h3>
         <div class="agile_top_brands_grids">
             @foreach (var item in Model)
             {
-                <div class="col-md-3 top_brand_left">
-                    <div class="hover14 column">
-                        <div class="agile_top_brand_left_grid">
-                            <div class="tag"><img src="~/images/tag.png" alt=" " class="img-responsive" /></div>
+                <div class="col-md-3 top_brand_left" style="margin: 12px 0">
+                    <div class="hover14 column ">
+                        <div class="agile_top_brand_left_grid hover-tien">
+                            @if (Request.QueryString["category"] == null)
+                            {
+                                <div style="z-index: 1" class="tag"><img src="~/images/tag.png" alt=" " class="img-responsive" /></div>
+                            }
                             <div class="agile_top_brand_left_grid1">
                                 <figure>
                                     <div class="snipcart-item block">
                                         <div class="snipcart-thumb">
-                                            <a href="/Store/Single?id=@(item.id)"><img title=" " alt=" " src="@(item.image)" width="100px" height="100px" /></a>
-                                            <p>@item.name</p>
-                                            <h4>$7.99 <span>$10.00</span></h4>
+                                            <a href="/Store/Single?id=@(item.id)"><img class="img-tien" src="@(item.image)" width="150" height="150" /></a>
+                                            <p style="font-size: 1.1rem">@item.name</p>
+                                            <span style="font-size: 1.2rem">đ@(item.price)</span><h4 style="display: inline"><span style="color: red">đ@(item.price*1.5)</span></h4>
                                         </div>
                                         <div class="snipcart-details top_brand_home_details">
-                                            <form action="checkout.html" method="post">
-                                                <fieldset>
-                                                    <input type="hidden" name="cmd" value="_cart" />
-                                                    <input type="hidden" name="add" value="1" />
-                                                    <input type="hidden" name="business" value=" " />
-                                                    <input type="hidden" name="item_name" value="Fortune Sunflower Oil" />
-                                                    <input type="hidden" name="amount" value="7.99" />
-                                                    <input type="hidden" name="discount_amount" value="1.00" />
-                                                    <input type="hidden" name="currency_code" value="USD" />
-                                                    <input type="hidden" name="return" value=" " />
-                                                    <input type="hidden" name="cancel_return" value=" " />
-                                                    <input type="submit" name="submit" value="Add to cart" class="button" />
-                                                </fieldset>
-
-                                            </form>
-
+                                            <input type="button" onclick="addToCart(@item.id)" value="Add to cart" class="button" />
                                         </div>
                                     </div>
                                 </figure>
@@ -135,14 +136,11 @@
                     </div>
                 </div>
             }
-            @*Thêm mã phân trang
-                <br />
-                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
-
-                @Html.PagedListPager(Model, page => Url.Action("Index",
-                    new { page }))
-                 Kết thúc*@
+            <br />
             <div class="clearfix"> </div>
+            <div style="float: right">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, category = Request.QueryString["category"] }))
+            </div>
         </div>
     </div>
 </div>

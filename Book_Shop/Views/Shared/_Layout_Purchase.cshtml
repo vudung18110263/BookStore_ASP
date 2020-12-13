@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-
+@model List<Book_Shop.Models.Order_Detail>
 <!DOCTYPE html>
 
 <html>
@@ -129,6 +129,7 @@
             user-select: none;
             font-size: 1rem;
             line-height: 1.1875rem;
+            /*padding: 1rem 0;*/
             color: rgba(0,0,0,.8);
             -webkit-box-flex: 1;
             -webkit-flex: 1;
@@ -153,23 +154,23 @@
             display: -webkit-flex;
             display: -moz-box;
             display: -ms-flexbox;
-            display: flex;
+            /*display: flex;*/
             -ms-flex-item-align: center;
             justify-items: center;
         }
 
         .purchase-list-page__tab-label {
-            color: #555;
-            font-weight: 500;
-            display: block; 
-            width: 100%;
-            height: 100%;
-            text-align: center;
+            color: black;
+            display: block;
+            width: 100% !important;
+            height: 100%;   
             padding: 1rem 0;
+            text-align: center;
         }
 
         .purchase-list-page__tab-label:focus, .purchase-list-page__tab-label:hover {
             color: #ee4d2d;
+            width: inherit;
         }
         .purchase-list-page__tab:focus, .purchase-list-page__tab:visited, .purchase-list-page__tab:hover {
             border-bottom: 2px solid #ee4d2d;
@@ -219,21 +220,26 @@
         <div class="w3l_header_right">
             <ul>
                 <li class="dropdown profile_details_drop">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding: 0"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-top: 0.25rem"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
                     <div class="mega-dropdown-menu">
                         <div class="w3ls_vegetables">
                             <ul class="dropdown-menu drp-mnu">
-                                <li><a style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Login</a></li>
-                                <li style="font-size: 16px">@Html.ActionLink("Sign Up", "Register", "Users")</li>
-                                <li style="font-size: 16px">@Html.ActionLink("Infofmation", "Info", "Store")</li>
-                                <li style="font-size: 16px">@Html.ActionLink("Information Order", "PurChase", "Store")></li>
-                            </ul>
+                                @if (Session["userId"] != null)
+                                {
+                                    <li style="font-size: 16px">@Html.ActionLink("Infofmation", "Info", "Store")</li>
+                                    <li style="font-size: 16px">@Html.ActionLink("Information Order", "PurChase", "Store")</li>
+                                    <li style="font-size: 16px">@Html.ActionLink("Log out", "logout", "Users")</li>
+                                }
+                                else
+                                {
+                                    <li><a style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Login</a></li>
+                                    <li style="font-size: 16px">@Html.ActionLink("Sign Up", "Register", "Users")</li>
+                                }
                         </div>
                     </div>
                 </li>
             </ul>
         </div>
-
         <div class="product_list_header">
             <div class="header__cart">
                 <div class="header__cart-wrap">
@@ -248,7 +254,7 @@
                         <h4 class="header__cart-heading">Sản phẩm đã thêm</h4>
                         <ul class="header__cart-list-item">
                         </ul>
-                        <a href="Store/Checkout" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a>
+                        <a href="/Store/Checkout" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a>
                     </div>
                 </div>
             </div>
@@ -296,6 +302,14 @@
         </div>
     </div>
     <!-- //header -->
+    <div class="products-breadcrumb" style="padding: 0">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i>@Html.ActionLink("Home", "Index", "Store")<span>|</span></li>
+                <li>Purchase</li>
+            </ul>
+        </div>
+    </div>
     <div>
         @RenderBody()
     </div>
@@ -527,43 +541,43 @@
                 totalQuantity += item.quantity
 
                 let product = `<li class="header__cart-item">
-                                            <img src="${item.product.image}" alt="" class="header__cart-img">
-                                            <div class="header__cart-item-info">
-                                                <div class="header__cart-item-head">
-                                                    <h5 class="header__cart-item-name">${item.product.name}</h5>
-                                                    <div class="header__cart-item-price-wrap">
-                                                        <span class="header__cart-item-price">${item.product.price}</span>
-                                                        <span class="header__cart-item-multiply">x</span>
-                                                        <span class="header__cart-item-qnt">${item.quantity}</span>
+                                                <img src="${item.product.image}" alt="" class="header__cart-img">
+                                                <div class="header__cart-item-info">
+                                                    <div class="header__cart-item-head">
+                                                        <h5 class="header__cart-item-name">${item.product.name}</h5>
+                                                        <div class="header__cart-item-price-wrap">
+                                                            <span class="header__cart-item-price">${item.product.price}</span>
+                                                            <span class="header__cart-item-multiply">x</span>
+                                                            <span class="header__cart-item-qnt">${item.quantity}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="header__cart-item-body">
+                                                        <span class="header__cart-item-description">
+                                                            Phân loại hàng: Bạc
+                                                        </span>
+                                                        <span class="header__cart-item-remove">Xóa</span>
                                                     </div>
                                                 </div>
-                                                <div class="header__cart-item-body">
-                                                    <span class="header__cart-item-description">
-                                                        Phân loại hàng: Bạc
-                                                    </span>
-                                                    <span class="header__cart-item-remove">Xóa</span>
-                                                </div>
-                                            </div>
-                                        </li>`
+                                            </li>`
                 $('.header__cart-list-item').append(product)
                 $('.header__cart-notice').html(totalQuantity)
 
                 let productInCheckout = `<tr class="rem1">
-                                        <td class="invert">${i}</td>
-                                        <td class="invert-image"><a href="Store/Single?id=${item.product.id}"><img width="48px" height="48px" src="${item.product.image}" alt=" " class="img-responsive"></a></td>
-                                        <td class="invert">
-                                            <div class="quantity">
-                                                <div class="quantity-select">
-                                                    <div class="entry value-minus" onclick="minusFromCart(${item.product.id})">&nbsp;</div>
-                                                    <div class="entry value"><span>${item.quantity}</span></div>
-                                                    <div class="entry value-plus active" onclick="addToCart(${item.product.id})">&nbsp;</div>
+                                            <td class="invert">${i}</td>
+                                            <td class="invert-image"><a href="Store/Single?id=${item.product.id}"><img width="48px" height="48px" src="${item.product.image}" alt=" " class="img-responsive"></a></td>
+                                            <td class="invert">
+                                                <div class="quantity">
+                                                    <div class="quantity-select">
+                                                        <div class="entry value-minus" onclick="minusFromCart(${item.product.id})">&nbsp;</div>
+                                                        <div class="entry value"><span>${item.quantity}</span></div>
+                                                        <div class="entry value-plus active" onclick="addToCart(${item.product.id})">&nbsp;</div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="invert">${item.product.name}</td>
-                                        <td class="invert">${(item.product.price * item.quantity)}</td>
+                                            </td>
+                                            <td class="invert">${item.product.name}</td>
+                                            <td class="invert">${(item.product.price * item.quantity)}</td>
 
-                                    </tr>`
+                                        </tr>`
                 $('#cartCheckout').append(productInCheckout)
 
                 let checkoutBasket = `<li> ${item.product.name} <i> -</i> <span>${item.quantity * item.product.price} </span></li>`
@@ -607,9 +621,7 @@
         }
     </script>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const statusParam = urlParams.get('Status');
-        $(`#${statusParam}`).addClass("purchase-list-page__tab--selected")
+
     </script>
 </body>
 </html>
