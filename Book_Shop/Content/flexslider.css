@@ -81,7 +81,7 @@ html[xmlns] .slides {display: block;}
     position: absolute;
     left: 50%;
     margin-left: 0px;
-    bottom: 0;
+    bottom: 15%;
 }
 .flex-control-nav li {
 	margin: 0 5px;
@@ -89,19 +89,19 @@ html[xmlns] .slides {display: block;}
     zoom: 1;
 }
 .flex-control-paging li a {
-	width: 10px;
-    height: 10px;
-    display: block;
-    background: none;
-    cursor: pointer;
-    text-indent: -9999px;
-    border:2px solid #84C639;
-	border-radius:20px;
+	width: 14px;
+	height: 14px;
+	display: block;
+	background: none;
+	cursor: pointer;
+	text-indent: -9999px;
+	border: 2px solid #9eeb46;
+	border-radius: 20px;
 }
-.flex-control-paging li a.flex-active { 
-	background: #84C639;
-    cursor: default;
-    border: 2px solid #84C639;
+.flex-control-paging li a.flex-active {
+	background: #9eeb46;
+	cursor: default;
+	border: 2px solid #9eeb46;
 }
 .flex-control-thumbs {margin: 5px 0 0; position: static; overflow: hidden;}
 .flex-control-thumbs li {width: 25%; float: left; margin: 0;}

@@ -63,7 +63,7 @@
                                 @if (Session["userId"] != null)
                                 {
                                     <li style="font-size: 16px">@Html.ActionLink("Infofmation", "Info", "Store")</li>
-                                    <li style="font-size: 16px">@Html.ActionLink("Information Order", "PurChase", "Store")</li>
+                                    <li style="font-size: 16px">@Html.ActionLink("Information Order", "Purchase", "Store")</li>
                                     <li style="font-size: 16px">@Html.ActionLink("Log out", "logout", "Users")</li>
                                 }
                                 else
@@ -76,7 +76,6 @@
                 </li>
             </ul>
         </div>
-
         <div class="product_list_header">
             <div class="header__cart">
                 <div class="header__cart-wrap">
@@ -158,25 +157,15 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
                     <ul class="nav navbar-nav nav_1">
-                        <li><a href="">Best selling</a></li>
-                        <li><a href="">Newly released</a></li>
-                        <li class="dropdown mega-dropdown active">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Literary<span class="caret"></span></a>
-                            <div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
-                                <div class="w3ls_vegetables">
-                                    <ul>
-                                        <li><a href="vegetables.html">Domestic</a></li>
-                                        <li><a href="vegetables.html">Foreign</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <li><a href="">Economic books</a></li>
-                        <li><a href="">Children's books</a></li>
-                        <li><a href="">Journal</a></li>
-                        <li><a href="">Textbooks</a></li>
-                        <li><a href="">English book</a></li>
-                        <li><a href="">Specialized books</a></li>
+                        <li><a style="cursor: pointer" onclick="selectCategory('Skill')">Skill books</a></li>
+                        <li><a style="cursor: pointer" onclick="selectCategory('Comic')">Comic books</a></li>
+                        <li><a style="cursor: pointer" onclick="selectCategory('Fiction')">Fiction books</a></li>
+                        <li><a style="cursor: pointer" onclick="selectCategory('Economic')">Economic books</a></li>
+                        <li><a style="cursor: pointer" onclick="selectCategory('Children')">Children's books</a></li>
+                        <li><a style="cursor: pointer" onclick="selectCategory('Journal')">Journal</a></li>
+                        <li><a style="cursor: pointer" onclick="selectCategory('Textbook')">Textbooks</a></li>
+                        <li><a style="cursor: pointer" onclick="selectCategory('English')">English book</a></li>
+                        <li><a style="cursor: pointer" onclick="selectCategory('Skill')">Specialized books</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </nav>
@@ -378,8 +367,8 @@
     <script>
         $(function () {
             $('#example').okzoom({
-                width: 400,
-                height: 400,
+                width: 200,
+                height: 200,
                 border: "1px solid black",
                 shadow: "0 0 5px #000",
                 round: false,
@@ -459,16 +448,15 @@
                                         <div class="header__cart-item-head">
                                             <h5 class="header__cart-item-name">${item.product.name}</h5>
                                             <div class="header__cart-item-price-wrap">
-                                                <span class="header__cart-item-price">${item.product.price}</span>
+                                                <span class="header__cart-item-price">đ${item.product.price}</span>
                                                 <span class="header__cart-item-multiply">x</span>
                                                 <span class="header__cart-item-qnt">${item.quantity}</span>
                                             </div>
                                         </div>
                                         <div class="header__cart-item-body">
                                             <span class="header__cart-item-description">
-                                                Phân loại hàng: Bạc
+                                                Thể loại: ${item.product.category}
                                             </span>
-                                            <span class="header__cart-item-remove">Xóa</span>
                                         </div>
                                     </div>
                                 </li>`
@@ -533,6 +521,13 @@
             })
         }
     </script>
-
+    <script>
+        function selectCategory(category) {
+            const urlParams = new URLSearchParams(window.location.search);
+            //const category = urlParams.get('category');
+            const page = urlParams.get('page');
+            window.location.href = `?category=${category}`
+        }
+    </script>
 </body>
 </html>

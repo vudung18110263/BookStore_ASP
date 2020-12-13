@@ -116,11 +116,10 @@ namespace Book_Shop.Controllers
             return Content("");
 
         }
-        [HttpPost]
         public ActionResult logout()
         {
             Session.Clear();//remove session
-            return RedirectToAction("Login");
+            return Redirect("/");
 
         }
         public ActionResult UplaodImage(string image)
