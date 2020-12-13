@@ -445,3 +445,8 @@
     </div>
     <div class="space"> </div>
 </div>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get('Status');
+    $(`#${myParam}`).addClass('purchase-list-page__tab--selected')
+</script>
