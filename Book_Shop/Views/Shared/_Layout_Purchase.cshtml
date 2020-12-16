@@ -178,7 +178,7 @@
         }
 
         .purchase-list-page__search-bar {
-            padding: 10px 50px 30px;
+            padding: 10px;
             display: flex;
             justify-content: space-between;
         }
@@ -209,8 +209,8 @@
     <!-- header -->
     <div class="agileits_header">
         <div class="w3l_search">
-            <form action="#" method="post">
-                <input type="text" name="Product" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="">
+            <form action="/Store/Search" method="get">
+                <input type="text" name="q" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required>
                 <input type="submit" value=" ">
             </form>
         </div>
@@ -541,43 +541,43 @@
                 totalQuantity += item.quantity
 
                 let product = `<li class="header__cart-item">
-                                                <img src="${item.product.image}" alt="" class="header__cart-img">
-                                                <div class="header__cart-item-info">
-                                                    <div class="header__cart-item-head">
-                                                        <h5 class="header__cart-item-name">${item.product.name}</h5>
-                                                        <div class="header__cart-item-price-wrap">
-                                                            <span class="header__cart-item-price">${item.product.price}</span>
-                                                            <span class="header__cart-item-multiply">x</span>
-                                                            <span class="header__cart-item-qnt">${item.quantity}</span>
+                                                    <img src="${item.product.image}" alt="" class="header__cart-img">
+                                                    <div class="header__cart-item-info">
+                                                        <div class="header__cart-item-head">
+                                                            <h5 class="header__cart-item-name">${item.product.name}</h5>
+                                                            <div class="header__cart-item-price-wrap">
+                                                                <span class="header__cart-item-price">${item.product.price}</span>
+                                                                <span class="header__cart-item-multiply">x</span>
+                                                                <span class="header__cart-item-qnt">${item.quantity}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="header__cart-item-body">
+                                                            <span class="header__cart-item-description">
+                                                                Phân loại hàng: Bạc
+                                                            </span>
+                                                            <span class="header__cart-item-remove">Xóa</span>
                                                         </div>
                                                     </div>
-                                                    <div class="header__cart-item-body">
-                                                        <span class="header__cart-item-description">
-                                                            Phân loại hàng: Bạc
-                                                        </span>
-                                                        <span class="header__cart-item-remove">Xóa</span>
-                                                    </div>
-                                                </div>
-                                            </li>`
+                                                </li>`
                 $('.header__cart-list-item').append(product)
                 $('.header__cart-notice').html(totalQuantity)
 
                 let productInCheckout = `<tr class="rem1">
-                                            <td class="invert">${i}</td>
-                                            <td class="invert-image"><a href="Store/Single?id=${item.product.id}"><img width="48px" height="48px" src="${item.product.image}" alt=" " class="img-responsive"></a></td>
-                                            <td class="invert">
-                                                <div class="quantity">
-                                                    <div class="quantity-select">
-                                                        <div class="entry value-minus" onclick="minusFromCart(${item.product.id})">&nbsp;</div>
-                                                        <div class="entry value"><span>${item.quantity}</span></div>
-                                                        <div class="entry value-plus active" onclick="addToCart(${item.product.id})">&nbsp;</div>
+                                                <td class="invert">${i}</td>
+                                                <td class="invert-image"><a href="Store/Single?id=${item.product.id}"><img width="48px" height="48px" src="${item.product.image}" alt=" " class="img-responsive"></a></td>
+                                                <td class="invert">
+                                                    <div class="quantity">
+                                                        <div class="quantity-select">
+                                                            <div class="entry value-minus" onclick="minusFromCart(${item.product.id})">&nbsp;</div>
+                                                            <div class="entry value"><span>${item.quantity}</span></div>
+                                                            <div class="entry value-plus active" onclick="addToCart(${item.product.id})">&nbsp;</div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td class="invert">${item.product.name}</td>
-                                            <td class="invert">${(item.product.price * item.quantity)}</td>
+                                                </td>
+                                                <td class="invert">${item.product.name}</td>
+                                                <td class="invert">${(item.product.price * item.quantity)}</td>
 
-                                        </tr>`
+                                            </tr>`
                 $('#cartCheckout').append(productInCheckout)
 
                 let checkoutBasket = `<li> ${item.product.name} <i> -</i> <span>${item.quantity * item.product.price} </span></li>`
@@ -621,7 +621,12 @@
         }
     </script>
     <script>
-
+        function selectCategory(category) {
+            const urlParams = new URLSearchParams(window.location.search);
+            //const category = urlParams.get('category');
+            const page = urlParams.get('page');
+            window.location.href = `/Store/Search?category=${category}`
+        }
     </script>
 </body>
 </html>

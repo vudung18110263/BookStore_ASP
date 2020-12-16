@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 namespace Book_Shop.Controllers
@@ -16,7 +18,7 @@ namespace Book_Shop.Controllers
         // GET: Products
         public ActionResult Index(int? page)
         {
-            string category = Request.QueryString["category"];
+            
             // 1. Tham số int? dùng để thể hiện null và kiểu int
             // page có thể có giá trị là null và kiểu int.
 
@@ -26,11 +28,7 @@ namespace Book_Shop.Controllers
             // 3. Tạo truy vấn, lưu ý phải sắp xếp theo trường nào đó, ví dụ OrderBy
             // theo LinkID mới có thể phân trang.
             var links = db.Products.OrderBy(x => x.rate);
-            if (category != null)
-            {
-                links = db.Products.Where(x => x.category == category).OrderBy(x => x.rate);
-            }
-
+           
             // 4. Tạo kích thước trang (pageSize) hay là số Link hiển thị trên 1 trang
             int pageSize = 8;
 
@@ -39,7 +37,8 @@ namespace Book_Shop.Controllers
             int pageNumber = (page ?? 1);
 
             // 5. Trả về các Link được phân trang theo kích thước và số trang.
-            return View(links.ToPagedList(pageNumber, pageSize));
+            var kq = links.ToPagedList(pageNumber, pageSize);
+            return View(kq);
         }
         public ActionResult About()
         {
@@ -97,6 +96,7 @@ namespace Book_Shop.Controllers
         }
         public ActionResult Pay(int userID,string promoID,string ShippingAddress )
         {
+            /* =================================== chua lam phuong thuc thanh toan  */
             string Payment = "cash";
             DateTime myDateTime = DateTime.Now;
             string Date = myDateTime.Date.ToString("yyyy-MM-dd");
@@ -112,6 +112,7 @@ namespace Book_Shop.Controllers
             };
             db.Orders.Add(order);
             db.SaveChanges();
+            /* ======================================= chua tru ma giam gia */
             if (promoID != null)
                 order.promoid = Convert.ToInt32(promoID);
             //tao orderprodcut
@@ -198,7 +199,7 @@ namespace Book_Shop.Controllers
             return Json(cart, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public ActionResult minusFromCart(JsonResult result)
+        public ActionResult MinusFromCart(JsonResult result)
         {
             int productId = int.Parse(result.id);
             List<itemInCart> cart = Session["cart"] as List<itemInCart>;
@@ -206,7 +207,7 @@ namespace Book_Shop.Controllers
             // Lặp qua từng phần tử trong giỏ hàng
             foreach (var cartItem in cart)
             {
-                // Kiểm tra nếu sản phẩm đã ở trong giỏ hàng rồi thì tăng quantity
+                // Kiểm tra nếu sản phẩm đã ở trong giỏ hàng rồi thì trừ quantity
                 if (cartItem.product.id == productId)
                 {
                     //-----------------------------------------
@@ -293,7 +294,7 @@ namespace Book_Shop.Controllers
                         listorderProJoinProducts.Add(orderProJoinProduct);
                         priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity;
                     }
-                    Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL.ToString());
+                    Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL);
                     result.Add(order_Detail);
                     ViewBag.Count = result.Count();
                 }
@@ -304,5 +305,47 @@ namespace Book_Shop.Controllers
                 return View();
             }
         }
+        public static string ConvertToUnSign(string s)
+        {
+            s = s ?? "";
+            Regex regex = new Regex("\\p{IsCombiningDiacriticalMarks}+");
+            string temp = s.Normalize(NormalizationForm.FormD);
+            return regex.Replace(temp, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D').ToLower();
+        }
+        public ActionResult Search(int? page)
+        {
+            string query = ConvertToUnSign(Request.QueryString["q"]);
+
+            string category = Request.QueryString["category"] ?? null;
+            var links = db.Products.AsEnumerable();
+            if (category != null)
+            {
+                links = links.Where(x => x.category == category).OrderBy(x => x.rate);
+            }
+            else
+            {
+                links = links.Where(x => ConvertToUnSign(x.category).Contains(query) || ConvertToUnSign(x.name).Contains(query) || ConvertToUnSign(x.User.fullname).Contains(query)).OrderBy(x => x.rate);
+            }
+            if (page == null) page = 1;
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+
+            return View("Index", links.ToPagedList(pageNumber, pageSize));
+        }
+        public class JsonPromo
+        {
+            public string code { get; set; }
+        }
+        [HttpPost]
+        public ActionResult AddPromoCode(JsonPromo promo)
+        {
+            var promocode = db.PromoCodes.Where(p => p.code == promo.code).First();
+            if(promocode == null)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            return Json(promocode.value, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
