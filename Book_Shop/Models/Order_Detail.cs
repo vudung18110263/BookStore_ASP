@@ -15,12 +15,12 @@ namespace Book_Shop.Models
         public string shippingAddess { get; set; }
         public string payment { get; set; }
         public List<OrderProJoinProduct> orderProduct { get; set; }
-        public string PriceALl { get; set; }
+        public int PriceALl { get; set; }
 
         public string UserMail { get; set; }
         public string UserFullName { get; set; }
         public Order_Detail() { }
-        public Order_Detail(Order orther, List<OrderProJoinProduct> ListOrtherProduct, string priceALl)
+        public Order_Detail(Order orther, List<OrderProJoinProduct> ListOrtherProduct, int priceALl)
         {
             id = orther.id;
             userid = orther.userid;

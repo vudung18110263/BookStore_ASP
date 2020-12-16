@@ -20,57 +20,46 @@
 }
 <!-- //products-breadcrumb -->
 <!-- banner -->
-<style>
-    #avatarInfo {
-        border: 1px solid black;
-    }
-</style>
 @section w3l_banner_nav_right
 {
     <!-- info -->
     <div class="mail">
         <h3>Infomation</h3>
-        <div class="agileinfo_mail_grids">
-            <form>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputAvatar">Avatar</label><br>
-                        <div id="avatarInfo">
-                            <img src="@Html.DisplayFor(model => model.avatar)" width="200" height="200" />
-                        </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputID">ID</label>
-                        <input type="text" value="" class="form-control" id="inputID" placeholder="ID">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputPhone">Phone</label>
-                        <input type="text" value="@Html.DisplayFor(model => model.phone)" class="form-control" id="inputPhone" placeholder="Phone">
-
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputAccount">Account</label>
-                        <input type="text" value="@Html.DisplayFor(model => model.account)" class="form-control" id="inputAccount" placeholder="Account">
-                    </div>
-                    @*<div class="form-group col-md-4">
-                            <label for="inputPassword4">Password</label>
-                            <input type="text" class="form-control" id="inputPassword4" placeholder="Password">
-                        </div>*@
-                    <div class="form-group col-md-7">
-                        <label for="inputPayment">Payment</label>
-                        <img class="img_payment" src="@Model.avatar" style="height: 15px" />
-                        <input type="text" value="@Html.DisplayFor(model => model.paymentId)" class="form-control" id="inputPayment" placeholder="Payment">
-                    </div>
-                    <div class="form-group col-md-7">
-                        <label for="inputEmail4">Email</label>
-                        <input type="text" value="@Html.DisplayFor(model => model.mail)" class="form-control" id="inputEmail4" placeholder="Email">
-                    </div>
-                    <div class="form-group col-md-7">
-                        <label for="inputAddress">Address</label>
-                        <input type="text" value="@Html.DisplayFor(model => model.address)" class="form-control" id="inputAddress" placeholder="Address">
-                    </div>
+        <div class="agileinfo_mail_grids" >
+            <div class="col-md-4" style="padding: 20px 0 0 60px">
+                <div id="avatarInfo">
+                    <img src="@Html.DisplayFor(model => model.avatar)" style="border: 10px solid #808080; border-radius: 50%;" width="200" height="200" />
                 </div>
-            </form>
+            </div>
+            <div class="col-md-8 agileinfo_mail_grid_right" style="padding: 20px 0 10px 35px">
+                <form action="#" method="post">
+                    <div class="form-group col-md-5">
+                        <label for="inputID">ID</label>
+                        <input disabled type="text" value="" class="form-control" id="inputID" placeholder="ID" style="margin-top: 7px;border-radius: 3px;">
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="inputPhone">Phone</label>
+                        <input disabled type="text" value="@Html.DisplayFor(model => model.phone)" class="form-control" id="inputPhone" placeholder="Phone" style="margin-top: 7px;border-radius: 3px;">
+                    </div>
+                    <div class="form-group col-md-10">
+                        <label for="inputAccount">Account</label>
+                        <input disabled type="text" value="@Html.DisplayFor(model => model.account)" class="form-control" id="inputAccount" placeholder="Account" style="margin-top: 7px;border-radius: 3px;">
+                    </div>
+                    <div class="form-group col-md-10">
+                        <label for="inputPayment">Payment</label>
+                        <img class="img_payment" src="@Model.avatar" style="height: 15px; border-radius: 50%;" />
+                        <input disabled type="text" value="@Html.DisplayFor(model => model.paymentId)" class="form-control" id="inputPayment" placeholder="Payment" style="margin-top: 7px;border-radius: 3px;">
+                    </div>
+                    <div class="form-group col-md-10">
+                        <label for="inputEmail4">Email</label>
+                        <input disabled type="text" value="@Html.DisplayFor(model => model.mail)" class="form-control" id="inputEmail4" placeholder="Email" style="margin-top: 7px;border-radius: 3px;">
+                    </div>
+                    <div class="form-group col-md-10">
+                        <label for="inputAddress">Address</label>
+                        <input disabled type="text" value="@Html.DisplayFor(model => model.address)" class="form-control" id="inputAddress" placeholder="Address" style="margin-top: 7px;border-radius: 3px;">
+                    </div>
+                </form>
+            </div>
             <div class="clearfix"> </div>
         </div>
     </div>

@@ -107,14 +107,25 @@
 <!-- top-brands -->
 <div class="top-brands">
     <div class="container">
-        <h3> @(Request.QueryString["category"] == null ? "Hot Offers" : Model[0].category)</h3>
+        @if (Request.QueryString["category"] == null && Request.QueryString["q"] == null)
+        {
+            <h3>Hot Offers</h3>
+        }
+        else if (Request.QueryString["q"] == null)
+        {
+            <h3>@Model[0].category</h3>
+        }
+        else if (Request.QueryString["category"] == null)
+        {
+            <h3>Search result</h3>
+        }
         <div class="agile_top_brands_grids">
             @foreach (var item in Model)
             {
                 <div class="col-md-3 top_brand_left" style="margin: 12px 0">
                     <div class="hover14 column ">
                         <div class="agile_top_brand_left_grid hover-tien">
-                            @if (Request.QueryString["category"] == null)
+                            @if (Request.QueryString["category"] == null && Request.QueryString["q"] == null)
                             {
                                 <div style="z-index: 1" class="tag"><img src="~/images/tag.png" alt=" " class="img-responsive" /></div>
                             }
@@ -124,7 +135,7 @@
                                         <div class="snipcart-thumb">
                                             <a href="/Store/Single?id=@(item.id)"><img class="img-tien" src="@(item.image)" width="150" height="150" /></a>
                                             <p style="font-size: 1.1rem">@item.name</p>
-                                            <span style="font-size: 1.2rem">đ@(item.price)</span><h4 style="display: inline"><span style="color: red">đ@(item.price*1.5)</span></h4>
+                                            <span style="font-size: 1.2rem">đ@(@String.Format("{0:n0}", item.price))</span><h4 style="display: inline"><span style="color: red">đ@(@String.Format("{0:n0}", item.price*1.5))</span></h4>
                                         </div>
                                         <div class="snipcart-details top_brand_home_details">
                                             <input type="button" onclick="addToCart(@item.id)" value="Add to cart" class="button" />
@@ -139,7 +150,7 @@
             <br />
             <div class="clearfix"> </div>
             <div style="float: right">
-                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, category = Request.QueryString["category"] }))
+                @Html.PagedListPager(Model, page => Url.Action("Search", new { page, category = Request.QueryString["category"], q = Request.QueryString["q"] }))
             </div>
         </div>
     </div>
