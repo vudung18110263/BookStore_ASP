@@ -27,6 +27,7 @@ namespace Book_Shop.Models
         public System.DateTime date { get; set; }
         public string shippingAddess { get; set; }
         public string payment { get; set; }
+        public string shippingType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order_Product> Order_Product { get; set; }

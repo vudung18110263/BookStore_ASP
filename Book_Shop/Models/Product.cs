@@ -52,4 +52,3 @@ namespace Book_Shop.Models
         public virtual User User { get; set; }
     }
 }
-
