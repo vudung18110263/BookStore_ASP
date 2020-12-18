@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Book_StoreModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Book_StoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="id" />
@@ -23,6 +23,7 @@
           <Property Name="date" Type="date" Nullable="false" />
           <Property Name="shippingAddess" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="payment" Type="nvarchar" MaxLength="50" />
+          <Property Name="shippingType" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Order_Product">
           <Key>
@@ -156,7 +157,7 @@
         <!--Errors Found During Generation:
 warning 6035: The relationship 'PK_Product_Category' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="PK_Product_Category" />-->
-        <EntityContainer Name="Book_StoreModel2StoreContainer">
+        <EntityContainer Name="Book_StoreModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Product" EntityType="Self.Order_Product" Schema="dbo" store:Type="Tables" />
@@ -189,10 +190,11 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Book_StoreModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Book_StoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="id" />
@@ -211,6 +213,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
           <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="shippingAddess" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="payment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="shippingType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Order_Product" Relationship="Self.FK_Order_Product_Order" FromRole="Order" ToRole="Order_Product" />
           <NavigationProperty Name="PromoCode" Relationship="Self.FK_Order_PromoCode" FromRole="Order" ToRole="PromoCode" />
           <NavigationProperty Name="User" Relationship="Self.FK_Order_Users" FromRole="Order" ToRole="Users" />
@@ -276,10 +279,10 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
           <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="paymentId" Type="Int32" />
           <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Users" FromRole="Users" ToRole="Order" />
           <NavigationProperty Name="Payment" Relationship="Self.FK_Users_Payment" FromRole="Users" ToRole="Payment" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Product_Users" FromRole="Users" ToRole="Product" />
-          <Property Name="fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Order_Product_Order">
           <End Role="Order" Type="Self.Order" Multiplicity="1" />
@@ -391,9 +394,9 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Book_StoreModel2StoreContainer" CdmEntityContainer="Book_StoreEntities2">
+        <EntityContainerMapping StorageEntityContainer="Book_StoreModelStoreContainer" CdmEntityContainer="Book_StoreEntities2">
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="Book_StoreModel2.Category">
+            <EntityTypeMapping TypeName="Book_StoreModel.Category">
               <MappingFragment StoreEntitySet="Category">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -401,7 +404,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="Book_StoreModel2.Order">
+            <EntityTypeMapping TypeName="Book_StoreModel.Order">
               <MappingFragment StoreEntitySet="Order">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
@@ -410,11 +413,12 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="shippingAddess" ColumnName="shippingAddess" />
                 <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="shippingType" ColumnName="shippingType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Order_Product">
-            <EntityTypeMapping TypeName="Book_StoreModel2.Order_Product">
+            <EntityTypeMapping TypeName="Book_StoreModel.Order_Product">
               <MappingFragment StoreEntitySet="Order_Product">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="orderId" ColumnName="orderId" />
@@ -425,7 +429,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Payments">
-            <EntityTypeMapping TypeName="Book_StoreModel2.Payment">
+            <EntityTypeMapping TypeName="Book_StoreModel.Payment">
               <MappingFragment StoreEntitySet="Payment">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -435,7 +439,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="Book_StoreModel2.Product">
+            <EntityTypeMapping TypeName="Book_StoreModel.Product">
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -450,7 +454,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PromoCodes">
-            <EntityTypeMapping TypeName="Book_StoreModel2.PromoCode">
+            <EntityTypeMapping TypeName="Book_StoreModel.PromoCode">
               <MappingFragment StoreEntitySet="PromoCode">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -460,9 +464,8 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="Book_StoreModel2.User">
+            <EntityTypeMapping TypeName="Book_StoreModel.User">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="fullname" ColumnName="fullname" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="account" ColumnName="account" />
                 <ScalarProperty Name="pass_word" ColumnName="pass_word" />
@@ -472,6 +475,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
                 <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="paymentId" ColumnName="paymentId" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
