@@ -5,45 +5,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
-
 <h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>PromoCode</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.name)
-        </dt>
+<div class="admin__layout">
+    <table class="admin__table">
+        <thead>
+            <tr class="admin__header">
+                <th style="text-align:center">Name</th>
+                <th style="text-align:center">Value</th>
+                <th style="text-align:center">Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(model => model.name)</td>
+                <td>@Html.DisplayFor(model => model.value)</td>
+                <td>@Html.DisplayFor(model => model.code)</td>
+            </tr>
+        </tbody>
+    </table>
 
-        <dd>
-            @Html.DisplayFor(model => model.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.value)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.value)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.code)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.code)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm("Delete", "PromoCodes", FormMethod.Post, new { style = "margin-left: auto" }))
+    {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="pagination">
+            <a href="/PromoCodes/Index" class="action-link">Back to list</a>
+            <a href="/PromoCodes/Index" class="action-link"><input type="submit" value="Delete" /></a>
         </div>
     }
 </div>

@@ -7,46 +7,44 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.quantity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Order.status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Product.name)
-        </th>
-        <th></th>
-    </tr>
+<br />
+<a href="/Products/Create" class="action-link">Create new order product</a>
+<div class="admin__layout">
+    <table class="admin__table">
+        <thead class="">
+            <tr class="admin__header">
+                <th style="text-align:center">Quantity</th>
+                <th style="text-align:center">Price</th>
+                <th style="text-align:center">Status</th>
+                <th style="text-align:center">Name</th>
+                <th class="action-cell" style="text-align:center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.quantity)</td>
+                    <td>@Html.DisplayFor(modelItem => item.price)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Order.status)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Product.name)</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "action-link" })
+                        @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "action-link" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "action-link" })
+                    </td>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.quantity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Order.status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Product.name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
+                </tr>
 
-</table>
+            }
+        </tbody>
+    </table>
+    @*<div class="pagination">
+            <!-- Thêm mã phân trang -->
+            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { page }))
+            <!-- Kết thúc -->
+        </div>*@
+</div>
