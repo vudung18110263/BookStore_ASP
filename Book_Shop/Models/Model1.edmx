@@ -23,6 +23,7 @@
           <Property Name="date" Type="date" Nullable="false" />
           <Property Name="shippingAddess" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="payment" Type="nvarchar" MaxLength="50" />
+          <Property Name="shippingType" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Order_Product">
           <Key>
@@ -166,6 +167,7 @@
         <!--Errors Found During Generation:
 warning 6035: The relationship 'PK_Product_Category' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="PK_Product_Category" />-->
+<<<<<<< HEAD
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -197,6 +199,8 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+=======
+>>>>>>> 219349b063b3e593c2559acc595fab9af7ffb2a6
         <EntityContainer Name="Book_StoreModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
@@ -254,6 +258,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
           <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="shippingAddess" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="payment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="shippingType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Order_Product" Relationship="Self.FK_Order_Product_Order" FromRole="Order" ToRole="Order_Product" />
           <NavigationProperty Name="PromoCode" Relationship="Self.FK_Order_PromoCode" FromRole="Order" ToRole="PromoCode" />
           <NavigationProperty Name="User" Relationship="Self.FK_Order_Users" FromRole="Order" ToRole="Users" />
@@ -494,6 +499,7 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="shippingAddess" ColumnName="shippingAddess" />
                 <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="shippingType" ColumnName="shippingType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

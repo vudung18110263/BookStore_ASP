@@ -4,6 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
+<<<<<<< HEAD
       <Diagram DiagramId="b3e206cd516b42bda667302ab1731530" Name="Diagram1">
         <EntityTypeShape EntityType="Book_StoreModel.Category" Width="1.5" PointX="7.75" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Book_StoreModel.Order" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
@@ -12,6 +13,15 @@
         <EntityTypeShape EntityType="Book_StoreModel.Product" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Book_StoreModel.PromoCode" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Book_StoreModel.sysdiagram" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+=======
+      <Diagram DiagramId="e35d3e510da8463aab5389b4727803ab" Name="Diagram1">
+        <EntityTypeShape EntityType="Book_StoreModel.Category" Width="1.5" PointX="5.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Book_StoreModel.Order" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Book_StoreModel.Order_Product" Width="1.5" PointX="7.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Book_StoreModel.Payment" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Book_StoreModel.Product" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="Book_StoreModel.PromoCode" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+>>>>>>> 219349b063b3e593c2559acc595fab9af7ffb2a6
         <EntityTypeShape EntityType="Book_StoreModel.User" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <AssociationConnector Association="Book_StoreModel.FK_Order_Product_Order" ManuallyRouted="false" />
         <AssociationConnector Association="Book_StoreModel.FK_Order_PromoCode" ManuallyRouted="false" />

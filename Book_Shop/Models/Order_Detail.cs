@@ -14,13 +14,15 @@ namespace Book_Shop.Models
         public System.DateTime date { get; set; }
         public string shippingAddess { get; set; }
         public string payment { get; set; }
+        public int? promoValue { get; set; }
         public List<OrderProJoinProduct> orderProduct { get; set; }
-        public string PriceALl { get; set; }
+        public int PriceALl { get; set; }
+        public string shippingType { get; set; }
 
         public string UserMail { get; set; }
         public string UserFullName { get; set; }
         public Order_Detail() { }
-        public Order_Detail(Order orther, List<OrderProJoinProduct> ListOrtherProduct, string priceALl)
+        public Order_Detail(Order orther, List<OrderProJoinProduct> ListOrtherProduct, int priceALl)
         {
             id = orther.id;
             userid = orther.userid;
@@ -34,6 +36,14 @@ namespace Book_Shop.Models
             var user = db.Users.Where(x => x.id == orther.userid).FirstOrDefault();
             UserFullName = user.fullname;
             UserMail = user.mail;
+            var promo = db.PromoCodes.Where(x => x.id == promoid).FirstOrDefault();
+            if (promo != null)
+            {
+                promoValue = promo.value;
+            }
+            else
+                promoValue = 0;
+            shippingType = orther.shippingType;
         }
 
     }

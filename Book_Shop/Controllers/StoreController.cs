@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 namespace Book_Shop.Controllers
@@ -16,7 +18,7 @@ namespace Book_Shop.Controllers
         // GET: Products
         public ActionResult Index(int? page)
         {
-            string category = Request.QueryString["category"];
+            
             // 1. Tham số int? dùng để thể hiện null và kiểu int
             // page có thể có giá trị là null và kiểu int.
 
@@ -26,11 +28,7 @@ namespace Book_Shop.Controllers
             // 3. Tạo truy vấn, lưu ý phải sắp xếp theo trường nào đó, ví dụ OrderBy
             // theo LinkID mới có thể phân trang.
             var links = db.Products.OrderBy(x => x.rate);
-            if (category != null)
-            {
-                links = db.Products.Where(x => x.category == category).OrderBy(x => x.rate);
-            }
-
+           
             // 4. Tạo kích thước trang (pageSize) hay là số Link hiển thị trên 1 trang
             int pageSize = 8;
 
@@ -39,7 +37,8 @@ namespace Book_Shop.Controllers
             int pageNumber = (page ?? 1);
 
             // 5. Trả về các Link được phân trang theo kích thước và số trang.
-            return View(links.ToPagedList(pageNumber, pageSize));
+            var kq = links.ToPagedList(pageNumber, pageSize);
+            return View(kq);
         }
         public ActionResult About()
         {
@@ -90,28 +89,32 @@ namespace Book_Shop.Controllers
             int Userid = int.Parse(temp);
             string promoCode = form["Promode"].ToString();
             string ShipAddress = form["Address"];
+            string typeShipping = form["shippgingOption"];
             var promode = db.PromoCodes.Where(x => x.code == promoCode).FirstOrDefault();
             if (promode != null)
                 idPromo = (promode.id).ToString();
-            return RedirectToAction("Pay", "Store", new { userID = Userid, promoID = idPromo, ShippingAddress= ShipAddress });
+            return RedirectToAction("Pay", "Store", new { userID = Userid, promoID = idPromo, ShippingAddress= ShipAddress , optionShip = typeShipping });
         }
-        public ActionResult Pay(int userID,string promoID,string ShippingAddress )
+        public ActionResult Pay(int userID,string promoID,string ShippingAddress ,string optionShip)
         {
+            /* =================================== chua lam phuong thuc thanh toan  */
             string Payment = "cash";
             DateTime myDateTime = DateTime.Now;
             string Date = myDateTime.Date.ToString("yyyy-MM-dd");
             //tao order
-            
+
             Order order = new Order()
             {
                 userid = userID,
                 status = "PENDING",
                 date = myDateTime.Date,
                 shippingAddess = ShippingAddress,
-                payment = Payment
+                payment = Payment,
+                shippingType = optionShip
             };
             db.Orders.Add(order);
             db.SaveChanges();
+            /* ======================================= chua tru ma giam gia */
             if (promoID != null)
                 order.promoid = Convert.ToInt32(promoID);
             //tao orderprodcut
@@ -131,9 +134,83 @@ namespace Book_Shop.Controllers
             }
             return RedirectToAction("Index","Store");
         }
-        public ActionResult Detail()
+        public ActionResult Detail(int? idOrder)
         {
-            return View();
+            var order = db.Orders.Where(x => x.id == idOrder).FirstOrDefault();
+            if (order == null)
+                return RedirectToAction("Purchase");
+
+            //lấy ra danh sách product trong database
+            List<Order_Product> listOrderPro = new List<Order_Product>();
+            listOrderPro = db.Order_Product.Where(x => x.orderId == order.id).ToList();
+
+            int priceALL=0;
+            List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
+            OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();
+            Product product = new Product();
+            foreach (var itemOrderPro in listOrderPro)
+            {
+                product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
+                orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
+                listorderProJoinProducts.Add(orderProJoinProduct);
+                priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity+Convert.ToInt32(order.shippingType) * 15000;
+            }
+            Order_Detail order_Detail = new Order_Detail(order, listorderProJoinProducts, priceALL);
+
+            return View(order_Detail);
+        }
+        public ActionResult Purchase(string Status)
+        {
+            if (Session["userId"] == null)//kiem tra dang nhập ?
+                return View();
+            //lấy userid trên session
+            var temp = Session["userId"].ToString();
+            int idUser = int.Parse(temp);
+
+            if (Status == null)
+                Status = "ALL";
+            try
+            {
+                //khởi tạo các đối tượng
+                List<Order> listorder = new List<Order>();//danh sách các order
+                int priceALL;
+                if (Status == "ALL")
+                {
+                    listorder = db.Orders.Where(x => x.userid == idUser).ToList();
+                }
+                else
+                {
+                    listorder = db.Orders.Where(x => x.status == Status && x.userid == idUser).ToList();
+                }
+                List<Order_Detail> result = new List<Order_Detail>();//orderDetail khởi tạo trong folder model
+
+                foreach (var item in listorder)
+                {
+                    //khởi tạo các temp
+                    List<Order_Product> listOrderPro = new List<Order_Product>();
+                    List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
+                    OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();
+                    Product product = new Product();
+                    listOrderPro = db.Order_Product.Where(x => x.orderId == item.id).ToList();
+                    priceALL = 0;
+
+                    foreach (var itemOrderPro in listOrderPro)
+                    {
+                        product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
+                        orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
+                        listorderProJoinProducts.Add(orderProJoinProduct);
+                        priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(item.shippingType)*15000;
+                    }
+                    Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL);
+                    result.Add(order_Detail);
+                    ViewBag.Count = result.Count();
+                }
+                return View(result);
+            }
+            catch
+            {
+                return View();
+            }
         }
         public ActionResult Products(int? page)
         {
@@ -198,7 +275,7 @@ namespace Book_Shop.Controllers
             return Json(cart, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public ActionResult minusFromCart(JsonResult result)
+        public ActionResult MinusFromCart(JsonResult result)
         {
             int productId = int.Parse(result.id);
             List<itemInCart> cart = Session["cart"] as List<itemInCart>;
@@ -206,7 +283,7 @@ namespace Book_Shop.Controllers
             // Lặp qua từng phần tử trong giỏ hàng
             foreach (var cartItem in cart)
             {
-                // Kiểm tra nếu sản phẩm đã ở trong giỏ hàng rồi thì tăng quantity
+                // Kiểm tra nếu sản phẩm đã ở trong giỏ hàng rồi thì trừ quantity
                 if (cartItem.product.id == productId)
                 {
                     //-----------------------------------------
@@ -251,58 +328,47 @@ namespace Book_Shop.Controllers
             var user = db.Users.Where(x => x.id == id).FirstOrDefault();
             return View("Checkout",user);
         }
-        public ActionResult Purchase(string Status)
+        public static string ConvertToUnSign(string s)
         {
-            if (Session["userId"] == null)//kiem tra dang nhập ?
-                return View();
-            //lấy userid trên session
-            var temp = Session["userId"].ToString();
-            int idUser = int.Parse(temp);
-
-            if (Status == null)
-                Status = "ALL";
-            try
-            {
-                //khởi tạo các đối tượng
-                List<Order> listorder = new List<Order>();//danh sách các order
-                int priceALL;
-                if (Status == "ALL")
-                {
-                    listorder = db.Orders.Where(x => x.userid == idUser).ToList();
-                }
-                else
-                {
-                    listorder = db.Orders.Where(x => x.status == Status && x.userid == idUser).ToList();
-                }
-                List<Order_Detail> result = new List<Order_Detail>();//orderDetail khởi tạo trong folder model
-
-                foreach (var item in listorder)
-                {
-                    //khởi tạo các temp
-                    List<Order_Product> listOrderPro = new List<Order_Product>();
-                    List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
-                    OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();
-                    Product product = new Product();
-                    listOrderPro = db.Order_Product.Where(x => x.orderId == item.id).ToList();
-                    priceALL = 0;
-
-                    foreach (var itemOrderPro in listOrderPro)
-                    {
-                        product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
-                        orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
-                        listorderProJoinProducts.Add(orderProJoinProduct);
-                        priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity;
-                    }
-                    Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL.ToString());
-                    result.Add(order_Detail);
-                    ViewBag.Count = result.Count();
-                }
-                return View(result);
-            }
-            catch
-            {
-                return View();
-            }
+            s = s ?? "";
+            Regex regex = new Regex("\\p{IsCombiningDiacriticalMarks}+");
+            string temp = s.Normalize(NormalizationForm.FormD);
+            return regex.Replace(temp, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D').ToLower();
         }
+        public ActionResult Search(int? page)
+        {
+            string query = ConvertToUnSign(Request.QueryString["q"]);
+
+            string category = Request.QueryString["category"] ?? null;
+            var links = db.Products.AsEnumerable();
+            if (category != null)
+            {
+                links = links.Where(x => x.category == category).OrderBy(x => x.rate);
+            }
+            else
+            {
+                links = links.Where(x => ConvertToUnSign(x.category).Contains(query) || ConvertToUnSign(x.name).Contains(query) || ConvertToUnSign(x.User.fullname).Contains(query)).OrderBy(x => x.rate);
+            }
+            if (page == null) page = 1;
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+
+            return View("Index", links.ToPagedList(pageNumber, pageSize));
+        }
+        public class JsonPromo
+        {
+            public string code { get; set; }
+        }
+        [HttpPost]
+        public ActionResult AddPromoCode(JsonPromo promo)
+        {
+            var promocode = db.PromoCodes.Where(p => p.code == promo.code).First();
+            if(promocode == null)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            return Json(promocode.value, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

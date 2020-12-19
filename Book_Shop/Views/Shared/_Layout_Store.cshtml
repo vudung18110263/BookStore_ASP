@@ -45,8 +45,8 @@
     <!-- header -->
     <div class="agileits_header">
         <div class="w3l_search">
-            <form action="#" method="post">
-                <input type="text" name="Product" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="">
+            <form action="/Store/Search" method="get">
+                <input type="text" name="q" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required>
                 <input type="submit" value=" ">
             </form>
         </div>
@@ -448,7 +448,7 @@
                                         <div class="header__cart-item-head">
                                             <h5 class="header__cart-item-name">${item.product.name}</h5>
                                             <div class="header__cart-item-price-wrap">
-                                                <span class="header__cart-item-price">đ${item.product.price}</span>
+                                                <span class="header__cart-item-price">đ${thousandFormat(item.product.price)}</span>
                                                 <span class="header__cart-item-multiply">x</span>
                                                 <span class="header__cart-item-qnt">${item.quantity}</span>
                                             </div>
@@ -476,17 +476,19 @@
                                     </div>
                                 </td>
                                 <td class="invert">${item.product.name}</td>
-                                <td class="invert">${(item.product.price * item.quantity)}</td>
+                                <td class="invert">đ${thousandFormat(item.product.price * item.quantity)}</td>
 
                             </tr>`
                 $('#cartCheckout').append(productInCheckout)
 
-                let checkoutBasket = `<li> ${item.product.name} <i> -</i> <span>${item.quantity * item.product.price} </span></li>`
+                let checkoutBasket = `<li> ${item.product.name} <i> -</i> <span>đ${thousandFormat(item.quantity * item.product.price)} </span></li>`
                 $('#checkoutBasket').append(checkoutBasket)
                 totalAmount += item.quantity * item.product.price
                 ++i
             })
-            let checkoutTotal = `<li> Total <i> -</i><span id="checkoutTotal">${totalAmount}</span></li>`
+            let checkoutPromo = `<li> Promo code <i> -</i><span id="checkoutPromo">- đ0</span></li>`
+            $('#checkoutBasket').append(checkoutPromo)
+            let checkoutTotal = `<li> Total <i> -</i><span id="checkoutTotal">đ${thousandFormat(totalAmount)}</span></li>`
             $('#checkoutBasket').append(checkoutTotal)
         }
         $(document).ready(function () {
@@ -526,8 +528,30 @@
             const urlParams = new URLSearchParams(window.location.search);
             //const category = urlParams.get('category');
             const page = urlParams.get('page');
-            window.location.href = `?category=${category}`
+            window.location.href = `/Store/Search?category=${category}`
         }
+    </script>
+    <script>
+        function addPromoCode() {
+            var code = $('#promoCode').val()
+            if(!code) return 0
+            fetch('/Store/AddPromoCode', {
+                'method': 'post',
+                'body': JSON.stringify({
+                    'code': code
+                }),
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json()).then(data => {
+                var oldPromoCodeValue = parseInt(removeThousanFormat($("#checkoutPromo").text()).split('').slice(3).join(''))
+                $("#checkoutPromo").html("- đ" + thousandFormat(data) )
+                var checkoutTotalValue = parseInt(removeThousanFormat($("#checkoutTotal").text()).split('').slice(1).join('')) - data + oldPromoCodeValue
+                $("#checkoutTotal").html('đ' + thousandFormat(checkoutTotalValue) )
+            })
+        }
+        function thousandFormat(number) { return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') }
+        function removeThousanFormat(string) { return string.replace(/,/g, '') }
     </script>
 </body>
 </html>
