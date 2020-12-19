@@ -7,61 +7,32 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>Order</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.status)
-        </dt>
+<div class="admin__layout">
+    <table class="admin__table">
+        <thead>
+            <tr class="admin__header">
+                <th style="text-align:center">Status</th>
+                <th style="text-align:center">Date</th>
+                <th style="text-align:center">Address</th>
+                <th style="text-align:center">Payment</th>
+                <th style="text-align:center">Name</th>
+                <th style="text-align:center">Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(model => model.status)</td>
+                <td>@Html.DisplayFor(model => model.date)</td>
+                <td>@Html.DisplayFor(model => model.shippingAddess)</td>
+                <td>@Html.DisplayFor(model => model.payment)</td>
+                <td>@Html.DisplayFor(model => model.PromoCode.name)</td>
+                <td>@Html.DisplayFor(model => model.User.account)</td>
 
-        <dd>
-            @Html.DisplayFor(model => model.status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.shippingAddess)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.shippingAddess)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.payment)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.payment)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PromoCode.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PromoCode.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.account)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.account)
-        </dd>
-
-    </dl>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <a href="/Orders/Edit/@Model.id" class="action-link">Edit</a>
+        <a href="/Orders/Index" class="action-link">Back to list</a>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

@@ -6,46 +6,28 @@
 }
 
 <h2>Details</h2>
+<div class="admin__layout">
+    <table class="admin__table">
+        <thead>
+            <tr class="admin__header">
+                <th style="text-align:center">Quantity</th>
+                <th style="text-align:center">Price</th>
+                <th style="text-align:center">Status</th>
+                <th style="text-align:center">Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(model => model.quantity)</td>
+                <td>@Html.DisplayFor(model => model.price)</td>
+                <td>@Html.DisplayFor(model => model.Order.status)</td>
+                <td>@Html.DisplayFor(model => model.Product.name)</td>
 
-<div>
-    <h4>Order_Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.quantity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.quantity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.price)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Order.status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Product.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Product.name)
-        </dd>
-
-    </dl>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <a href="/Order_Product/Edit/@Model.id" class="action-link">Edit</a>
+        <a href="/Order_Product/Index" class="action-link">Back to list</a>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
