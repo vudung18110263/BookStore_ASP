@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Book_Shop.Models
 {
-    public class Order_Detail
+    public class Order_Detail : IComparable<Order_Detail>
     {
         private Book_StoreEntities2 db = new Book_StoreEntities2();
         public int id { get; set; }
@@ -21,6 +21,10 @@ namespace Book_Shop.Models
 
         public string UserMail { get; set; }
         public string UserFullName { get; set; }
+        public int CompareTo(Order_Detail obj) // OverRight phương thức CompareTo của Interface IComparable
+        {
+            return obj.date.CompareTo(this.date); //Phương thức CompareTo này có sẵn với các kiểu cơ bản như Integer, String.
+        }
         public Order_Detail() { }
         public Order_Detail(Order orther, List<OrderProJoinProduct> ListOrtherProduct, int priceALl)
         {
