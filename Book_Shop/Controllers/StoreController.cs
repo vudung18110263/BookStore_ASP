@@ -205,6 +205,7 @@ namespace Book_Shop.Controllers
                     result.Add(order_Detail);
                     ViewBag.Count = result.Count();
                 }
+                result.Sort();
                 return View(result);
             }
             catch
@@ -236,6 +237,14 @@ namespace Book_Shop.Controllers
             int id = int.Parse(temp);
             var user = db.Users.Where(x => x.id == id).FirstOrDefault();
             return View(user);
+        }
+        [HttpPost]
+        public ActionResult CancelOrder(int? idOrder)
+        {
+            var order = db.Orders.Where(x => x.id == idOrder).FirstOrDefault();
+            order.status = "CANCELED";
+            db.SaveChanges();
+            return RedirectToAction("Purchase", "Store", new { Status = "CANCELED" });
         }
         public partial class itemInCart
         {
