@@ -167,7 +167,6 @@
         <!--Errors Found During Generation:
 warning 6035: The relationship 'PK_Product_Category' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="PK_Product_Category" />-->
-<<<<<<< HEAD
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -199,8 +198,6 @@ warning 6035: The relationship 'PK_Product_Category' has columns that are not pa
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-=======
->>>>>>> 219349b063b3e593c2559acc595fab9af7ffb2a6
         <EntityContainer Name="Book_StoreModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />

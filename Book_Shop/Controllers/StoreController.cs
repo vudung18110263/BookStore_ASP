@@ -1,7 +1,9 @@
 ﻿using Book_Shop.Models;
+using Newtonsoft.Json.Linq;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -77,6 +79,7 @@ namespace Book_Shop.Controllers
             }
             return notification;
         }
+        //thanh toan
         public ActionResult CheckoutProdcut(FormCollection form)
         {
             List<itemInCart> cart = Session["cart"] as List<itemInCart>;
@@ -84,56 +87,245 @@ namespace Book_Shop.Controllers
             if (Notification != "")
                 return RedirectToAction("Checkout2", "Store", new { notification = Notification });
 
-            string idPromo="";
+            string idPromo=null;
             var temp = Session["userId"].ToString();
             int Userid = int.Parse(temp);
+            string payOption = form["payOption"];
             string promoCode = form["Promode"].ToString();
             string ShipAddress = form["Address"];
             string typeShipping = form["shippgingOption"];
-            var promode = db.PromoCodes.Where(x => x.code == promoCode).FirstOrDefault();
-            if (promode != null)
-                idPromo = (promode.id).ToString();
-            return RedirectToAction("Pay", "Store", new { userID = Userid, promoID = idPromo, ShippingAddress= ShipAddress , optionShip = typeShipping });
-        }
-        public ActionResult Pay(int userID,string promoID,string ShippingAddress ,string optionShip)
-        {
-            /* =================================== chua lam phuong thuc thanh toan  */
-            string Payment = "cash";
+
             DateTime myDateTime = DateTime.Now;
             string Date = myDateTime.Date.ToString("yyyy-MM-dd");
-            //tao order
-
             Order order = new Order()
             {
-                userid = userID,
-                status = "PENDING",
+                userid = Userid,
+                status = "dang xu ly", //don hàng chưa được xử lý
                 date = myDateTime.Date,
-                shippingAddess = ShippingAddress,
-                payment = Payment,
-                shippingType = optionShip
+                shippingAddess = ShipAddress,
+                shippingType = typeShipping
             };
             db.Orders.Add(order);
-            db.SaveChanges();
+
             /* ======================================= chua tru ma giam gia */
-            if (promoID != null)
-                order.promoid = Convert.ToInt32(promoID);
-            //tao orderprodcut
-            List<itemInCart> cart = Session["cart"] as List<itemInCart>;
-            foreach(var item in cart)
+            if(promoCode!=null)
             {
-                Order_Product order_Product = new Order_Product { 
-                    orderId = order.id, 
-                    productId = item.product.id, 
-                    price = (int)item.product.price, 
-                    quantity = item.quantity,
-                };
-                item.product.stock -= item.quantity;
-                db.Entry(item.product).State = EntityState.Modified;
-                db.Order_Product.Add(order_Product);
-                db.SaveChanges();
+                var promode = db.PromoCodes.Where(x => x.code == promoCode).FirstOrDefault();
+                if (promode != null)
+                    idPromo = (promode.id).ToString();
+                if (idPromo != null)
+                    order.promoid = Convert.ToInt32(idPromo);
             }
-            return RedirectToAction("Index","Store");
+            //tao orderprodcut
+            db.SaveChanges();
+
+            if (payOption == "2")
+            {
+                return RedirectToAction("payMomo","Store",order);
+            }
+            return RedirectToAction("Pay", "Store", order) ;
         }
+        public ActionResult Pay(Order order)
+        {
+            try
+            {
+                order.payment = "cash";
+                order.status = "PENDING";//chờ xác nhận
+                List<itemInCart> cart = Session["cart"] as List<itemInCart>;
+                foreach (var item in cart)
+                {
+                    Order_Product order_Product = new Order_Product
+                    {
+                        orderId = order.id,
+                        productId = item.product.id,
+                        price = (int)item.product.price,
+                        quantity = item.quantity,
+                    };
+                    item.product.stock -= item.quantity;
+                    db.Entry(item.product).State = EntityState.Modified;
+                    db.Order_Product.Add(order_Product);
+                    db.SaveChanges();
+                }
+            }
+            catch { }
+
+            return RedirectToAction("Purchase", "Store", new { Status = "PENDING" });
+        }
+        public ActionResult payMomo(Order order)
+        {
+            List<itemInCart> cart = Session["cart"] as List<itemInCart>;
+            string endpoint = ConfigurationManager.AppSettings["endpoint"].ToString();
+            string partnerCode = ConfigurationManager.AppSettings["partnerCode"].ToString();
+            string accessKey = ConfigurationManager.AppSettings["accessKey"].ToString();
+            string serectkey = ConfigurationManager.AppSettings["serectkey"].ToString();
+            string orderInfo = ConfigurationManager.AppSettings["orderInfo"].ToString();
+            string returnUrl = ConfigurationManager.AppSettings["returnUrl"].ToString();
+            string notifyurl = ConfigurationManager.AppSettings["notifyurl"].ToString();
+
+            //tim gia ma khuyen mai
+            int promoValue;
+            var promo = db.PromoCodes.Where(x => x.id == order.promoid).FirstOrDefault();
+            if (promo != null)
+            {
+                promoValue = promo.value ?? default(int);
+            }
+            else
+                promoValue = 0;
+
+            int amountTemp = Convert.ToInt32(cart.Sum(n => ((n.product.price) * (n.quantity))+Convert.ToInt32(order.shippingType)*15000 - promoValue));
+            string amount;
+            if (amountTemp >= 0)
+                amount = amountTemp.ToString();
+            else
+                amount = "0";
+            string orderid = order.id.ToString();
+            string requestId = Guid.NewGuid().ToString();
+            string extraData = "";
+
+            //Before sign HMAC SHA256 signature
+            string rawHash = "partnerCode=" +
+                partnerCode + "&accessKey=" +
+                accessKey + "&requestId=" +
+                requestId + "&amount=" +
+                amount + "&orderId=" +
+                orderid + "&orderInfo=" +
+                orderInfo + "&returnUrl=" +
+                returnUrl + "&notifyUrl=" +
+                notifyurl + "&extraData=" +
+                extraData;
+
+            //log.Debug("rawHash = " + rawHash);
+
+            MoMoSecurity crypto = new MoMoSecurity();
+            string signature = crypto.signSHA256(rawHash, serectkey);
+            //log.Debug("Signature = " + signature);
+
+            ////build body json request
+            JObject message = new JObject
+            {
+                { "partnerCode", partnerCode },
+                { "accessKey", accessKey },
+                { "requestId", requestId },
+                { "amount", amount },
+                { "orderId", orderid },
+                { "orderInfo", orderInfo },
+                { "returnUrl", returnUrl },
+                { "notifyUrl", notifyurl },
+                { "extraData", extraData },
+                { "requestType", "captureMoMoWallet" },
+                { "signature", signature }
+
+            };
+            //log.Debug("Json request to MoMo: " + message.ToString());
+            string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
+
+            JObject jmessage = JObject.Parse(responseFromMomo);
+            return Redirect(jmessage.GetValue("payUrl").ToString());
+
+        }
+        public ActionResult ReturnUrl()
+        {
+            string param = Request.QueryString.ToString().Substring(0, Request.QueryString.ToString().IndexOf("signature") - 1);
+            param = Server.UrlDecode(param);
+            MoMoSecurity crypto = new MoMoSecurity();
+            string serectkey = ConfigurationManager.AppSettings["serectkey"].ToString();
+            string signature = crypto.signSHA256(param, serectkey);
+            ViewBag.message = "";
+            int a = Convert.ToInt32(Request["orderId"]);
+            var order = db.Orders.Where(x => x.id == a).FirstOrDefault();
+            if (signature!= Request["signature"].ToString())
+            {
+                ViewBag.message = "thông tin không hợp lệ";
+                order.payment = "momo";
+                order.status = "thanh Toan that bai";
+                return View();
+            }
+            if(!Request.QueryString["errorCode"].Equals("0"))
+            {
+                order.payment = "momo";
+                order.status = "thanh Toan that bai";
+                ViewBag.message="thanh toán thất bại";
+                return View();
+            }
+            else
+            {
+                order.payment = "momo";
+                order.status = "PENDING";
+                List<itemInCart> cart = Session["cart"] as List<itemInCart>;
+                foreach (var item in cart)
+                {
+                    Order_Product order_Product = new Order_Product
+                    {
+                        orderId = order.id,
+                        productId = item.product.id,
+                        price = (int)item.product.price,
+                        quantity = item.quantity,
+                    };
+                    item.product.stock -= item.quantity;
+                    db.Entry(item.product).State = EntityState.Modified;
+                    db.Order_Product.Add(order_Product);
+                    db.SaveChanges();
+                }
+                ViewBag.message = "thanh toán thành công";
+                
+            }
+            return RedirectToAction("Purchase", "Store", new { Status = "PENDING" });
+        }
+        [HttpPost]
+        public ActionResult NotifyUrl()
+        {
+            string param = "";
+            param = "partner_code=" + Request["partner_code"] +
+                "&access_key=" + Request["access_key"] +
+                "&amount=" + Request["amount"] +
+                "&order_id=" + Request["order_id"] +
+                "&order_info=" + Request["order_info"] +
+                "&order_type=" + Request["order_type"] +
+                "&transaction_id" + Request["transaction_id"] +
+                "&message=" + Request["message"] +
+                "&response_time=" + Request["response_time"] +
+                "&status_code=" + Request["status_code"];
+
+            param = Server.UrlDecode(param);
+            MoMoSecurity crypto = new MoMoSecurity();
+            string serectkey = ConfigurationManager.AppSettings["serectkey"].ToString();
+            string signature = crypto.signSHA256(param, serectkey);
+
+            var order = db.Orders.Where(x => x.id == Convert.ToInt32(Request["order_id"])).FirstOrDefault();
+
+            if (signature != Request["signature"].ToString())
+            {
+                
+            }
+            string status_code = Request["status_code"].ToString();
+            if(status_code!="0")
+            {
+                order.payment = "momo";
+                order.status = "thanh Toan that bai";//chờ xác nhận
+            }
+            else
+            {
+                order.payment = "momo";
+                order.status = "PENDING";//chờ xác nhận
+                List<itemInCart> cart = Session["cart"] as List<itemInCart>;
+                foreach (var item in cart)
+                {
+                    Order_Product order_Product = new Order_Product
+                    {
+                        orderId = order.id,
+                        productId = item.product.id,
+                        price = (int)item.product.price,
+                        quantity = item.quantity,
+                    };
+                    item.product.stock -= item.quantity;
+                    db.Entry(item.product).State = EntityState.Modified;
+                    db.Order_Product.Add(order_Product);
+                    db.SaveChanges();
+                }
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Detail(int? idOrder)
         {
             var order = db.Orders.Where(x => x.id == idOrder).FirstOrDefault();
