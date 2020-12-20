@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-﻿// T4 code generation is enabled for model 'D:\BookStore_ASP\Book_Shop\Models\Model1.edmx'. 
-=======
 ﻿// T4 code generation is enabled for model 'C:\Users\X\Desktop\BookStore_ASP\Book_Shop\Models\Model1.edmx'. 
->>>>>>> 219349b063b3e593c2559acc595fab9af7ffb2a6
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

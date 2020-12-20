@@ -51,8 +51,5 @@ namespace Book_Shop.Models
         public virtual ICollection<Order_Product> Order_Product { get; set; }
         public virtual User User { get; set; }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 219349b063b3e593c2559acc595fab9af7ffb2a6
+

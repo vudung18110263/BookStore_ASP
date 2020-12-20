@@ -36,7 +36,6 @@ namespace Book_Shop.Models
             shippingAddess = orther.shippingAddess;
             payment = orther.payment;
             orderProduct = ListOrtherProduct;
-            PriceALl = priceALl;
             var user = db.Users.Where(x => x.id == orther.userid).FirstOrDefault();
             UserFullName = user.fullname;
             UserMail = user.mail;
@@ -47,6 +46,7 @@ namespace Book_Shop.Models
             }
             else
                 promoValue = 0;
+            PriceALl = priceALl-Convert.ToInt32(promoValue);
             shippingType = orther.shippingType;
         }
 
