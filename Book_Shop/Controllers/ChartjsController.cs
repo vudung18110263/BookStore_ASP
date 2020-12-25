@@ -1,16 +1,15 @@
 ﻿using Book_Shop.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity;
 
 namespace Book_Shop.Controllers
 {
-    public class ChartController : Controller
+    public class ChartjsController : Controller
     {
+        // GET: Chartjs
         private Book_StoreEntities2 db = new Book_StoreEntities2();
         // GET: Chart
         public ActionResult Index(int? month)

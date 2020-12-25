@@ -353,6 +353,7 @@ namespace Book_Shop.Controllers
         }
         public ActionResult Purchase(string Status)
         {
+            var a = db.Orders.ToList();
             if (Session["userId"] == null)//kiem tra dang nhập ?
                 return View();
             //lấy userid trên session
@@ -368,7 +369,7 @@ namespace Book_Shop.Controllers
                 int priceALL;
                 if (Status == "ALL")
                 {
-                    listorder = db.Orders.Where(x => x.userid == idUser).ToList();
+                    listorder = db.Orders.ToList();
                 }
                 else
                 {
