@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
@@ -20,7 +21,7 @@ namespace Book_Shop.Controllers
         // GET: Products
         public ActionResult Index(int? page)
         {
-            
+
             // 1. Tham số int? dùng để thể hiện null và kiểu int
             // page có thể có giá trị là null và kiểu int.
 
@@ -30,7 +31,7 @@ namespace Book_Shop.Controllers
             // 3. Tạo truy vấn, lưu ý phải sắp xếp theo trường nào đó, ví dụ OrderBy
             // theo LinkID mới có thể phân trang.
             var links = db.Products.OrderBy(x => x.rate);
-           
+
             // 4. Tạo kích thước trang (pageSize) hay là số Link hiển thị trên 1 trang
             int pageSize = 8;
 
@@ -68,7 +69,7 @@ namespace Book_Shop.Controllers
         //} 
         public string CheckProdcutQuantity(List<itemInCart> cart)
         {
-            string notification ="";
+            string notification = "";
             foreach (var item in cart)
             {
                 var product = db.Products.Where(x => x.id == item.product.id).FirstOrDefault();
@@ -87,14 +88,30 @@ namespace Book_Shop.Controllers
             if (Notification != "")
                 return RedirectToAction("Checkout2", "Store", new { notification = Notification });
 
+<<<<<<< HEAD
             string idPromo=null;
+=======
+            string idPromo = "";
+>>>>>>> 26535ef9833c6302f1d02dcbb242b72f5ae0bb53
             var temp = Session["userId"].ToString();
             int Userid = int.Parse(temp);
             string payOption = form["payOption"];
             string promoCode = form["Promode"].ToString();
             string ShipAddress = form["Address"];
             string typeShipping = form["shippgingOption"];
+<<<<<<< HEAD
 
+=======
+            var promode = db.PromoCodes.Where(x => x.code == promoCode).FirstOrDefault();
+            if (promode != null)
+                idPromo = (promode.id).ToString();
+            return RedirectToAction("Pay", "Store", new { userID = Userid, promoID = idPromo, ShippingAddress = ShipAddress, optionShip = typeShipping });
+        }
+        public ActionResult Pay(int userID, string promoID, string ShippingAddress, string optionShip)
+        {
+            /* =================================== chua lam phuong thuc thanh toan  */
+            string Payment = "cash";
+>>>>>>> 26535ef9833c6302f1d02dcbb242b72f5ae0bb53
             DateTime myDateTime = DateTime.Now;
             string Date = myDateTime.Date.ToString("yyyy-MM-dd");
             Order order = new Order()
@@ -154,6 +171,7 @@ namespace Book_Shop.Controllers
         public ActionResult payMomo(Order order)
         {
             List<itemInCart> cart = Session["cart"] as List<itemInCart>;
+<<<<<<< HEAD
             string endpoint = ConfigurationManager.AppSettings["endpoint"].ToString();
             string partnerCode = ConfigurationManager.AppSettings["partnerCode"].ToString();
             string accessKey = ConfigurationManager.AppSettings["accessKey"].ToString();
@@ -324,6 +342,23 @@ namespace Book_Shop.Controllers
                 }
             }
             return Json("", JsonRequestBehavior.AllowGet);
+=======
+            foreach (var item in cart)
+            {
+                Order_Product order_Product = new Order_Product
+                {
+                    orderId = order.id,
+                    productId = item.product.id,
+                    price = (int)item.product.price,
+                    quantity = item.quantity,
+                };
+                item.product.stock -= item.quantity;
+                db.Entry(item.product).State = EntityState.Modified;
+                db.Order_Product.Add(order_Product);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index", "Store");
+>>>>>>> 26535ef9833c6302f1d02dcbb242b72f5ae0bb53
         }
 
         public ActionResult Detail(int? idOrder)
@@ -336,7 +371,7 @@ namespace Book_Shop.Controllers
             List<Order_Product> listOrderPro = new List<Order_Product>();
             listOrderPro = db.Order_Product.Where(x => x.orderId == order.id).ToList();
 
-            int priceALL=0;
+            int priceALL = 0;
             List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
             OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();
             Product product = new Product();
@@ -345,7 +380,7 @@ namespace Book_Shop.Controllers
                 product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
                 orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
                 listorderProJoinProducts.Add(orderProJoinProduct);
-                priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity+Convert.ToInt32(order.shippingType) * 15000;
+                priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(order.shippingType) * 15000;
             }
             Order_Detail order_Detail = new Order_Detail(order, listorderProJoinProducts, priceALL);
 
@@ -392,7 +427,7 @@ namespace Book_Shop.Controllers
                         product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
                         orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
                         listorderProJoinProducts.Add(orderProJoinProduct);
-                        priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(item.shippingType)*15000;
+                        priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(item.shippingType) * 15000;
                     }
                     Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL);
                     result.Add(order_Detail);
@@ -471,7 +506,7 @@ namespace Book_Shop.Controllers
             }
             // Nếu chưa có thì thêm vào giỏ hàng
             Product product = db.Products.SingleOrDefault(n => n.id == productId);
-            product = new Product(product);
+            product = new Product();
             itemInCart item = new itemInCart() { product = product, quantity = 1 };
             cart.Add(item);
             return Json(cart, JsonRequestBehavior.AllowGet);
@@ -516,7 +551,7 @@ namespace Book_Shop.Controllers
             var user = db.Users.Where(x => x.id == id).FirstOrDefault();
             return View(user);
         }
-        public ActionResult Checkout2(string notification )
+        public ActionResult Checkout2(string notification)
         {
             ViewBag.KQ = MvcHtmlString.Create(notification.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None).Aggregate((a, b) => a + "<br />" + b));
             ViewBag.Userid = true;
@@ -528,7 +563,7 @@ namespace Book_Shop.Controllers
             var temp = Session["userId"].ToString();
             int id = int.Parse(temp);
             var user = db.Users.Where(x => x.id == id).FirstOrDefault();
-            return View("Checkout",user);
+            return View("Checkout", user);
         }
         public static string ConvertToUnSign(string s)
         {
@@ -565,12 +600,105 @@ namespace Book_Shop.Controllers
         public ActionResult AddPromoCode(JsonPromo promo)
         {
             var promocode = db.PromoCodes.Where(p => p.code == promo.code).First();
-            if(promocode == null)
+            if (promocode == null)
             {
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             return Json(promocode.value, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult MyShop()
+        {
+            int id = Convert.ToInt32(Session["userId"]);
+            List<Product> listproduct = new List<Product>();
+            foreach (var item in db.Products)
+            {
+                if (item.authorId == id)
+                {
+                    listproduct.Add(item);
+                }
+            }
+            return View(listproduct);
+        }
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(Product product)
+        {
+            var Image = Request.Files["image"];
+            var path = Server.MapPath("~/imageProduct/" + product.name + ".PNG");
+            Image.SaveAs(path);
+            product.image = "/imageProduct/" + product.name + ".PNG";
+            product.authorId = Convert.ToInt32(Session["userId"]);
+            db.Products.Add(product);
+            db.SaveChanges();
+            return Redirect("MyShop");
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Product product = db.Products.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
 
+        // POST: Products/Delete/5
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Product product = db.Products.Find(id);
+            db.Products.Remove(product);
+            db.SaveChanges();
+            return RedirectToAction("MyShop", "Store");
+        }
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Product product = db.Products.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+        [HttpPost]
+        public ActionResult Edit(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                var image = Request.Files["image"];
+                var path = Server.MapPath("~/imageProduct/" + product.name + ".png");
+                image.SaveAs(path);
+                product.image = "/imageProduct/" + product.name + ".png";
+                product.authorId = Convert.ToInt32(Session["userId"]);
+                db.Entry(product).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("MyShop", "Store");
+            }
+            return View(product);
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Product product = db.Products.SingleOrDefault(p => p.id == id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
     }
 }
