@@ -88,30 +88,16 @@ namespace Book_Shop.Controllers
             if (Notification != "")
                 return RedirectToAction("Checkout2", "Store", new { notification = Notification });
 
-<<<<<<< HEAD
+
             string idPromo=null;
-=======
-            string idPromo = "";
->>>>>>> 26535ef9833c6302f1d02dcbb242b72f5ae0bb53
+
             var temp = Session["userId"].ToString();
             int Userid = int.Parse(temp);
             string payOption = form["payOption"];
             string promoCode = form["Promode"].ToString();
             string ShipAddress = form["Address"];
             string typeShipping = form["shippgingOption"];
-<<<<<<< HEAD
 
-=======
-            var promode = db.PromoCodes.Where(x => x.code == promoCode).FirstOrDefault();
-            if (promode != null)
-                idPromo = (promode.id).ToString();
-            return RedirectToAction("Pay", "Store", new { userID = Userid, promoID = idPromo, ShippingAddress = ShipAddress, optionShip = typeShipping });
-        }
-        public ActionResult Pay(int userID, string promoID, string ShippingAddress, string optionShip)
-        {
-            /* =================================== chua lam phuong thuc thanh toan  */
-            string Payment = "cash";
->>>>>>> 26535ef9833c6302f1d02dcbb242b72f5ae0bb53
             DateTime myDateTime = DateTime.Now;
             string Date = myDateTime.Date.ToString("yyyy-MM-dd");
             Order order = new Order()
@@ -171,7 +157,7 @@ namespace Book_Shop.Controllers
         public ActionResult payMomo(Order order)
         {
             List<itemInCart> cart = Session["cart"] as List<itemInCart>;
-<<<<<<< HEAD
+
             string endpoint = ConfigurationManager.AppSettings["endpoint"].ToString();
             string partnerCode = ConfigurationManager.AppSettings["partnerCode"].ToString();
             string accessKey = ConfigurationManager.AppSettings["accessKey"].ToString();
@@ -342,23 +328,6 @@ namespace Book_Shop.Controllers
                 }
             }
             return Json("", JsonRequestBehavior.AllowGet);
-=======
-            foreach (var item in cart)
-            {
-                Order_Product order_Product = new Order_Product
-                {
-                    orderId = order.id,
-                    productId = item.product.id,
-                    price = (int)item.product.price,
-                    quantity = item.quantity,
-                };
-                item.product.stock -= item.quantity;
-                db.Entry(item.product).State = EntityState.Modified;
-                db.Order_Product.Add(order_Product);
-                db.SaveChanges();
-            }
-            return RedirectToAction("Index", "Store");
->>>>>>> 26535ef9833c6302f1d02dcbb242b72f5ae0bb53
         }
 
         public ActionResult Detail(int? idOrder)
