@@ -12,7 +12,7 @@ namespace Book_Shop.Controllers
         // GET: Chartjs
         private Book_StoreEntities2 db = new Book_StoreEntities2();
         // GET: Chart
-        public ActionResult Index(int? month)
+        public ActionResult Index(int? month, FormCollection form)
         {
             var ordersForBar = db.Order_Product.Where(o => o.Order.status == "DONE").ToList();
             var categoriesForBar = new List<string>();
@@ -55,6 +55,52 @@ namespace Book_Shop.Controllers
             ViewBag.lineLabels = stringLabelsForLine.ToArray();
             ViewBag.lineData = dataForLine.ToArray();
 
+            //biểu đồ cột theo tháng
+            string yearBar;
+            yearBar = form["year"];
+            if (yearBar == null)
+            {
+                yearBar = now.Year.ToString();
+            }
+            var ordersForBar1 = db.Orders.Where(x => x.date.Year.ToString() == yearBar).ToList();
+            var datamonthForBar = new List<int>();
+            var monthForBar = new List<string>();
+            for (int i = 1; i < 13; i++)
+            {
+                monthForBar.Add(i.ToString());
+                datamonthForBar.Add(0);
+            }
+            int priceALL;
+
+            List<Order_Detail> result = new List<Order_Detail>();//orderDetail khởi tạo trong folder model
+            foreach (var item in ordersForBar1)
+            {
+                //khởi tạo các temp
+                List<Order_Product> listOrderPro = new List<Order_Product>();
+                List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
+                OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();
+                Product product = new Product();
+                listOrderPro = db.Order_Product.Where(x => x.orderId == item.id).ToList();
+                priceALL = 0;
+
+                foreach (var itemOrderPro in listOrderPro)
+                {
+                    product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
+                    orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
+                    listorderProJoinProducts.Add(orderProJoinProduct);
+                    priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(item.shippingType) * 15000;
+                }
+                Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL);
+                result.Add(order_Detail);
+            }
+            foreach (var order in result)
+            {
+                int index = monthForBar.IndexOf(order.date.Month.ToString());
+                datamonthForBar[index] += order.PriceALl;
+            }
+            ViewBag.monthBarLabels = monthForBar.ToArray();
+            ViewBag.monthBarData = datamonthForBar.ToArray();
+            ViewBag.year = yearBar;
             return View();
         }
     }
