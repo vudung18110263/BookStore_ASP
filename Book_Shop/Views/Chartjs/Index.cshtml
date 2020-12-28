@@ -3,6 +3,9 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    int now =Convert.ToInt32(DateTime.Now.Year);
+}
 <style>
     .chart__layout {
         width: 100%;
@@ -59,10 +62,30 @@
 </div>
 <div class="chart__layout">
     <div class="chart__wrapper">
-        <canvas class="chart__size" id="barcanvas"></canvas>
+        <canvas class="chart__size" id="barmonthcanvas"></canvas>
 
-        <button type="button" onclick="backsale()">Back</button>
-        <button type="button" onclick="nextsale()">Next</button>
+        <form action="/Chartjs/Index" method="post" class="creditly-card-form agileinfo_form">
+            <section class="creditly-wrapper wthree, w3_agileits_wrapper">
+                <div class="information-wrapper">
+                    <div class="first-row form-group">
+                        <div class="w3_agileits_card_number_grids">
+                            <div class="w3_agileits_card_number_grid_left">
+                            </div>
+                            <div class="w3_agileits_card_number_grid_right">
+                                <div class="controls">
+                                    <label class="control-label">chọn năm: </label>
+                                    <input class="form-control" name="year" value="@ViewBag.year" type="number" placeholder="@ViewBag.year">
+                                </div>
+                            </div>
+                            <div class="clear"> </div>
+                        </div>
+                    </div>
+                    <div class="checkout-right-basket">
+                        <button type="submit" class="glyphicon glyphicon-chevron-right">submit<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </section>
+        </form>
     </div>
     <div class="chart__wrapper">
         <canvas class="chart__size" id="linecanvas"></canvas>
@@ -80,6 +103,7 @@
     // Chuyển thành array ["Economic", "English"]
     let barLabels = @Html.Raw(Json.Encode(ViewData["barLabels"]));
     let barData = @Html.Raw(Json.Encode(ViewData["barData"]));
+    console.log(barData)
     const mappedBarData = barData.map((data, index) => {
         const randomLineColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}`
         return {
@@ -110,6 +134,9 @@
         }]
     };
     /* ------------- */
+    let monthBarLabels = @Html.Raw(Json.Encode(ViewData["monthBarLabels"]));
+    let monthBarData = @Html.Raw(Json.Encode(ViewData["monthBarData"]));
+    /* ------------- */
 
     window.onload = function () {
         const ctxBar = document.getElementById("barcanvas").getContext("2d");
@@ -121,6 +148,61 @@
         window.myLine = new Chart(ctxLine, {
             type: 'line',
             data: lineChartData,
+        });
+        const ctxmonthBar = document.getElementById("barmonthcanvas").getContext("2d");
+        window.myBar = new Chart(ctxmonthBar, {
+            type: 'bar',
+            data: {
+                labels: monthBarLabels,
+                datasets: [{
+                    label: '',
+                    data: monthBarData,
+                    //backgroundColor:'green',
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(255, 99, 132, 0.6)'
+                    ],
+                    borderWidth: 1,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000'
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Danh thu theo tháng',
+                    fontSize: 25
+                },
+                legend: {
+                    display: false,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
         });
     }
 </script>
