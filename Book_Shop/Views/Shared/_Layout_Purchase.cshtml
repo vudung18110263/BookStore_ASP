@@ -12,6 +12,12 @@
     <script type="application/x-javascript">
         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
                function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!---->
+    <script src="~/Scripts/script.js"></script>
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/admintable.css" rel="stylesheet" />
     <!-- //for-mobile-apps -->
     <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Content/style.css" rel="stylesheet" type="text/css" media="all" />
@@ -162,15 +168,16 @@
             color: black;
             display: block;
             width: 100% !important;
-            height: 100%;   
+            height: 100%;
             padding: 1rem 0;
             text-align: center;
         }
 
-        .purchase-list-page__tab-label:focus, .purchase-list-page__tab-label:hover {
-            color: #ee4d2d;
-            width: inherit;
-        }
+            .purchase-list-page__tab-label:focus, .purchase-list-page__tab-label:hover {
+                color: #ee4d2d;
+                width: inherit;
+            }
+
         .purchase-list-page__tab:focus, .purchase-list-page__tab:visited, .purchase-list-page__tab:hover {
             border-bottom: 2px solid #ee4d2d;
             color: #ee4d2d;

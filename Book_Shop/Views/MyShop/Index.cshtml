@@ -21,13 +21,17 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
-                <button class="btn btn-primary  btn-sm rounded-0 "><i class="fa fa-building" aria-hidden="true"></i>Quản lý đơn hàng</button>
+                <button class="btn btn-primary  btn-sm rounded-0 ">
+                    <i class="fa fa-edit"></i>@Html.ActionLink(" Order Management", "OrderManagement", new { }, new { Style = "color:White;" })
+                </button>
                 <h1 class="mt-4">QUẢN LÝ SẢN PHẨM</h1>
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table mr-1"></i>
                         Danh sách sản phẩm
-                        <button class="btn btn-primary  btn-sm rounded-0 "><i class="fa fa-edit"></i>@Html.ActionLink("Create", "Create", new { }, new { Style = "color:White;" })</button>
+                        <button class="btn btn-primary  btn-sm rounded-0 ">
+                        <i class="fa fa-edit"></i>@Html.ActionLink("Create", "Create", new { }, new { Style = "color:White;" })
+                        </button>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

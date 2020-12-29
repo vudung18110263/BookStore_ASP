@@ -1,0 +1,521 @@
+﻿
+@{
+    ViewBag.Title = "Purchase";
+    Layout = "~/Views/Shared/_Layout_Purchase.cshtml";
+}
+@model List<Book_Shop.Models.Order_Detail>
+@*----------------- Add model ----------------------*@
+@using PagedList.Mvc;
+@*--------------------------------------------------*@
+
+<style>
+    strong {
+        font-weight: bold;
+    }
+
+    p {
+        margin: 0.75rem 0 0;
+    }
+
+    h1 {
+        font-size: 0.75rem;
+        font-weight: normal;
+        margin: 0;
+        padding: 0;
+    }
+
+    input,
+    button {
+        border: 0 none;
+        outline: 0 none;
+    }
+
+    button {
+        background-color: #666;
+        color: #fff;
+    }
+
+        button:hover,
+        button:focus {
+            background-color: #555;
+        }
+
+    .product-frame,
+    .basket-module,
+    .basket-labels,
+    .basket-product {
+        width: 100%;
+    }
+
+    input,
+    button,
+    .basket,
+    .basket-module,
+    .basket-labels,
+    .item,
+    .price,
+    .quantity,
+    .subtotal,
+    .basket-product,
+    .product-image,
+    .product-details {
+        float: left;
+    }
+
+        .price:before,
+        .subtotal:before,
+        .subtotal-value:before,
+        .total-value:before,
+        .promo-value:before {
+            content: 'đ';
+        }
+
+    .hide {
+        display: none;
+    }
+
+    main {
+        clear: both;
+        font-size: 0.75rem;
+        margin: 0 auto;
+        overflow: hidden;
+        padding: 1rem 0;
+        width: 960px;
+    }
+
+    .basket,
+    aside {
+        padding: 0 1rem;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .basket {
+        width: 100%;
+    }
+
+    .basket-module {
+        color: #111;
+        margin: 8px 0;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.3125rem;
+    }
+
+    .promo-code-field {
+        border: 1px solid #ccc;
+        padding: 0.5rem;
+        text-transform: uppercase;
+        transition: all 0.2s linear;
+        width: 91%;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -o-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    }
+
+        .promo-code-field:hover,
+        .promo-code-field:focus {
+            border: 1px solid #999;
+        }
+
+    .promo-code-cta {
+        border-radius: 4px;
+        font-size: 1rem;
+        margin-left: 0.625rem;
+        padding: 0.6rem 1rem;
+        background: #FA1818;
+    }
+
+    .basket-labels {
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        margin-top: 4px;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        color: #111;
+        display: inline-block;
+        padding: 0.625rem 0;
+    }
+
+        li.price:before,
+        li.subtotal:before {
+            content: '';
+        }
+
+    .item {
+        width: 40%;
+        display: flex;
+        align-items: center;
+    }
+
+    .price,
+    .quantity,
+    .subtotal {
+        width: 10%;
+    }
+
+    .subtotal {
+        text-align: right;
+    }
+
+    .remove {
+        float: right;
+        text-align: right;
+        margin-top: 18px;
+        width: 45%;
+        position: absolute;
+        bottom: 24px;
+        right: 0;
+    }
+
+    .makerelative {
+        position: relative;
+        padding: 24px;
+        margin: 14px 0;
+    }
+
+    .remove a, .remove button {
+        background-color: transparent;
+        color: #777;
+        float: none;
+        text-decoration: underline;
+        text-transform: uppercase;
+    }
+
+    .item-heading {
+        padding-left: 4.375rem;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .basket-product {
+        border-bottom: 1px solid #ccc;
+        position: relative;
+    }
+
+    .product-image {
+        width: 35%;
+    }
+
+    .product-details {
+        width: 65%;
+    }
+
+    .product-frame {
+        /*border: 1px solid #aaa;*/
+    }
+
+    .product-details {
+        padding: 0 1.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+        .product-details :not(:first-child) {
+            font-weight: normal;
+            font-size: 1rem;
+        }
+
+    .quantity-field {
+        background-color: #ccc;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        font-size: 0.625rem;
+        padding: 2px;
+        width: 3.75rem;
+    }
+
+    aside {
+        float: right;
+        position: relative;
+        width: 30%;
+    }
+
+    .summary {
+        background-color: #eee;
+        border: 1px solid #aaa;
+        padding: 1rem;
+        position: fixed;
+        width: 250px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .summary-total-items {
+        color: #666;
+        font-size: 0.875rem;
+        text-align: center;
+    }
+
+    .summary-subtotal,
+    .summary-total {
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        clear: both;
+        margin: 1rem 0;
+        overflow: hidden;
+        padding: 0.5rem 0;
+    }
+
+    .subtotal-title,
+    .subtotal-value,
+    .total-title,
+    .total-value,
+    .promo-title,
+    .promo-value {
+        color: #111;
+        float: left;
+        width: 50%;
+    }
+
+    .summary-promo {
+        -webkit-transition: all .3s ease;
+        -moz-transition: all .3s ease;
+        -o-transition: all .3s ease;
+        transition: all .3s ease;
+    }
+
+    .promo-title {
+        float: left;
+        width: 70%;
+    }
+
+    .promo-value {
+        color: #8B0000;
+        float: left;
+        text-align: right;
+        width: 30%;
+    }
+
+    .summary-delivery {
+        padding-bottom: 3rem;
+    }
+
+    .subtotal-value,
+    .total-value {
+        text-align: right;
+    }
+
+    .total-title {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .summary-checkout {
+        display: block;
+    }
+
+    .checkout-cta {
+        display: block;
+        float: none;
+        font-size: 0.75rem;
+        text-align: center;
+        text-transform: uppercase;
+        padding: 0.625rem 0;
+        width: 100%;
+    }
+
+    .summary-delivery-selection {
+        background-color: #ccc;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        display: block;
+        font-size: 0.625rem;
+        height: 34px;
+        width: 100%;
+    }
+
+    .boder-2 {
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .Order_nb {
+        float: right;
+        width: 15%;
+        font-weight: 600;
+        border-bottom: 2px solid rgba(250, 24, 24, 0.3);
+        padding: 0.5rem 0;
+    }
+
+    .tongsotien {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #FA1818;
+        margin-left: 8px;
+    }
+
+    .container2 {
+        background: #f7f7f7;
+        width: 100% !important;
+    }
+
+    .statusbar {
+        background: white;
+    }
+
+    .basket-labels2 {
+        background: white;
+    }
+
+    .price2 {
+        color: #FA1818;
+    }
+
+    .itemlayout {
+        display: flex;
+        align-items: center;
+        padding-bottom: 8px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid #eee;
+    }
+</style>
+
+<div class="container2">
+    <div class="container">
+        <div class="space">
+            <button class="btn btn-primary  btn-sm rounded-0 ">
+                <i class="fa fa-edit"></i>@Html.ActionLink(" Products Management", "Index", new { }, new { Style = "color:White;" })
+            </button>
+        </div>
+        <br />
+        <br />
+        <div class="purchase-list-page__wrapper boder-2 statusbar" role="main">
+            <div class="purchase-list-page__tabs-container">
+                <div class="purchase-list-page__tab" id="PENDING">
+                    <a class="purchase-list-page__tab-label" href="/MyShop/OrderManagement?Status=PENDING">Confirming</a>
+                </div>
+                <div class="purchase-list-page__tab" id="GETTING">
+                    <a class="purchase-list-page__tab-label" href="/MyShop/OrderManagement?Status=GETTING">Getting</a>
+                </div>
+                <div class="purchase-list-page__tab" id="CANCELED">
+                    <a class="purchase-list-page__tab-label" href="/MyShop/OrderManagement?Status=CANCELED">Canceled</a>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="basket">
+                <div class="basket-module">
+                    <input id="promo-code" type="text" name="promo-code" maxlength="5" class="promo-code-field" placeholder="Search product">
+                    <button class="promo-code-cta">Search</button>
+                </div>
+                <div class="basket-labels basket-labels2">
+                    <ul>
+                        <li class="item item-heading">Item</li>
+                        <li class="price">Price</li>
+                        <li class="quantity">Quantity</li>
+                        <li class="quantity">Status</li>
+                        <li class="quantity">Transport</li>
+                    </ul>
+                </div>
+                <div class="basket-product ">
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="row makerelative basket-labels2">
+                                @foreach (var item2 in item.orderProduct)
+                                {
+                                    <div> cái này là tên của shop, sửa cho đẹp sau, sửa cho hết vòng lặp sau: @item2.author</div>
+                                    <div class="col-xs-12 itemlayout">
+                                        <div class="item">
+                                            <div class="product-image">
+                                                <img src="@(item2.imageProduct)" width="120" height="166" alt="Placholder Image 2" class="product-frame">
+                                            </div>
+                                            <div class="product-details">
+                                                <p>@item2.nameProduct</p>
+                                                <p>Thể loại: <span>@item2.categoryProduct</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="price price2">@(@String.Format("{0:n0}", item2.price))</div>
+                                        <div class="quantity">
+                                            <span class="">x@(item2.quantity)</span>
+                                        </div>
+                                        <div class="quantity">
+                                            <span class="">@item.status</span>
+                                        </div>
+                                        <div class="quantity">
+                                            <span class="">Giao hàng tiết kiệm</span>
+                                        </div>
+
+                                    </div>
+                                }
+                                <section class="creditly-wrapper wthree, w3_agileits_wrapper">
+                                    <div class="information-wrapper">
+                                        <div class="checkout-right-basket">
+                                            <a href="/Store/Detail?idOrder=@(item.id)" data-toggle="modal">View order details <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                                            @if (item.status == "PENDING")
+                                            {
+                                                <a href="/MyShop/ConfirmOrder?idOrder=@(item.id)" data-toggle="modal"> Confirm <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                                                <a href="#alo" data-toggle="modal">Cancel order <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> </a>
+                                            }
+                                            else if (item.status == "GETTING")
+                                            {
+                                                <a href="/MyShop/ComfirmGetedOrder?idOrder=@(item.id)" data-toggle="modal"> Confirm Geted <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                                                <a href="#alo" data-toggle="modal">Cancel order <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> </a>
+                                            }
+                                            <!-- ############################ cancel ############################## -->
+                                            <div class="modal fade" id="alo">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <form method="post" action="/MyShop/CancelOrder?idOrder=@item.id">
+                                                            <div class="modal-body">
+                                                                <div id="err_login"></div>
+                                                                <div id="login_here">
+                                                                    <label>Reason cancel order : </label>
+                                                                    <input type="text" class="form-control" name="account" id="reason" />
+                                                                </div>
+                                                                <br />
+                                                                <div id="waiting" style="display: none;">
+                                                                    <div class="progress progress-striped active">
+                                                                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-primary">cancel</button>
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </form>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
+                                            <!-- Bootstrap Core JavaScript -->
+                                        </div>
+                                    </div>
+                                </section>
+                                <div class="text-right">Tổng số tiền:<span class="tongsotien"> đ@(@String.Format("{0:n0}", item.PriceALl))</span></div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="space"> </div>
+    </div>
+</div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get('Status');
+    $(`#${myParam}`).addClass('purchase-list-page__tab--selected')
+    if (!myParam) $('#PENDING').addClass('purchase-list-page__tab--selected')
+</script>
+
