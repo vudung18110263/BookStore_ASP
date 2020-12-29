@@ -25,6 +25,7 @@ namespace Book_Shop.Models
         {
             return obj.date.CompareTo(this.date); //Phương thức CompareTo này có sẵn với các kiểu cơ bản như Integer, String.
         }
+        public virtual Product Product { get; set; }
         public Order_Detail() { }
         public Order_Detail(Order orther, List<OrderProJoinProduct> ListOrtherProduct, int priceALl)
         {

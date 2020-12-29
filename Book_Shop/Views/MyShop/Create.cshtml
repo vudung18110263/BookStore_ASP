@@ -1,0 +1,85 @@
+﻿@model Book_Shop.Models.Product
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout_Purchase.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "MyShop", FormMethod.Post, new { encType = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="admin__layout">
+        <table class="admin__table table-vertical">
+            <tr>
+                <th class="admin__header">ID</th>
+                <td>@Html.DisplayFor(model => model.id, new { htmlAttributes = new { @class = "form-control" } })</td>
+            </tr>
+            <tr>
+                <th class="admin__header">Name</th>
+                <td>
+                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <th class="admin__header">Image</th>
+                <td class="image-field">
+                    <img id="blah" height="120px" width="120px" />
+                    <label for="imgInp" id="avatar-label" class="custom-file-upload action-link">
+                        Upload file
+                        <input type="file" name="image" id="imgInp" style="display: none;" />
+                    </label>
+                    @*<img src="@Html.DisplayFor(model => model.image)" height="120px" width="120px" />
+                        <label for="file-upload" class="custom-file-upload action-link">
+                            Upload file
+                        </label>
+                        <input id="file-upload" type="file" name="image" />*@
+                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <th class="admin__header">Description</th>
+                <td>
+                    @Html.TextAreaFor(model => model.description, new { htmlAttributes = new { @class = "form-control " } })
+                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <th class="admin__header">Category</th>
+                <td>
+                    @if (ViewBag.Categories != null)
+                    {
+                        @Html.DropDownListFor(model => model.category, new SelectList(ViewBag.Categories, "name", "name", ViewBag.Categories[0].name))
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th class="admin__header">Price</th>
+                <td>
+                    @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <th class="admin__header">Rate</th>
+                <td>
+                    @Html.EditorFor(model => model.rate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.rate, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <th class="admin__header">Stock</th>
+                <td>
+                    @Html.EditorFor(model => model.stock, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.stock, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+
+        </table>
+        <div class="pagination">
+            <a class="action-link"><input type="submit" value="Create" /></a>
+            <a href="/MyShop/Index" class="action-link">Back to list</a>
+        </div>
+    </div>
+}

@@ -475,7 +475,7 @@ namespace Book_Shop.Controllers
             }
             // Nếu chưa có thì thêm vào giỏ hàng
             Product product = db.Products.SingleOrDefault(n => n.id == productId);
-            product = new Product();
+            product = new Product(product);
             itemInCart item = new itemInCart() { product = product, quantity = 1 };
             cart.Add(item);
             return Json(cart, JsonRequestBehavior.AllowGet);
@@ -574,100 +574,6 @@ namespace Book_Shop.Controllers
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             return Json(promocode.value, JsonRequestBehavior.AllowGet);
-        }
-        public ActionResult MyShop()
-        {
-            int id = Convert.ToInt32(Session["userId"]);
-            List<Product> listproduct = new List<Product>();
-            foreach (var item in db.Products)
-            {
-                if (item.authorId == id)
-                {
-                    listproduct.Add(item);
-                }
-            }
-            return View(listproduct);
-        }
-        public ActionResult Create()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Create(Product product)
-        {
-            var Image = Request.Files["image"];
-            var path = Server.MapPath("~/imageProduct/" + product.name + ".PNG");
-            Image.SaveAs(path);
-            product.image = "/imageProduct/" + product.name + ".PNG";
-            product.authorId = Convert.ToInt32(Session["userId"]);
-            db.Products.Add(product);
-            db.SaveChanges();
-            return Redirect("MyShop");
-        }
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = db.Products.Find(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            return View(product);
-        }
-
-        // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Product product = db.Products.Find(id);
-            db.Products.Remove(product);
-            db.SaveChanges();
-            return RedirectToAction("MyShop", "Store");
-        }
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = db.Products.Find(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            return View(product);
-        }
-        [HttpPost]
-        public ActionResult Edit(Product product)
-        {
-            if (ModelState.IsValid)
-            {
-                var image = Request.Files["image"];
-                var path = Server.MapPath("~/imageProduct/" + product.name + ".png");
-                image.SaveAs(path);
-                product.image = "/imageProduct/" + product.name + ".png";
-                product.authorId = Convert.ToInt32(Session["userId"]);
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("MyShop", "Store");
-            }
-            return View(product);
-        }
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = db.Products.SingleOrDefault(p => p.id == id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            return View(product);
         }
     }
 }

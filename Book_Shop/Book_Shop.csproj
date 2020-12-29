@@ -160,6 +160,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ChartjsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MyShopController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\Order_ProductController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
@@ -464,11 +465,12 @@
     <Content Include="Views\Store\Detail.cshtml" />
     <Content Include="Views\Store\ReturnUrl.cshtml" />
     <Content Include="Views\Chartjs\Index.cshtml" />
-    <Content Include="Views\Store\MyShop.cshtml" />
-    <Content Include="Views\Store\Create.cshtml" />
-    <Content Include="Views\Store\Delete.cshtml" />
-    <Content Include="Views\Store\Edit.cshtml" />
-    <Content Include="Views\Store\Details.cshtml" />
+    <Content Include="Views\MyShop\Create.cshtml" />
+    <Content Include="Views\MyShop\Index.cshtml" />
+    <Content Include="Views\MyShop\OrderManagement.cshtml" />
+    <Content Include="Views\MyShop\Details.cshtml" />
+    <Content Include="Views\MyShop\Edit.cshtml" />
+    <Content Include="Views\MyShop\Delete.cshtml" />
     <None Include="Views\Store\Single.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

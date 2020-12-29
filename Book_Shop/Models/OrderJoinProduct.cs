@@ -13,6 +13,7 @@
         public string descriptionProduct { get; set; }
         public string categoryProduct { get; set; }
         public string author { get; set; }
+        public int? authorid { get; set; }
 
         public OrderProJoinProduct() { }
         public OrderProJoinProduct(Order_Product order_Product, Product product)
@@ -28,6 +29,7 @@
             descriptionProduct = product.description;
             categoryProduct = product.category;
             author = product.User.fullname;
+            authorid = product.authorId;
 
         }
     }
