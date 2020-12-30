@@ -119,8 +119,11 @@ namespace Book_Shop.Controllers
             if (ModelState.IsValid)
             {
                 var image = Request.Files["image"];
-                var path = Server.MapPath("~/imageProduct/" + product.name + ".png");
-                image.SaveAs(path);
+                if(image.ContentLength != 0)
+                {
+                    var path = Server.MapPath("~/imageProduct/" + product.name + ".png");
+                    image.SaveAs(path);
+                }
                 product.image = "/imageProduct/" + product.name + ".png";
                 product.authorId = Convert.ToInt32(Session["userId"]);
                 db.Entry(product).State = EntityState.Modified;
@@ -167,6 +170,7 @@ namespace Book_Shop.Controllers
                 //khởi tạo các đối tượng
                 List<Order> listorder = new List<Order>();//danh sách các order
                 int priceALL;
+                bool temp2;
                 listorder = db.Orders.Where(x => x.status == Status).ToList();
                 List<Order_Detail> result = new List<Order_Detail>();//orderDetail khởi tạo trong folder model
 
@@ -179,7 +183,7 @@ namespace Book_Shop.Controllers
                     Product product = new Product();
                     listOrderPro = db.Order_Product.Where(x => x.orderId == item.id).ToList();
                     priceALL = 0;
-
+                    temp2 = false;
                     foreach (var itemOrderPro in listOrderPro)
                     {
                         product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
@@ -188,9 +192,10 @@ namespace Book_Shop.Controllers
                         {
                             listorderProJoinProducts.Add(orderProJoinProduct);
                             priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(item.shippingType) * 15000;
+                            temp2 = true;
                         }                    
                     }
-                    if(priceALL!=0)
+                    if(temp2==true)
                     {
                         Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL);
                         result.Add(order_Detail);
@@ -217,7 +222,7 @@ namespace Book_Shop.Controllers
             var order = db.Orders.Where(x => x.id == idOrder).FirstOrDefault();
             order.status = "SHIPPING";
             db.SaveChanges();
-            return RedirectToAction("OrderManagement", "MyShop", new { Status = "PENDING" });
+            return RedirectToAction("OrderManagement", "MyShop", new { Status = "GETTING" });
         }
     }
 }

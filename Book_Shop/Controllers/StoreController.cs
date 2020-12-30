@@ -80,6 +80,37 @@ namespace Book_Shop.Controllers
             }
             return notification;
         }
+        //khỏi tạo list order trước khi thanh toán
+        public List<Order> checkoutListOrderNeed(string ShipAddress, string typeShipping)
+        {
+            List<itemInCart> cart = Session["cart"] as List<itemInCart>;
+            List<Order> orders = new List<Order>();
+            List<int?> listAuthorld = new List<int?>();
+            int Userid = Convert.ToInt32(Session["userId"]);
+            DateTime myDateTime = DateTime.Now;
+            try
+            {
+                foreach (var item in cart)
+                {
+                    if (!listAuthorld.Contains(item.product.authorId))
+                    {
+                        listAuthorld.Add(item.product.authorId);
+                        Order order = new Order()
+                        {
+                            userid = Userid,
+                            status = "dang xu ly", //don hàng chưa được xử lý
+                            date = myDateTime.Date,
+                            shippingAddess = ShipAddress,
+                            shippingType = typeShipping
+                        };
+                        orders.Add(order);
+                    }
+                }
+            }
+            catch
+            {  }
+            return orders;
+        }
         //thanh toan
         public ActionResult CheckoutProdcut(FormCollection form)
         {
@@ -91,8 +122,7 @@ namespace Book_Shop.Controllers
 
             string idPromo=null;
 
-            var temp = Session["userId"].ToString();
-            int Userid = int.Parse(temp);
+            int Userid = Convert.ToInt32(Session["userId"]);
             string payOption = form["payOption"];
             string promoCode = form["Promode"].ToString();
             string ShipAddress = form["Address"];
@@ -100,15 +130,8 @@ namespace Book_Shop.Controllers
 
             DateTime myDateTime = DateTime.Now;
             string Date = myDateTime.Date.ToString("yyyy-MM-dd");
-            Order order = new Order()
-            {
-                userid = Userid,
-                status = "dang xu ly", //don hàng chưa được xử lý
-                date = myDateTime.Date,
-                shippingAddess = ShipAddress,
-                shippingType = typeShipping
-            };
-            db.Orders.Add(order);
+            List<Order> orders = checkoutListOrderNeed(ShipAddress, typeShipping);
+
 
             /* ======================================= chua tru ma giam gia */
             if(promoCode!=null)
@@ -117,29 +140,41 @@ namespace Book_Shop.Controllers
                 if (promode != null)
                     idPromo = (promode.id).ToString();
                 if (idPromo != null)
-                    order.promoid = Convert.ToInt32(idPromo);
+                    orders[0].promoid = Convert.ToInt32(idPromo);
             }
             //tao orderprodcut
-            db.SaveChanges();
-
+            TempData["orders"] = orders;
             if (payOption == "2")
             {
-                return RedirectToAction("payMomo","Store",order);
+                return RedirectToAction("payMomo","Store");
             }
-            return RedirectToAction("Pay", "Store", order) ;
+            return RedirectToAction("Pay", "Store") ;
         }
-        public ActionResult Pay(Order order)
+        public ActionResult Pay()
         {
             try
             {
-                order.payment = "cash";
-                order.status = "PENDING";//chờ xác nhận
                 List<itemInCart> cart = Session["cart"] as List<itemInCart>;
+                List<int?> listauthorld = new List<int?>();
+                List<Order> orders = TempData["orders"] as List<Order>;
+                foreach (var order in orders)
+                {
+                    order.payment = "cash";
+                    order.status = "PENDING";
+                }
+                foreach (var item in orders)
+                    db.Orders.Add(item);
+                db.SaveChanges();
                 foreach (var item in cart)
                 {
+                    if (!listauthorld.Contains(item.product.authorId))
+                    {
+                        listauthorld.Add(item.product.authorId);
+                    }
+                    int index = listauthorld.IndexOf(item.product.authorId);
                     Order_Product order_Product = new Order_Product
                     {
-                        orderId = order.id,
+                        orderId = orders[index].id,
                         productId = item.product.id,
                         price = (int)item.product.price,
                         quantity = item.quantity,
@@ -149,15 +184,15 @@ namespace Book_Shop.Controllers
                     db.Order_Product.Add(order_Product);
                     db.SaveChanges();
                 }
+                Session["cart"] = null;
             }
             catch { }
-
             return RedirectToAction("Purchase", "Store", new { Status = "PENDING" });
         }
-        public ActionResult payMomo(Order order)
+        public ActionResult payMomo()
         {
             List<itemInCart> cart = Session["cart"] as List<itemInCart>;
-
+            List<Order> orders = TempData["orders"] as List<Order>;
             string endpoint = ConfigurationManager.AppSettings["endpoint"].ToString();
             string partnerCode = ConfigurationManager.AppSettings["partnerCode"].ToString();
             string accessKey = ConfigurationManager.AppSettings["accessKey"].ToString();
@@ -168,7 +203,10 @@ namespace Book_Shop.Controllers
 
             //tim gia ma khuyen mai
             int promoValue;
-            var promo = db.PromoCodes.Where(x => x.id == order.promoid).FirstOrDefault();
+            int tempPromoid = 0;
+            if (orders[0].promoid != null)
+                tempPromoid = (int)orders[0].promoid;
+            var promo = db.PromoCodes.Where(x => x.id ==tempPromoid).FirstOrDefault();
             if (promo != null)
             {
                 promoValue = promo.value ?? default(int);
@@ -176,13 +214,13 @@ namespace Book_Shop.Controllers
             else
                 promoValue = 0;
 
-            int amountTemp = Convert.ToInt32(cart.Sum(n => ((n.product.price) * (n.quantity))+Convert.ToInt32(order.shippingType)*15000 - promoValue));
+            int amountTemp = Convert.ToInt32(cart.Sum(n => (n.product.price) * (n.quantity)) + Convert.ToInt32(orders[0].shippingType) * 15000 * orders.Count - promoValue);
             string amount;
             if (amountTemp >= 0)
                 amount = amountTemp.ToString();
             else
                 amount = "0";
-            string orderid = order.id.ToString();
+            string orderid = Guid.NewGuid().ToString();
             string requestId = Guid.NewGuid().ToString();
             string extraData = "";
 
@@ -235,32 +273,53 @@ namespace Book_Shop.Controllers
             string serectkey = ConfigurationManager.AppSettings["serectkey"].ToString();
             string signature = crypto.signSHA256(param, serectkey);
             ViewBag.message = "";
-            int a = Convert.ToInt32(Request["orderId"]);
-            var order = db.Orders.Where(x => x.id == a).FirstOrDefault();
-            if (signature!= Request["signature"].ToString())
+            //int a = Convert.ToInt32(Request["orderId"]);
+            //var order = db.Orders.Where(x => x.id == a).FirstOrDefault();
+            List<Order> orders = TempData["orders"] as List<Order>;
+            foreach (var item in orders)
+            {
+                item.payment = "momo";
+            }
+            foreach (var item in orders)
+                db.Orders.Add(item);
+            db.SaveChanges();
+
+            if (signature != Request["signature"].ToString())
             {
                 ViewBag.message = "thông tin không hợp lệ";
-                order.payment = "momo";
-                order.status = "thanh Toan that bai";
+                foreach (var item in orders)
+                {
+                    item.status = "thanh Toan that bai";
+                }
                 return View();
             }
-            if(!Request.QueryString["errorCode"].Equals("0"))
+            if (!Request.QueryString["errorCode"].Equals("0"))
             {
-                order.payment = "momo";
-                order.status = "thanh Toan that bai";
-                ViewBag.message="thanh toán thất bại";
+                foreach (var item in orders)
+                {
+                    item.status = "thanh Toan that bai";
+                }
+                ViewBag.message = "thanh toán thất bại";
                 return View();
             }
             else
             {
-                order.payment = "momo";
-                order.status = "PENDING";
                 List<itemInCart> cart = Session["cart"] as List<itemInCart>;
+                List<int?> listauthorld = new List<int?>();
+                foreach (var order in orders)
+                {
+                    order.status = "PENDING";
+                }
                 foreach (var item in cart)
                 {
+                    if (!listauthorld.Contains(item.product.authorId))
+                    {
+                        listauthorld.Add(item.product.authorId);
+                    }
+                    int index = listauthorld.IndexOf(item.product.authorId);
                     Order_Product order_Product = new Order_Product
                     {
-                        orderId = order.id,
+                        orderId = orders[index].id,
                         productId = item.product.id,
                         price = (int)item.product.price,
                         quantity = item.quantity,
@@ -270,8 +329,8 @@ namespace Book_Shop.Controllers
                     db.Order_Product.Add(order_Product);
                     db.SaveChanges();
                 }
+                Session["cart"] = null;
                 ViewBag.message = "thanh toán thành công";
-                
             }
             return RedirectToAction("Purchase", "Store", new { Status = "PENDING" });
         }
@@ -349,8 +408,9 @@ namespace Book_Shop.Controllers
                 product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
                 orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
                 listorderProJoinProducts.Add(orderProJoinProduct);
-                priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(order.shippingType) * 15000;
+                priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity ;
             }
+            priceALL+= Convert.ToInt32(order.shippingType) * 15000;
             Order_Detail order_Detail = new Order_Detail(order, listorderProJoinProducts, priceALL);
 
             return View(order_Detail);
@@ -373,7 +433,7 @@ namespace Book_Shop.Controllers
                 int priceALL;
                 if (Status == "ALL")
                 {
-                    listorder = db.Orders.ToList();
+                    listorder = db.Orders.Where(x => x.userid == idUser).ToList();
                 }
                 else
                 {
@@ -396,8 +456,9 @@ namespace Book_Shop.Controllers
                         product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
                         orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
                         listorderProJoinProducts.Add(orderProJoinProduct);
-                        priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(item.shippingType) * 15000;
+                        priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity ;
                     }
+                    priceALL += Convert.ToInt32(item.shippingType) * 15000;
                     Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL);
                     result.Add(order_Detail);
                     ViewBag.Count = result.Count();
