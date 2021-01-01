@@ -109,10 +109,11 @@ namespace Book_Shop.Controllers
 
             if (user == null)
             {
-
                 return Content("false");
             }
             Session["userId"] = user.id;
+            if (user.lever == 3)
+                return Content("isShipper");
             return Content("");
 
         }

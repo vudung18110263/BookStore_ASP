@@ -167,6 +167,7 @@ namespace Book_Shop.Controllers
                 //khởi tạo các đối tượng
                 List<Order> listorder = new List<Order>();//danh sách các order
                 int priceALL;
+                bool temp2;
                 listorder = db.Orders.Where(x => x.status == Status).ToList();
                 List<Order_Detail> result = new List<Order_Detail>();//orderDetail khởi tạo trong folder model
 
@@ -179,18 +180,19 @@ namespace Book_Shop.Controllers
                     Product product = new Product();
                     listOrderPro = db.Order_Product.Where(x => x.orderId == item.id).ToList();
                     priceALL = 0;
-
+                    temp2 = false;
                     foreach (var itemOrderPro in listOrderPro)
                     {
                         product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
                         orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
                         if(orderProJoinProduct.authorid== idUser)
                         {
+                            temp2 = true;
                             listorderProJoinProducts.Add(orderProJoinProduct);
                             priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(item.shippingType) * 15000;
                         }                    
                     }
-                    if(priceALL!=0)
+                    if(temp2==true)
                     {
                         Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL);
                         result.Add(order_Detail);
