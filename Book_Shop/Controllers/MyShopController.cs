@@ -190,6 +190,7 @@ namespace Book_Shop.Controllers
                         orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
                         if(orderProJoinProduct.authorid== idUser)
                         {
+                            temp2 = true;
                             listorderProJoinProducts.Add(orderProJoinProduct);
                             priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(item.shippingType) * 15000;
                             temp2 = true;

@@ -166,6 +166,7 @@
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PromoCodesController.cs" />
+    <Compile Include="Controllers\ShipperController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -471,6 +472,7 @@
     <Content Include="Views\MyShop\Details.cshtml" />
     <Content Include="Views\MyShop\Edit.cshtml" />
     <Content Include="Views\MyShop\Delete.cshtml" />
+    <Content Include="Views\Shipper\Index.cshtml" />
     <None Include="Views\Store\Single.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

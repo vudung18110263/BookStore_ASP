@@ -407,6 +407,13 @@
                                 $("#password").focus();
                                 return false;
                             }
+                            else if (msg_login == 'isShipper') {
+                                setTimeout(
+                                    //chuyển đến địa chỉ msg_login của controler gửi qua
+                                    function () {
+                                        window.location.href = 'https://localhost:44327/Shipper/Index';
+                                    }, 100);
+                            }
                             else {
                                 $("#login_here").hide();
                                 $(".modal-footer").hide();
