@@ -119,8 +119,11 @@ namespace Book_Shop.Controllers
             if (ModelState.IsValid)
             {
                 var image = Request.Files["image"];
-                var path = Server.MapPath("~/imageProduct/" + product.name + ".png");
-                image.SaveAs(path);
+                if(image.ContentLength != 0)
+                {
+                    var path = Server.MapPath("~/imageProduct/" + product.name + ".png");
+                    image.SaveAs(path);
+                }
                 product.image = "/imageProduct/" + product.name + ".png";
                 product.authorId = Convert.ToInt32(Session["userId"]);
                 db.Entry(product).State = EntityState.Modified;
@@ -190,6 +193,7 @@ namespace Book_Shop.Controllers
                             temp2 = true;
                             listorderProJoinProducts.Add(orderProJoinProduct);
                             priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(item.shippingType) * 15000;
+                            temp2 = true;
                         }                    
                     }
                     if(temp2==true)
@@ -219,7 +223,7 @@ namespace Book_Shop.Controllers
             var order = db.Orders.Where(x => x.id == idOrder).FirstOrDefault();
             order.status = "SHIPPING";
             db.SaveChanges();
-            return RedirectToAction("OrderManagement", "MyShop", new { Status = "PENDING" });
+            return RedirectToAction("OrderManagement", "MyShop", new { Status = "GETTING" });
         }
     }
 }
