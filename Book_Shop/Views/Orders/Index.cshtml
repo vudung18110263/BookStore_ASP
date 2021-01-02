@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Book_Shop.Models.Order>
+﻿@model PagedList.IPagedList<Book_Shop.Models.Order>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,7 +8,14 @@
 <h2>Index</h2>
 
 <br />
-<a href="/Products/Create" class="action-link">Create new order</a>
+<form action="/Orders/ViewOrderByMonth" method="post">
+    <div class="controls">
+        <label class="control-label">nhập tháng: </label>
+        <input class="form-control" type="month" name="month" placeholder="Landmark">
+        <input type="submit" value="view order"/>
+    </div>
+    <i>@ViewBag.message</i>
+</form>
 <div class="admin__layout">
     <table class="admin__table">
         <thead class="">
@@ -42,12 +50,12 @@
             }
         </tbody>
     </table>
-    @*<div class="pagination">
-            <!-- Thêm mã phân trang -->
-            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    <div class="pagination">
+        <!-- Thêm mã phân trang -->
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 
-            @Html.PagedListPager(Model, page => Url.Action("Index",
-                new { page }))
-            <!-- Kết thúc -->
-        </div>*@
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page }))
+        <!-- Kết thúc -->
+    </div>
 </div>
