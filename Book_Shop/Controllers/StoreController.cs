@@ -396,8 +396,9 @@ namespace Book_Shop.Controllers
                         product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
                         orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
                         listorderProJoinProducts.Add(orderProJoinProduct);
-                        priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(item.shippingType) * 15000;
+                        priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity ;
                     }
+                    priceALL = priceALL + Convert.ToInt32(item.shippingType) * 15000;
                     Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL);
                     result.Add(order_Detail);
                     ViewBag.Count = result.Count();
