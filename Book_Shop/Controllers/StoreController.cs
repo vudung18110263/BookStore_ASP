@@ -67,7 +67,7 @@ namespace Book_Shop.Controllers
         //    else
         //        return View("Purchase");
         //} 
-        public string CheckProdcutQuantity(List<itemInCart> cart)
+        private string CheckProdcutQuantity(List<itemInCart> cart)
         {
             string notification = "";
             foreach (var item in cart)
@@ -112,6 +112,7 @@ namespace Book_Shop.Controllers
             return orders;
         }
         //thanh toan
+        [AuthorizeUserController]
         public ActionResult CheckoutProdcut(FormCollection form)
         {
             List<itemInCart> cart = Session["cart"] as List<itemInCart>;
@@ -189,6 +190,7 @@ namespace Book_Shop.Controllers
             catch { }
             return RedirectToAction("Purchase", "Store", new { Status = "PENDING" });
         }
+        [AuthorizeUserController]
         public ActionResult payMomo()
         {
             List<itemInCart> cart = Session["cart"] as List<itemInCart>;
@@ -265,6 +267,7 @@ namespace Book_Shop.Controllers
             return Redirect(jmessage.GetValue("payUrl").ToString());
 
         }
+        [AuthorizeUserController]
         public ActionResult ReturnUrl()
         {
             string param = Request.QueryString.ToString().Substring(0, Request.QueryString.ToString().IndexOf("signature") - 1);
@@ -335,6 +338,7 @@ namespace Book_Shop.Controllers
             return RedirectToAction("Purchase", "Store", new { Status = "PENDING" });
         }
         [HttpPost]
+        [AuthorizeUserController]
         public ActionResult NotifyUrl()
         {
             string param = "";
@@ -388,7 +392,7 @@ namespace Book_Shop.Controllers
             }
             return Json("", JsonRequestBehavior.AllowGet);
         }
-
+        [AuthorizeUserController]
         public ActionResult Detail(int? idOrder)
         {
             var order = db.Orders.Where(x => x.id == idOrder).FirstOrDefault();
@@ -415,6 +419,7 @@ namespace Book_Shop.Controllers
 
             return View(order_Detail);
         }
+        [AuthorizeUserController]
         public ActionResult Purchase(string Status)
         {
             var a = db.Orders.ToList();
@@ -480,6 +485,7 @@ namespace Book_Shop.Controllers
             int pageNumber = (page ?? 1);
             return View(links.ToPagedList(pageNumber, pageSize));
         }
+        [AuthorizeUserController]
         public ActionResult Single(int? id)
         {
             var product = db.Products.Where(x => x.id == id).FirstOrDefault();
@@ -489,6 +495,7 @@ namespace Book_Shop.Controllers
         {
             return View();
         }
+        [AuthorizeUserController]
         public ActionResult Info()
         {
             var temp = Session["userId"].ToString();
@@ -496,6 +503,7 @@ namespace Book_Shop.Controllers
             var user = db.Users.Where(x => x.id == id).FirstOrDefault();
             return View(user);
         }
+        [AuthorizeUserController]
         [HttpPost]
         public ActionResult CancelOrder(int? idOrder)
         {
@@ -626,6 +634,7 @@ namespace Book_Shop.Controllers
         {
             public string code { get; set; }
         }
+        [AuthorizeUserController]
         [HttpPost]
         public ActionResult AddPromoCode(JsonPromo promo)
         {

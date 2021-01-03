@@ -11,6 +11,7 @@ using System.Collections.Generic;
 
 namespace Book_Shop.Controllers
 {
+    [AuthorizeAdminController]
     public class OrdersController : Controller
     {
         private Book_StoreEntities2 db = new Book_StoreEntities2();
@@ -64,9 +65,13 @@ namespace Book_Shop.Controllers
         public ActionResult Export()
         {
             string monthYear="";
+            var now = DateTime.Now;
             if (TempData["monthYear"]!=null)
                 monthYear = TempData["monthYear"] as string;
-            string nameExcel = "myexport" + monthYear ;
+            string nameExcel = "myexport" + monthYear 
+                +now.Hour.ToString() +"_"
+                +now.Minute.ToString()+"_"
+                +now.Second.ToString();
             var result=ExportData(nameExcel, monthYear);
             if (result)
                 ViewBag.message = "Export successfully";
@@ -131,7 +136,8 @@ namespace Book_Shop.Controllers
                 ws.Cells["C1"].Value = "Address";
                 ws.Cells["D1"].Value = "promocode";
                 ws.Cells["E1"].Value = "total bill";
-                ws.Cells["F1"].Value = "total bill";
+                ws.Cells["F1"].Value = "status";
+                ws.Cells["G1"].Value = "date";
 
             foreach (var item in result2)
                 {
@@ -142,6 +148,8 @@ namespace Book_Shop.Controllers
                     ws.Cells[string.Format("D{0}", StartRow)].Value = item.promoValue;
                     ws.Cells[string.Format("E{0}", StartRow)].Value = item.PriceALl;
                     ws.Cells[string.Format("F{0}", StartRow)].Value = item.status;
+                    ws.Cells[string.Format("G{0}", StartRow)].Value = item.date.Day.ToString() +"/"
+                        +item.date.Month.ToString()+"/" +item.date.Year.ToString();
                     StartRow++;
                 }
                 pck.Save();

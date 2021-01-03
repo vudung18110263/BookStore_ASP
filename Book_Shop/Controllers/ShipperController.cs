@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Web.Mvc;
 namespace Book_Shop.Controllers
 {
+    [AuthorizeShipperController]
     public class ShipperController : Controller
     {
         // GET: Shipper

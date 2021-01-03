@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Book_Shop.Controllers
 {
+    [AuthorizeAdminController]
     public class PaymentsController : Controller
     {
         private Book_StoreEntities2 db = new Book_StoreEntities2();

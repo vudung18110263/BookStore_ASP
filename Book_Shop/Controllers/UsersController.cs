@@ -5,11 +5,26 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using System.Security.Cryptography;
 
 namespace Book_Shop.Controllers
 {
     public class UsersController : Controller
     {
+        private static string GetMD5(string str)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] fromData = Encoding.UTF8.GetBytes(str);
+            byte[] targetData = md5.ComputeHash(fromData);
+            string byte2String = null;
+
+            for (int i = 0; i < targetData.Length; i++)
+            {
+                byte2String += targetData[i].ToString("x2");
+
+            }
+            return byte2String;
+        }
         private Book_StoreEntities2 db = new Book_StoreEntities2();
         // GET: Users
         public ActionResult Index()
@@ -55,7 +70,7 @@ namespace Book_Shop.Controllers
                 avatar.SaveAs(path);
                 avatarPath = "/UploadFiles/" + user.id + ".PNG";
             }
-            User newUser = new User() { account = username, pass_word = password, lever = 2, mail = email, phone = phone, avatar = avatarPath, paymentId = null, address = address };
+            User newUser = new User() { account = username, pass_word = GetMD5(password), lever = 2, mail = email, phone = phone, avatar = avatarPath, paymentId = null, address = address };
             db.Users.Add(newUser);
             db.SaveChanges();
             return Redirect("/");
@@ -105,7 +120,8 @@ namespace Book_Shop.Controllers
         {
             string username = form["username"].ToString();
             string password = form["password"].ToString();
-            var user = db.Users.SingleOrDefault(n => n.account == username && n.pass_word == password);
+            string passwordMD5 = GetMD5(password);
+            var user = db.Users.SingleOrDefault(n => n.account == username && n.pass_word == passwordMD5);
 
             if (user == null)
             {
