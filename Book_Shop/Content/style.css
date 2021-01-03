@@ -265,15 +265,11 @@ ul.dropdown-menu.drp-mnu li a i {
     background-color: #84C639;
     color: #fff;
 }
+
 .navbar-nav {
-    float: none;
-    margin: 0;
-	border-top: 1px solid #B58F62;
-}
-.navbar-nav > li > a {
-    color: #212121;
-    padding:10px 0px 10px 40px;
-    border-bottom: 1px dotted #CDCDCD;
+	color: #212121;
+	padding: 10px 0px 10px 40px;
+	border-bottom: 1px dotted #CDCDCD;
 }
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
     background-color: #84C639;
@@ -1786,7 +1782,7 @@ h2.typoh2{
 		margin-bottom: 10px;
 	}
 	ul.pagination li a {
-		font-size: 14px;
+		font-size: 16px;
 		padding: 5px 11px;
 	}
 	.list-group {
@@ -2171,8 +2167,8 @@ ul.wmuSliderPagination {
 .wmuSliderPagination a {
 	display: block;
     text-indent: -9999px;
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     background: #CFCFCF;
     border-radius: 50px;
     -webkit-border-radius: 50px;

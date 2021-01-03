@@ -238,7 +238,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\base.css" />
     <Content Include="Content\datatables-demo.js" />
+    <Content Include="Content\detail.css" />
+    <Content Include="Content\grid.css" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\purchase.css" />
     <Content Include="Content\register.css" />
     <Content Include="Content\admintable.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -251,7 +256,9 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\headercart2.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\responsive.css" />
     <Content Include="Content\scripts.js" />
+    <Content Include="Content\store.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\styles_myShop.css" />
     <Content Include="favicon.ico" />

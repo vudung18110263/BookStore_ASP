@@ -12,14 +12,13 @@
     <script type="application/x-javascript">
         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
                function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <!---->
-    <script src="~/Scripts/script.js"></script>
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/admintable.css" rel="stylesheet" />
     <!-- //for-mobile-apps -->
     <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/grid.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/responsive.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/login.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/base.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/store.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Content/style.css" rel="stylesheet" type="text/css" media="all" />
     <!-- font-awesome icons -->
     @*<link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" media="all" />*@
@@ -44,230 +43,152 @@
         });
     </script>
     <!-- start-smoth-scrolling -->
-    <style>
-        .boders {
-            border: 1px solid black;
-            margin-bottom: 30px;
-        }
-
-        .purchase-list-page__tab--selected {
-            color: #ee4d2d;
-            border-bottom: 2px solid #ee4d2d;
-        }
-
-        .purchase-boder {
-            border: 1px solid rgba(0,0,0,.8);
-            background-color: lightgrey;
-        }
-
-        .purchase-boder1 {
-            border-left: 1px solid rgba(0,0,0,.8);
-            border-right: 1px solid rgba(0,0,0,.8);
-            border-bottom: 1px solid rgba(0,0,0,.8);
-        }
-
-        .sp1 {
-            width: 348.39px;
-            display: flex;
-            justify-items: center;
-            justify-content: center;
-            line-height: 20px;
-            padding-left: 30px;
-            margin-right: 26px;
-        }
-
-        #sp_name {
-            width: 280px;
-            height: 100px;
-            margin: 30px 0 0 10px;
-        }
-
-        #sp_sol {
-            width: 10px;
-            height: 100px;
-            margin: 30px 0 0 10px;
-        }
-
-        .sp2 {
-            width: 198.25px;
-            padding: 40px 60px;
-            margin-right: 30px;
-        }
-
-        .Price {
-            color: #ee4d2d;
-            font-size: 1.875rem;
-            line-height: 2rem;
-        }
-
-        .sp3 {
-            padding: 40px 60px;
-            margin-left: 2px;
-        }
-
-        .sp4 {
-            padding: 40px 30px 40px 50px;
-        }
-
-        .sp5 {
-            padding: 40px 10px;
-        }
-
-        .tb {
-            display: inline-flex;
-            padding: 10px 250px 10px 50px;
-        }
-
-        .tb1 {
-            padding: 10px 60px;
-        }
-
-        .tb2 {
-            padding: 10px 5px;
-        }
-
-        .purchase-list-page__tab {
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            font-size: 1rem;
-            line-height: 1.1875rem;
-            /*padding: 1rem 0;*/
-            color: rgba(0,0,0,.8);
-            -webkit-box-flex: 1;
-            -webkit-flex: 1;
-            -moz-box-flex: 1;
-            -ms-flex: 1;
-            flex: 1;
-            -webkit-box-align: center;
-            -webkit-align-items: center;
-            -moz-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            -webkit-justify-content: center;
-            -moz-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-        }
-
-        .purchase-list-page__tab, .purchase-list-page__tabs-container {
-            overflow: hidden;
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -moz-box;
-            display: -ms-flexbox;
-            /*display: flex;*/
-            -ms-flex-item-align: center;
-            justify-items: center;
-        }
-
-        .purchase-list-page__tab-label {
-            color: black;
-            display: block;
-            width: 100% !important;
-            height: 100%;
-            padding: 1rem 0;
-            text-align: center;
-        }
-
-            .purchase-list-page__tab-label:focus, .purchase-list-page__tab-label:hover {
-                color: #ee4d2d;
-                width: inherit;
-            }
-
-        .purchase-list-page__tab:focus, .purchase-list-page__tab:visited, .purchase-list-page__tab:hover {
-            border-bottom: 2px solid #ee4d2d;
-            color: #ee4d2d;
-        }
-
-        .purchase-list-page__search-bar {
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        div {
-            display: block;
-        }
-
-        :root {
-            --tooltipBgColor: rgba(0, 0, 0, 0.8);
-        }
-
-        .space {
-            padding: 10px 0px;
-        }
-
-        .purchase-list-sp {
-            display: flex;
-        }
-
-        .purchase-list-sp1, .purchase-list-sp2 {
-            padding: 10px 50px 10px 0px;
-        }
-    </style>
 </head>
 
 <body>
     <!-- header -->
-    <div class="agileits_header">
-        <div class="w3l_search">
-            <form action="/Store/Search" method="get">
-                <input type="text" name="q" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required>
-                <input type="submit" value=" ">
-            </form>
-        </div>
-        <div class="w3l_header_right1">
-            <h2>@Html.ActionLink("Contact Us", "Mail", "Store")</h2>
-        </div>
-        <div class="w3l_header_right">
-            <ul>
-                <li class="dropdown profile_details_drop">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-top: 0.25rem"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
-                    <div class="mega-dropdown-menu">
-                        <div class="w3ls_vegetables">
-                            <ul class="dropdown-menu drp-mnu">
-                                @if (Session["userId"] != null)
-                                {
-                                    <li style="font-size: 16px">@Html.ActionLink("Infofmation", "Info", "Store")</li>
-                                    <li style="font-size: 16px">@Html.ActionLink("Information Order", "PurChase", "Store")</li>
-                                    <li style="font-size: 16px">@Html.ActionLink("Log out", "logout", "Users")</li>
-                                }
-                                else
-                                {
-                                    <li><a style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Login</a></li>
-                                    <li style="font-size: 16px">@Html.ActionLink("Sign Up", "Register", "Users")</li>
-                                }
+    <header class="header agileits_header">
+        <!-- Class Grid -->
+        <div class="grid wide">
+            <!-- Navbar : có 2 thẻ ul-->
+            <nav class="header__navbar hide-on-mobile-tablet">
+                <ul class="header__navbar-list">
+                    <li>
+                        <a href="/MyShop/Index" class="header__navbar-item header__navbar-item--separate header__navbar-item--strong" style="font-size: 16px;">Seller channel</a>
+                    </li>
+
+                    <li class="header__navbar-item">
+                        <a href="/Store/About" class="header__navbar-item header__navbar-item--separate header__navbar-item--strong" style="font-size: 16px;">
+                            About Us
+                        </a>
+                    </li>
+                    <li class="header__navbar-item header__navbar-item--separate header__navbar-item--strong" style="cursor: text;font-size: 16px;">
+                        <i class="header__navbar-icon fa fa-phone" style="font-size: 16px;"></i>
+                        <span>(+0123) 234 567</span>
+                    </li>
+                    <li class="header__navbar-item header__navbar-item--strong" style="cursor: text;font-size: 16px;">
+                        <i class="header__navbar-icon fas fa-envelope" style="font-size: 16px;"></i>
+                        <span>tgmbooks@gmail.com</span>
+                    </li>
+                </ul>
+                <ul class="header__navbar-list">
+                    <li class="header__navbar-item header__navbar-item--has-notify header__navbar-item--separate header__navbar-item--strong" style="font-size: 16px;">
+                        <a href="/Store/Mail" class="header__navbar-icon-link">
+                            <i class="header__navbar-icon far fa-question-circle" style="font-size: 16px;"></i>
+                            Contact Us
+                        </a>
+                    </li>
+
+                    <!-- Khi đã đăng nhập -->
+                    @if (Session["userId"] != null)
+                    {
+                        <li class="header__navbar-item header__navbar-user">
+                            <img src="https://avatar-redirect.appspot.com/google/111617765129302393859?size=400" alt="" class="header__navbar-user-img">
+                            <span class="header__navbar-user-name" style="font-size: 16px">Văn Lượng</span>
+
+                            <ul class="header__navbar-user-menu-a">
+                                <li class="header__navbar-user-item">
+                                    <a href="/Store/Info" style="font-size: 16px;"><strong>Information</strong></a>
+                                </li>
+                                <li class="header__navbar-user-item">
+                                    <a href="/Store/Purchase" style="font-size: 16px"><strong>Information Order</strong></a>
+                                </li>
+                                <li class="header__navbar-user-item header__navbar-user-item--separate">
+                                    <a class="" href="/Users/logout" style="font-size: 16px"><strong class="header__navbar-user-item-a">Log out</strong></a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <!-- Chưa đăng nhập -->
+                        <li><a class="header__navbar-item header__navbar-item--strong header__navbar-item--separate" style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Login</a></li>
+                        <li><a class="header__navbar-item header__navbar-item--strong" style="font-size: 16px" data-toggle="modal" href="/Users/Register">Sign Up</a></li>
+
+                    }
+                </ul>
+            </nav>
+
+            <!-- SEARCH -->
+            <div class="header-with-search">
+                <!-- Nav bars-btn -->
+                <label for="nav-mobile-input" class="nav__bars-btn">
+                    <i class="fas fa-bars"></i>
+                </label>
+
+                <!--  -->
+                <input hidden type="checkbox" name="" class="nav__input" id="nav-mobile-input">
+
+                <!-- Overlay -->
+                <label for="nav-mobile-input" class="nav__overlay"></label>
+
+                <!-- Nav Mobile -->
+                <nav class="nav__mobile">
+                    <!-- Nút Close -->
+                    <label for="nav-mobile-input" class="nav__mobile-close">
+                        <i class="fas fa-times"></i>
+                    </label>
+                    <ul class="nav__mobile-list">
+                        <li>
+                            <a href="" class="nav__mobile-link">Home</a>
+                        </li>
+                        <li>
+                            <a href="" class="nav__mobile-link">About</a>
+                        </li>
+                        <li>
+                            <a href="" class="nav__mobile-link">Category</a>
+                        </li>
+                        <li>
+                            <a href="" class="nav__mobile-link">News</a>
+                        </li>
+                        <li>
+                            <a href="" class="nav__mobile-link">Contact</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Logo tìm kiếm -->
+                <input hidden class="header__search-checkbox" type="checkbox" name="" id="mobile-search-checkbox">
+                <label for="mobile-search-checkbox" class="header__mobile-search">
+                    <i class="fas fa-search"></i>
+                </label>
+
+                <div class="header__logo hide-on-tablet">
+                    <a href="/Store/Index" class="header__logo-link">
+                        <img class="header__logo-img" src="~/images/logo.png" />
+
+                    </a>
+                </div>
+                <div class="header__search">
+                    <form action="/Store/Search" method="get" class="header__search-input-wrap">
+                        <input style="width: 87%; color: #e9e2e2" type="text" name="q" class="header__search-input" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required>
+                        <button class="header__search-btn" type="submit">
+                            <i class="header__search-btn-icon fas fa-search"></i>
+                        </button>
+                    </form>
+
+                </div>
+                <!-- Giỏ hàng -->
+                <div class="header__cart">
+                    <div class="header__cart-wrap">
+                        <i class="header__cart-icon fas fa-shopping-cart"></i>
+                        <span class="header__cart-notice">0</span>
+
+                        <div class="header__cart-list ">
+                            <!--No cart:có thêm class header__cart-list--no-cart-->
+                            <img src="./assets/image/no_cart.png" alt="" class="header__cart-no-cart-img">
+
+                            <!-- Có sản phẩm trong giỏ hàng -->
+                            <h4 class="header__cart-heading">Sản phẩm đã thêm</h4>
+                            <ul class="header__cart-list-item">
+                            </ul>
+                            <a href="/Store/Checkout" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a>
                         </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="product_list_header">
-            <div class="header__cart">
-                <div class="header__cart-wrap">
-                    <i class="header__cart-icon fas fa-shopping-cart"></i>
-                    <span class="header__cart-notice">0</span>
-
-                    <div class="header__cart-list ">
-                        <!--No cart:có thêm class header__cart-list--no-cart-->
-                        <img src="./assets/image/no_cart.png" alt="" class="header__cart-no-cart-img">
-
-                        <!-- Có sản phẩm trong giỏ hàng -->
-                        <h4 class="header__cart-heading">Sản phẩm đã thêm</h4>
-                        <ul class="header__cart-list-item">
-                        </ul>
-                        <a href="/Store/Checkout" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a>
                     </div>
                 </div>
             </div>
-
         </div>
-        <div class="clearfix"> </div>
-    </div>
+    </header>
     <!-- script-for sticky-nav -->
     <script>
         $(document).ready(function () {
@@ -284,38 +205,10 @@
         });
     </script>
     <!-- //script-for sticky-nav -->
-    <div class="logo_products">
-        <div class="container">
-            <div class="w3ls_logo_products_left">
-                @*<h1><a href="index.html"><span>Grocery</span> Store</a></h1>*@
-                <h1><a href="/Store/Index"><img src="~/images/nxb5.png" style="width: inherit; height:inherit" /></a></h1>
-            </div>
-            <div class="w3ls_logo_products_left1">
-                <ul class="special_items">
-                    <li><a href="events.html">Events</a><i>/</i></li>
-                    <li>@Html.ActionLink("About Us", "About", "Store")<i>/</i></li>
-                    <li><a href="products.html">Best Deals</a><i>/</i></li>
-                    <li><a href="services.html">Services</a></li>
-                </ul>
-            </div>
-            <div class="w3ls_logo_products_left1">
-                <ul class="phone_email">
-                    <li><i class="fa fa-phone" aria-hidden="true"></i>(+0123) 234 567</li>
-                    <li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:store@grocery.com">store@grocery.com</a></li>
-                </ul>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
+    <div class="logo_products" style="margin-top: 50px; background-color: yellow">
     </div>
     <!-- //header -->
-    <div class="products-breadcrumb" style="padding: 0">
-        <div class="container">
-            <ul>
-                <li><i class="fa fa-home" aria-hidden="true"></i>@Html.ActionLink("Home", "Index", "Store")<span>|</span></li>
-                <li>Purchase</li>
-            </ul>
-        </div>
-    </div>
+    @RenderSection("products_breadcrumb", required: false)
     <div>
         @RenderBody()
     </div>
@@ -412,6 +305,7 @@
             </div>
         </div>
     </div>
+    <!-- //footer -->
     <!-- Bootstrap Core JavaScript -->
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script>
@@ -471,8 +365,8 @@
     <script>
         $(function () {
             $('#example').okzoom({
-                width: 400,
-                height: 400,
+                width: 200,
+                height: 200,
                 border: "1px solid black",
                 shadow: "0 0 5px #000",
                 round: false,
@@ -547,51 +441,52 @@
                 totalQuantity += item.quantity
 
                 let product = `<li class="header__cart-item">
-                                                    <img src="${item.product.image}" alt="" class="header__cart-img">
-                                                    <div class="header__cart-item-info">
-                                                        <div class="header__cart-item-head">
-                                                            <h5 class="header__cart-item-name">${item.product.name}</h5>
-                                                            <div class="header__cart-item-price-wrap">
-                                                                <span class="header__cart-item-price">${item.product.price}</span>
-                                                                <span class="header__cart-item-multiply">x</span>
-                                                                <span class="header__cart-item-qnt">${item.quantity}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="header__cart-item-body">
-                                                            <span class="header__cart-item-description">
-                                                                Phân loại hàng: Bạc
-                                                            </span>
-                                                            <span class="header__cart-item-remove">Xóa</span>
-                                                        </div>
+                                            <img src="${item.product.image}" alt="" class="header__cart-img">
+                                            <div class="header__cart-item-info">
+                                                <div class="header__cart-item-head">
+                                                    <h5 class="header__cart-item-name">${item.product.name}</h5>
+                                                    <div class="header__cart-item-price-wrap">
+                                                        <span class="header__cart-item-price">đ${thousandFormat(item.product.price)}</span>
+                                                        <span class="header__cart-item-multiply">x</span>
+                                                        <span class="header__cart-item-qnt">${item.quantity}</span>
                                                     </div>
-                                                </li>`
+                                                </div>
+                                                <div class="header__cart-item-body">
+                                                    <span class="header__cart-item-description">
+                                                        Thể loại: ${item.product.category}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>`
                 $('.header__cart-list-item').append(product)
                 $('.header__cart-notice').html(totalQuantity)
 
                 let productInCheckout = `<tr class="rem1">
-                                                <td class="invert">${i}</td>
-                                                <td class="invert-image"><a href="Store/Single?id=${item.product.id}"><img width="48px" height="48px" src="${item.product.image}" alt=" " class="img-responsive"></a></td>
-                                                <td class="invert">
-                                                    <div class="quantity">
-                                                        <div class="quantity-select">
-                                                            <div class="entry value-minus" onclick="minusFromCart(${item.product.id})">&nbsp;</div>
-                                                            <div class="entry value"><span>${item.quantity}</span></div>
-                                                            <div class="entry value-plus active" onclick="addToCart(${item.product.id})">&nbsp;</div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="invert">${item.product.name}</td>
-                                                <td class="invert">${(item.product.price * item.quantity)}</td>
+                                        <td class="invert">${i}</td>
+                                        <td class="invert-image"><a href="Store/Single?id=${item.product.id}"><img width="48px" height="48px" src="${item.product.image}" alt=" " class="img-responsive"></a></td>
+                                        <td class="invert">
+                                            <div class="quantity">
+                                                <div class="quantity-select">
+                                                    <div class="entry value-minus" onclick="minusFromCart(${item.product.id})">&nbsp;</div>
+                                                    <div class="entry value"><span>${item.quantity}</span></div>
+                                                    <div class="entry value-plus active" onclick="addToCart(${item.product.id})">&nbsp;</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="invert">${item.product.name}</td>
+                                        <td class="invert">đ${thousandFormat(item.product.price * item.quantity)}</td>
 
-                                            </tr>`
+                                    </tr>`
                 $('#cartCheckout').append(productInCheckout)
 
-                let checkoutBasket = `<li> ${item.product.name} <i> -</i> <span>${item.quantity * item.product.price} </span></li>`
+                let checkoutBasket = `<li> ${item.product.name} <i> -</i> <span>đ${thousandFormat(item.quantity * item.product.price)} </span></li>`
                 $('#checkoutBasket').append(checkoutBasket)
                 totalAmount += item.quantity * item.product.price
                 ++i
             })
-            let checkoutTotal = `<li> Total <i> -</i><span id="checkoutTotal">${totalAmount}</span></li>`
+            let checkoutPromo = `<li> Promo code <i> -</i><span id="checkoutPromo">- đ0</span></li>`
+            $('#checkoutBasket').append(checkoutPromo)
+            let checkoutTotal = `<li> Total <i> -</i><span id="checkoutTotal">đ${thousandFormat(totalAmount)}</span></li>`
             $('#checkoutBasket').append(checkoutTotal)
         }
         $(document).ready(function () {
@@ -633,6 +528,28 @@
             const page = urlParams.get('page');
             window.location.href = `/Store/Search?category=${category}`
         }
+    </script>
+    <script>
+        function addPromoCode() {
+            var code = $('#promoCode').val()
+            if (!code) return 0
+            fetch('/Store/AddPromoCode', {
+                'method': 'post',
+                'body': JSON.stringify({
+                    'code': code
+                }),
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json()).then(data => {
+                var oldPromoCodeValue = parseInt(removeThousanFormat($("#checkoutPromo").text()).split('').slice(3).join(''))
+                $("#checkoutPromo").html("- đ" + thousandFormat(data))
+                var checkoutTotalValue = parseInt(removeThousanFormat($("#checkoutTotal").text()).split('').slice(1).join('')) - data + oldPromoCodeValue
+                $("#checkoutTotal").html('đ' + thousandFormat(checkoutTotalValue))
+            })
+        }
+        function thousandFormat(number) { return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') }
+        function removeThousanFormat(string) { return string.replace(/,/g, '') }
     </script>
 </body>
 </html>
