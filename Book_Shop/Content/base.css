@@ -1,0 +1,216 @@
+﻿/* ------------------------- */
+/*    Khai báo biến Color    */
+/* ------------------------- */
+:root {
+    --white-color: #fff;
+    --black-color: #000;
+    --text-color: #333;
+    --primary-color: #ee4d2d;
+    --primary-color-rgba: rgba(238, 75, 43, 0.08);
+    --border-color: #dbdbdb;
+    --star-gold-color: #ffce3e;
+    --header-sort-bar-height: 46px;
+    --navbar-height: 34px;
+    --header-height: 120px;
+    --header-with-search-height: calc(var(--header-height) - var(--navbar-height));
+}
+/* Tất cả các thẻ con được kế thừa thuộc tính box-sizing từ thẻ lớn nhất */
+* {
+    box-sizing: inherit;
+}
+
+html {
+    /*font-size: 100%; =16px*/
+    /*1rem = 10px*/
+    /*HACK*/
+    font-size: 16px;
+    line-height: 16px; /*Chiều cao mỗi dòng*/
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
+/* ------------------- */
+/*      Reponsive      */ /*(Ứng dụng cho phần App Container để chia phần Category + Home-filter + Home-product)*/
+/* ------------------- */
+
+.grid__row {
+    display: flex; /*những thẻ nằm trong class này sẽ nằm cùng 1 hàng ngang*/
+    flex-wrap: wrap; /*khi tổng độ dài các item trong class này vượt quá thì sẽ tự động xuống hàng*/
+    margin-left: -5px; /*Loại bỏ khoảng thừa 2 phía*/
+    margin-right: -5px;
+}
+/* Category */
+.grid__column-2 {
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 16.6667%;
+}
+/* Moi SP */
+.grid__column-2-4 {
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 20%;
+}
+/* Home-filter + Home-product */
+.grid__column-10 {
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 83.3334%;
+}
+
+/* --------------- */
+/*    Animation    */
+/* --------------- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes growth {
+    from {
+        transform: scale(var(--growth-from));
+    }
+
+    to {
+        transform: scale(var(--growth-to));
+    }
+}
+
+/* ------------------- */
+/*      Selection      */ /*Ứng dụng cho phần Home-filter (giá)*/
+/* ------------------- */
+/* Khung chứa lớn nhất */
+.select-input {
+    position: relative;
+    min-width: 200px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 2px;
+    background-color: var(--white-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+}
+    /* Di chuột vào sẽ hiện ra khung */
+    .select-input:hover .select-input__list {
+        display: block;
+    }
+/* Size "Giá" */
+.select-input__label {
+    font-size: 1.4rem;
+}
+/* Xử lý icon mũi tên */
+.select-input__icon {
+    font-size: 1.4rem;
+    color: rgb(131, 131, 131);
+    position: relative;
+    top: 1px;
+}
+/* UL */
+.select-input__list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 25px;
+    border-radius: 2px;
+    background-color: var(--white-color);
+    padding: 8px 16px;
+    list-style: none;
+    display: none;
+}
+/* Thẻ a */
+.select-input__link {
+    text-decoration: none;
+    font-size: 1.4rem;
+    color: var(--text-color);
+    display: block;
+    padding: 4px 0;
+}
+    /* Khi di chuột vào sẽ đổi màu chữ */
+    .select-input__link:hover {
+        color: var(--primary-color);
+    }
+
+/* ---------------------- */
+/*      Button style      */
+/* ---------------------- */
+.btn {
+    min-width: 124px;
+    height: 34px;
+    border: none;
+    border-radius: 2px;
+    font-size: 1.5rem;
+    padding: 0 12px;
+    outline: none;
+    cursor: pointer;
+    color: var(--text-color);
+    background-color: var(--white-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.6rem;
+    text-decoration: none;
+}
+
+    .btn.btn--nomal:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+.btn--size-s {
+    height: 32px;
+    font-size: 12px;
+    padding: 0 8px;
+}
+
+.btn.btn--primary {
+    color: var(--white-color);
+    background-color: var(--primary-color);
+}
+/* Disabled button khi chưa được sử dụng */
+/* .btn.btn--disabled {
+    color: #949494;
+    cursor: default;
+    background-color: #c3c3c3;
+} */
+/* ------------------------- */
+/*      Phần phân trang      */
+/* ------------------------- */
+/* UL */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+/* Li */
+.pagination-item {
+    margin: 0 12px;
+}
+/* Thẻ a */
+.pagination-item__link {
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: 300;
+    color: #939393;
+    display: block;
+    text-align: center;
+    min-width: 40px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 2px;
+}
+/* Phần tử đầu tiên */
+.pagination-item--active .pagination-item__link {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+    .pagination-item--active .pagination-item__link:hover {
+        background-color: #ed5c3f;
+    }
