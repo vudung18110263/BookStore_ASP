@@ -183,7 +183,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AuthorizeController.cs" />
+    <Compile Include="Models\AuthorizeShipperController.cs" />
+    <Compile Include="Models\AuthorizeAdminController.cs" />
+    <Compile Include="Models\AuthorizeUserController.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -527,6 +529,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="imageProduct\" />
     <Folder Include="UploadFiles\" />
+    <Folder Include="Views\AuthoizeShipper\" />
+    <Folder Include="Views\AuthorizeUser\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

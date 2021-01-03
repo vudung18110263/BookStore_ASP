@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Book_Shop.Controllers
 {
+    [AuthorizeAdminController]
     public class ChartjsController : Controller
     {
         // GET: Chartjs

@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace Book_Shop.Controllers
 {
+    [AuthorizeUserController]
     public class MyShopController : Controller
     {
         private Book_StoreEntities2 db = new Book_StoreEntities2();

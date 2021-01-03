@@ -45,7 +45,7 @@
                         </div>
                         <div class="price">@(@String.Format("{0:n0}",item.price))</div>
                         <div class="quantity">
-                            <input type="number" value="@item.quantity" min="1" class="quantity-field">
+                            <input type="number" value="@item.quantity" min="1" disabled class="quantity-field">
                         </div>
                         <div class="subtotal">@(@String.Format("{0:n0}", item.quantity * item.price))</div>
                     </div>
@@ -79,7 +79,13 @@
                     </span>
                 </div><br />
                 <div>
-                    <strong>Delivery Address:</strong><br />
+                    <strong>Date Order</strong><br />
+                    <span>
+                        @Model.date.Day / @Model.date.Month / @Model.date.Year
+                    </span>
+                </div><br />
+                <div>
+                    <strong>Delivery Address</strong><br />
                     <span>
                         @Model.shippingAddess
                     </span>
