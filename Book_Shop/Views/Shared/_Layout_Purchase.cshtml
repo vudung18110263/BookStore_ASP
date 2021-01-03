@@ -83,8 +83,8 @@
                     @if (Session["userId"] != null)
                     {
                         <li class="header__navbar-item header__navbar-user">
-                            <img src="https://avatar-redirect.appspot.com/google/111617765129302393859?size=400" alt="" class="header__navbar-user-img">
-                            <span class="header__navbar-user-name" style="font-size: 16px">Văn Lượng</span>
+                            <img src="@(Session["avatar"] as string)" alt="" class="header__navbar-user-img">
+                            <span class="header__navbar-user-name" style="font-size: 16px">@(Session["fullname"] as string)</span>
 
                             <ul class="header__navbar-user-menu-a">
                                 <li class="header__navbar-user-item">
