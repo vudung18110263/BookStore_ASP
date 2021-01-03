@@ -404,11 +404,31 @@
                 <div class="purchase-list-page__tab" id="GETTING">
                     <a class="purchase-list-page__tab-label" href="/MyShop/OrderManagement?Status=GETTING">Getting</a>
                 </div>
+                <div class="purchase-list-page__tab" id="DONE">
+                    <a class="purchase-list-page__tab-label" href="/MyShop/OrderManagement?Status=DONE">Done</a>
+                </div>
                 <div class="purchase-list-page__tab" id="CANCELED">
                     <a class="purchase-list-page__tab-label" href="/MyShop/OrderManagement?Status=CANCELED">Canceled</a>
                 </div>
             </div>
         </div>
+
+        @if (ViewBag.Done == "true")
+        {
+            <form action="/MyShop/OrderManagementDone" method="post">
+                <div class="controls">
+                    <label class="control-label">nhập tháng: </label>
+                    <input class="form-control" type="month" name="month" placeholder="Landmark">
+                    <input type="submit" value="view order" />
+                    <input type="submit" onclick="exportOrder()" value="export order" />
+                </div>
+            </form>
+            <script>
+                function exportOrder() {
+                    $.get("/MyShop/Export");
+                };
+            </script>
+        }
 
         <div>
             <div class="basket">
@@ -433,7 +453,7 @@
                             <div class="row makerelative basket-labels2">
                                 @foreach (var item2 in item.orderProduct)
                                 {
-                                    <div> cái này là tên của shop, sửa cho đẹp sau, sửa cho hết vòng lặp sau: @item2.author</div>
+                                    <div>người bán : @item2.author</div>
                                     <div class="col-xs-12 itemlayout">
                                         <div class="item">
                                             <div class="product-image">
@@ -516,6 +536,6 @@
     const urlParams = new URLSearchParams(window.location.search);
     const myParam = urlParams.get('Status');
     $(`#${myParam}`).addClass('purchase-list-page__tab--selected')
-    if (!myParam) $('#PENDING').addClass('purchase-list-page__tab--selected')
+    if (!myParam) $('#DONE').addClass('purchase-list-page__tab--selected')
 </script>
 
