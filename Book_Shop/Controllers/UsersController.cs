@@ -122,12 +122,13 @@ namespace Book_Shop.Controllers
             string password = form["password"].ToString();
             string passwordMD5 = GetMD5(password);
             var user = db.Users.SingleOrDefault(n => n.account == username && n.pass_word == passwordMD5);
-
             if (user == null)
             {
                 return Content("false");
             }
             Session["userId"] = user.id;
+            Session["avatar"] = user.avatar;
+            Session["fullname"] = user.fullname;
             if (user.lever == 3)
                 return Content("isShipper");
             return Content("");
