@@ -80,6 +80,10 @@
                         </a>
                     </li>
                     <!-- Khi đã đăng nhập -->
+                    @if (Session[""] != null)
+                    {
+
+                    }
                     @if (Session["userId"] != null)
                      {
                         <li class="header__navbar-item header__navbar-user">
@@ -94,7 +98,7 @@
                                     <a href="/Store/Purchase" style="font-size: 16px"><strong>Information Order</strong></a>
                                 </li>
                                 <li class="header__navbar-user-item">
-                                    <a href="/MyShop/Index" style="font-size: 16px"><strong>My shop</strong></a>
+                                    <a href="/Users/ChangePassword" style="font-size: 16px"><strong>Change Password</strong></a>
                                 </li>
                                 <li class="header__navbar-user-item header__navbar-user-item--separate">
                                     <a class="" href="/Users/logout" style="font-size: 16px"><strong class="header__navbar-user-item-a">Log out</strong></a>
