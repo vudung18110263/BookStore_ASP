@@ -163,7 +163,7 @@ namespace Book_Shop.Controllers
                 return View();
             }
 
-            user2.pass_word = randomString;
+            user2.pass_word = GetMD5(randomString);
             db.Entry(user2).State = EntityState.Modified;
             db.SaveChanges();
 
