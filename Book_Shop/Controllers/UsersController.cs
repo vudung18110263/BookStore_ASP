@@ -59,16 +59,16 @@ namespace Book_Shop.Controllers
                 ViewBag.Result = "User existed";
                 return View();
             }
-            if (password == confirmPassword)
+            if (password != confirmPassword)
             {
                 ViewBag.Result = "Password not matched";
                 return View();
             }
             if (avatar.FileName != "" && avatar.ContentLength > 0)
             {
-                var path = Server.MapPath("~/UploadFiles/" + user.id + ".PNG");
+                var path = Server.MapPath("~/UploadFiles/" + username + ".PNG");
                 avatar.SaveAs(path);
-                avatarPath = "/UploadFiles/" + user.id + ".PNG";
+                avatarPath = "/UploadFiles/" + username + ".PNG";
             }
             User newUser = new User() { account = username, pass_word = GetMD5(password), lever = 2, mail = email, phone = phone, avatar = avatarPath, paymentId = null, address = address };
             db.Users.Add(newUser);
