@@ -507,6 +507,13 @@ namespace Book_Shop.Controllers
         public ActionResult CancelOrder(int? idOrder)
         {
             var order = db.Orders.Where(x => x.id == idOrder).FirstOrDefault();
+            var listOrderProduct = db.Order_Product.Where(x => x.id == idOrder).ToList();
+            foreach(var item in listOrderProduct)
+            {
+                var product = db.Products.Where(x => x.id == item.productId).FirstOrDefault();
+                product.stock += item.quantity;
+                db.SaveChanges();
+            }
             order.status = "CANCELED";
             db.SaveChanges();
             return RedirectToAction("Purchase", "Store", new { Status = "CANCELED" });
