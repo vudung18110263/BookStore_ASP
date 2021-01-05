@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("Create", "Products", FormMethod.Post, new { encType = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Orders", FormMethod.Post, new { encType = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="admin__layout">

@@ -8,11 +8,14 @@
     margin-left: auto;
 }
 .action-link {
+    display: inline-block;
+    margin: 4px 0;  
+    min-width: 64px;
     padding: 8px 10px;
     background-color: #6c7ae0;
-    color: white;   
+    color: white;
     border-radius: 4px;
-    border-color:transparent;
+    border-color: transparent;
     max-height: 32px;
 }
 .action-link:hover {
