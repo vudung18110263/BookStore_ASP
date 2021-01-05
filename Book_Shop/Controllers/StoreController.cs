@@ -628,7 +628,7 @@ namespace Book_Shop.Controllers
             }
             else
             {
-                links = links.Where(x => (ConvertToUnSign(x.category).Contains(query) || ConvertToUnSign(x.name).Contains(query) || ConvertToUnSign(x.User.fullname).Contains(query)) && x.isable == 1).OrderByDescending(x => x.rate);
+                links = links.Where(x => (ConvertToUnSign(x.category).Contains(query) || ConvertToUnSign(x.name).Contains(query) || ConvertToUnSign(x.User.account).Contains(query)) && x.isable == 1).OrderByDescending(x => x.rate);
             }
             if (page == null) page = 1;
             int pageSize = 8;

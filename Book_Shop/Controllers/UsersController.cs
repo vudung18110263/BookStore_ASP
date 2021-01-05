@@ -54,9 +54,10 @@ namespace Book_Shop.Controllers
             var avatar = Request.Files["Avatar"];
 
             var user = db.Users.SingleOrDefault(n => n.account == username);
-            if (user != null)
+            var user2 = db.Users.SingleOrDefault(n => n.mail == email);
+            if (user != null || user2 !=null)
             {
-                ViewBag.Result = "User existed";
+                ViewBag.Result = "User or Email existed ";
                 return View();
             }
             if (password != confirmPassword)
@@ -183,31 +184,16 @@ namespace Book_Shop.Controllers
         }
         private bool SendView(string EMAIL, string newPassWord)
         {
-            try
-            {
-                ////Configuring webMail class to send emails  
-                ////gmail smtp server  
-                //WebMail.SmtpServer = "smtp.gmail.com";
-                ////gmail port to send emails  
-                //WebMail.SmtpPort = 587;
-                //WebMail.SmtpUseDefaultCredentials = true;
-                ////sending emails with secure protocol  
-                //WebMail.EnableSsl = true;
-                ////EmailId used to send emails from application  
-                //WebMail.UserName = "tranhanam1999hn@gmail.com";
-                //WebMail.Password = "0898546564";
-
-                ////Sender email address.  
-                //WebMail.From = "tranhanam1999hn@gmail.com";
-                ////Send email  ()
+            //try
+            //{
+                
                 new MailHelper().SendMail(EMAIL, "Change Your password", "New you password " + newPassWord, "");
-                //WebMail.Send(to: EMAIL, subject: "Change Your password", body: "New you password " + newPassWord, cc: null, bcc: null, isBodyHtml: true);
-                return true; //"Email Sent Successfully.";
-            }
-            catch (Exception)
-            {
-                return false;// "Problem while sending email, Please check details.";
-            }
+                return true; 
+            ////}
+            ////catch (Exception)
+            ////{
+            //    return false;// "Problem while sending email, Please check details.";
+            ////}
         }
     }
 }
