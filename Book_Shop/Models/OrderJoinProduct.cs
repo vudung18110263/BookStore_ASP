@@ -28,7 +28,7 @@
             imageProduct = product.image;
             descriptionProduct = product.description;
             categoryProduct = product.category;
-            author = product.User.fullname;
+            author = product.User.account;
             authorid = product.authorId;
 
         }

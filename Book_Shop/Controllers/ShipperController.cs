@@ -66,7 +66,7 @@ namespace Book_Shop.Controllers
             var order = db.Orders.Where(x => x.id == idOrder).FirstOrDefault();
             order.status = "DONE";
             db.SaveChanges();
-            return RedirectToAction("Shipper", "Index");
+            return RedirectToAction("Index", "Shipper");
         }
     }
 }
