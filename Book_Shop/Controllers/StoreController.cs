@@ -30,7 +30,7 @@ namespace Book_Shop.Controllers
 
             // 3. Tạo truy vấn, lưu ý phải sắp xếp theo trường nào đó, ví dụ OrderBy
             // theo LinkID mới có thể phân trang.
-            var links = db.Products.OrderBy(x => x.rate);
+            var links = db.Products.Where(x=>x.isable==1).OrderByDescending(x => x.rate);
 
             // 4. Tạo kích thước trang (pageSize) hay là số Link hiển thị trên 1 trang
             int pageSize = 8;
@@ -479,8 +479,7 @@ namespace Book_Shop.Controllers
         public ActionResult Products(int? page)
         {
             if (page == null) page = 1;
-            var links = (from l in db.Products
-                         select l).OrderBy(x => x.id);
+            var links = db.Products.Where(x => x.isable == 1).OrderBy(x => x.rate);
             int pageSize = 8;
             int pageNumber = (page ?? 1);
             return View(links.ToPagedList(pageNumber, pageSize));
@@ -488,7 +487,7 @@ namespace Book_Shop.Controllers
         [AuthorizeUserController]
         public ActionResult Single(int? id)
         {
-            var product = db.Products.Where(x => x.id == id).FirstOrDefault();
+            var product = db.Products.Where(x => x.id == id && x.isable==1).FirstOrDefault();
             return View(product);
         }
         public ActionResult Mail()
@@ -618,11 +617,11 @@ namespace Book_Shop.Controllers
             var links = db.Products.AsEnumerable();
             if (category != null)
             {
-                links = links.Where(x => x.category == category).OrderBy(x => x.rate);
+                links = links.Where(x => x.category == category&& x.isable==1).OrderByDescending(x => x.rate);
             }
             else
             {
-                links = links.Where(x => ConvertToUnSign(x.category).Contains(query) || ConvertToUnSign(x.name).Contains(query) || ConvertToUnSign(x.User.fullname).Contains(query)).OrderBy(x => x.rate);
+                links = links.Where(x => (ConvertToUnSign(x.category).Contains(query) || ConvertToUnSign(x.name).Contains(query) || ConvertToUnSign(x.User.fullname).Contains(query)) && x.isable == 1).OrderByDescending(x => x.rate);
             }
             if (page == null) page = 1;
             int pageSize = 8;

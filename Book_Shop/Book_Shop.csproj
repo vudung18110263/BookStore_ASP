@@ -221,15 +221,6 @@
     <Compile Include="Models\PromoCode.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -494,6 +485,7 @@
     <Content Include="Views\MyShop\Delete.cshtml" />
     <Content Include="Views\Shipper\Index.cshtml" />
     <Content Include="Views\Orders\ViewOrderByMonth.cshtml" />
+    <Content Include="Views\Products\IndexProductUnIsable.cshtml" />
     <None Include="Views\Store\Single.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

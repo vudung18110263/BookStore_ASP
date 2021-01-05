@@ -25,7 +25,7 @@ namespace Book_Shop.Controllers
             List<Product> listproduct = new List<Product>();
             foreach (var item in db.Products)
             {
-                if (item.authorId == id)
+                if (item.authorId == id && item.isable==1)
                 {
                     listproduct.Add(item);
                 }
@@ -74,6 +74,7 @@ namespace Book_Shop.Controllers
             var path = Server.MapPath("~/imageProduct/" + product.id + ".PNG");
             image.SaveAs(path);
             product.image = "/imageProduct/" + product.id + ".PNG";
+            product.isable = 0;
             db.Entry(product).State = EntityState.Modified;
             db.SaveChanges();
             ViewBag.authorId = new SelectList(db.Users, "id", "account", product.authorId);
@@ -98,7 +99,7 @@ namespace Book_Shop.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Products.Find(id);
-            db.Products.Remove(product);
+            product.isable = 2;
             db.SaveChanges();
             return RedirectToAction("Index", "MyShop");
         }

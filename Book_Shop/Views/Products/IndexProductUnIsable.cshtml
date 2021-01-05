@@ -8,7 +8,6 @@
 
 <br />
 <a href="/Products/Create" class="action-link">Create new product</a>
-<a href="/Products/IndexProductUnIsable?page=1" class="action-link">Product confirmation</a>
 <div class="admin__layout">
     <table class="admin__table">
         <thead class="">
@@ -28,24 +27,26 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.id)</td>
-                    <td>@Html.DisplayFor(modelItem => item.name)</td>
-                    <td><img width="80px" height="80px" src="@Html.DisplayFor(modelItem => item.image)" /></td>
-                    <td class="word-break">@Html.DisplayFor(modelItem => item.description)</td>
-                    <td>@Html.DisplayFor(modelItem => item.category)</td>
-                    <td>@Html.DisplayFor(modelItem => item.price)</td>
-                    <td>@Html.DisplayFor(modelItem => item.rate)</td>
-                    <td>@Html.DisplayFor(modelItem => item.stock)</td>
-                    <td>@Html.DisplayFor(modelItem => item.User.account)</td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "action-link" })
-                        @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "action-link" })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "action-link" })
-                    </td>
+                if (item.isable == 0)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.id)</td>
+                        <td>@Html.DisplayFor(modelItem => item.name)</td>
+                        <td><img width="80px" height="80px" src="@Html.DisplayFor(modelItem => item.image)" /></td>
+                        <td class="word-break">@Html.DisplayFor(modelItem => item.description)</td>
+                        <td>@Html.DisplayFor(modelItem => item.category)</td>
+                        <td>@Html.DisplayFor(modelItem => item.price)</td>
+                        <td>@Html.DisplayFor(modelItem => item.rate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.stock)</td>
+                        <td>@Html.DisplayFor(modelItem => item.User.account)</td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "action-link" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "action-link" })
+                            @Html.ActionLink("Allow", "SellAllow", new { id = item.id , page=ViewBag.page }, new { @class = "action-link" })
+                        </td>
 
-                </tr>
-
+                    </tr>
+                }
             }
         </tbody>
     </table>

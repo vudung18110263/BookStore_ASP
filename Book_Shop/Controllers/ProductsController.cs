@@ -24,8 +24,7 @@ namespace Book_Shop.Controllers
 
             // 3. Tạo truy vấn, lưu ý phải sắp xếp theo trường nào đó, ví dụ OrderBy
             // theo LinkID mới có thể phân trang.
-            var links = (from l in db.Products
-                         select l).Include(p => p.User).OrderBy(x => x.id);
+            var links = db.Products.Where(x=>x.isable==1).Include(p => p.User).OrderBy(x => x.id);
 
             // 4. Tạo kích thước trang (pageSize) hay là số Link hiển thị trên 1 trang
             int pageSize = 9;
@@ -36,6 +35,35 @@ namespace Book_Shop.Controllers
 
             // 5. Trả về các Link được phân trang theo kích thước và số trang.
             return View(links.ToPagedList(pageNumber, pageSize));
+        }
+        public ActionResult IndexProductUnIsable(int? page)
+        {
+            // 1. Tham số int? dùng để thể hiện null và kiểu int
+            // page có thể có giá trị là null và kiểu int.
+
+            // 2. Nếu page = null thì đặt lại là 1.
+            if (page == null) page = 1;
+
+            // 3. Tạo truy vấn, lưu ý phải sắp xếp theo trường nào đó, ví dụ OrderBy
+            // theo LinkID mới có thể phân trang.
+            var links = db.Products.Where(x => x.isable == 0).Include(p => p.User).OrderBy(x => x.id);
+
+            // 4. Tạo kích thước trang (pageSize) hay là số Link hiển thị trên 1 trang
+            int pageSize = 9;
+
+            // 4.1 Toán tử ?? trong C# mô tả nếu page khác null thì lấy giá trị page, còn
+            // nếu page = null thì lấy giá trị 1 cho biến pageNumber.
+            int pageNumber = (page ?? 1);
+            ViewBag.page = page;
+            // 5. Trả về các Link được phân trang theo kích thước và số trang.
+            return View(links.ToPagedList(pageNumber, pageSize));
+        }
+        public ActionResult SellAllow(int? id,int? page)
+        {
+            var product = db.Products.Where(x => x.id == id).FirstOrDefault();
+            product.isable = 1;
+            db.SaveChanges();
+            return RedirectToAction("IndexProductUnIsable", new { page = page });
         }
 
         // GET: Products/Details/5
@@ -79,6 +107,7 @@ namespace Book_Shop.Controllers
             var path = Server.MapPath("~/imageProduct/" + product.id + ".PNG");
             image.SaveAs(path);
             product.image = "/imageProduct/" + product.id + ".PNG";
+            product.isable = 1;
             db.Entry(product).State = EntityState.Modified;
             db.SaveChanges();
             ViewBag.authorId = new SelectList(db.Users, "id", "account", product.authorId);
@@ -144,7 +173,7 @@ namespace Book_Shop.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Products.Find(id);
-            db.Products.Remove(product);
+            product.isable = 2;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
