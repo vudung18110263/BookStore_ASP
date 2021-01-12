@@ -9,7 +9,7 @@
     <div class="products-breadcrumb">
         <div class="container">
             <ul>
-                <li><i class="fa fa-home" aria-hidden="true"></i>@Html.ActionLink("Home", "Index", "Store")<span>|</span></li>
+                <li><i class="fa fa-home" aria-hidden="true"></i>@Html.ActionLink("Trang chủ", "Index", "Store")<span>|</span></li>
                 @if (Request.QueryString["category"] != null)
                 {
                     <li>@Model[0].category</li>
@@ -27,17 +27,14 @@
             <ul class="slides">
                 <li>
                     <div class="w3l_banner_nav_right_banner">
-                        <h3>Make your <span>BOOK</span> with Spicy.</h3>
                     </div>
                 </li>
                 <li>
                     <div class="w3l_banner_nav_right_banner1">
-                        <h3>Make your <span>BOOK</span> with Spicy.</h3>
                     </div>
                 </li>
                 <li>
                     <div class="w3l_banner_nav_right_banner2">
-                        <h3>upto <i>50%</i> off.</h3>
                     </div>
                 </li>
             </ul>
@@ -71,7 +68,7 @@
             <div class="wthree_banner_bottom_left_grid">
                 <img src="~/images/4-1.jpg" alt=" " class="img-responsive" />
                 <div class="wthree_banner_bottom_left_grid_pos">
-                    <h4 style="color: white">Discount Offer <span>25%</span></h4>
+                    <h4 style="color: white">Giảm giá đến <span>25%</span></h4>
                 </div>
             </div>
         </div>
@@ -79,7 +76,6 @@
             <div class="wthree_banner_bottom_left_grid">
                 <img src="~/images/5-1.jpg" alt=" " class="img-responsive" />
                 <div class="wthree_banner_btm_pos">
-                    <h3>introducing <span>best store</span> for <i>groceries</i></h3>
                 </div>
             </div>
         </div>
@@ -87,7 +83,6 @@
             <div class="wthree_banner_bottom_left_grid">
                 <img src="~/images/6-1.jpg" alt=" " class="img-responsive" />
                 <div class="wthree_banner_btm_pos1">
-                    <h3 style="color: white">Save <span>Upto</span> $10</h3>
                 </div>
             </div>
         </div>
@@ -100,7 +95,7 @@
     <div class="container">
         @if (Request.QueryString["category"] == null && Request.QueryString["q"] == null)
         {
-            <h3>Hot Offers</h3>
+            <h3>Sản phẩm đề xuất</h3>
         }
         else if (Request.QueryString["q"] == null)
         {
@@ -108,7 +103,7 @@
         }
         else if (Request.QueryString["category"] == null)
         {
-            <h3>Search result</h3>
+            <h3>Kết quả tìm kiếm</h3>
         }
         <div class="agile_top_brands_grids">
             @foreach (var item in Model)
@@ -129,7 +124,7 @@
                                             <span style="font-size: 1.2rem">đ@(@String.Format("{0:n0}", item.price))</span><h4 style="display: inline"><span style="color: red">đ@(@String.Format("{0:n0}", item.price*1.5))</span></h4>
                                         </div>
                                         <div class="snipcart-details top_brand_home_details">
-                                            <input type="button" onclick="addToCart(@item.id)" value="Add to cart" class="button" />
+                                            <input type="button" onclick="addToCart(@item.id)" value="Thêm vào giỏ hàng" class="button" />
                                         </div>
                                     </div>
                                 </figure>
@@ -150,7 +145,7 @@
 <!-- fresh-vegetables -->
 <div class="fresh-vegetables">
     <div class="container">
-        <h3>Top Products</h3>
+        <h3>Sản phẩm tốt</h3>
         <div class="w3l_fresh_vegetables_grids">
             <div class="col-md-3 w3l_fresh_vegetables_grid w3l_fresh_vegetables_grid_left">
                 <img src="~/images/img2.jpg" style="height: 410px" alt=" " class="img-responsive" />
@@ -172,7 +167,7 @@
                     <div class="w3l_fresh_vegetables_grid1_bottom">
                         <img src="~/images/10-1.jpg" alt=" " class="img-responsive" />
                         <div class="w3l_fresh_vegetables_grid1_bottom_pos">
-                            <h5>Special Offers</h5>
+                            <h5>Sản phẩm đặc biệt</h5>
                         </div>
                     </div>
                 </div>

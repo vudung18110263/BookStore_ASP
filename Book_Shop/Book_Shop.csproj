@@ -171,6 +171,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ChartjsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageUserController.cs" />
     <Compile Include="Controllers\MyShopController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\Order_ProductController.cs" />
@@ -229,10 +230,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\demo\chart-area-demo.js" />
+    <Content Include="Content\assets\demo\chart-bar-demo.js" />
+    <Content Include="Content\assets\demo\chart-pie-demo.js" />
+    <Content Include="Content\assets\demo\datatables-demo.js" />
+    <Content Include="Content\assets\img\error-404-monochrome.svg" />
     <Content Include="Content\base.css" />
+    <Content Include="Content\css\styles.css" />
     <Content Include="Content\datatables-demo.js" />
     <Content Include="Content\detail.css" />
     <Content Include="Content\grid.css" />
+    <Content Include="Content\js\scripts.js" />
     <Content Include="Content\login.css" />
     <Content Include="Content\purchase.css" />
     <Content Include="Content\register.css" />
@@ -486,6 +494,10 @@
     <Content Include="Views\Shipper\Index.cshtml" />
     <Content Include="Views\Orders\ViewOrderByMonth.cshtml" />
     <Content Include="Views\Products\IndexProductUnIsable.cshtml" />
+    <Content Include="Views\ManageUser\Index.cshtml" />
+    <Content Include="Views\ManageUser\Disable.cshtml" />
+    <Content Include="Views\ManageUser\Enable.cshtml" />
+    <Content Include="Views\Shared\_Layout_admin.cshtml" />
     <None Include="Views\Store\Single.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -516,6 +528,7 @@
     <Content Include="Views\Shared\_Layout_Store.cshtml" />
     <Content Include="Views\Store\About.cshtml" />
     <Content Include="Views\Store\Products.cshtml" />
+    <Content Include="Views\Users\ConfirmGmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
