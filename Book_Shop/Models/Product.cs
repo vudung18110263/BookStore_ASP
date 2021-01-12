@@ -11,11 +11,11 @@ namespace Book_Shop.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    
+
         public int id { get; set; }
         public string name { get; set; }
         public string image { get; set; }

@@ -55,12 +55,12 @@
             <nav class="header__navbar hide-on-mobile-tablet">
                 <ul class="header__navbar-list">
                     <li>
-                        <a href="/MyShop/Index" class="header__navbar-item header__navbar-item--separate header__navbar-item--strong" style="font-size: 16px;">Seller channel</a>
+                        <a href="/MyShop/Index" class="header__navbar-item header__navbar-item--separate header__navbar-item--strong" style="font-size: 16px;">Kênh người bán</a>
                     </li>
                     
                     <li class="header__navbar-item">
                         <a href="/Store/About" class="header__navbar-item header__navbar-item--separate header__navbar-item--strong" style="font-size: 16px;">
-                            About Us
+                            Thông tin về chúng tôi
                         </a>
                     </li>
                     <li class="header__navbar-item header__navbar-item--separate header__navbar-item--strong" style="cursor: text;font-size: 16px;">
@@ -76,7 +76,7 @@
                     <li class="header__navbar-item header__navbar-item--has-notify header__navbar-item--separate header__navbar-item--strong" style="font-size: 16px;">
                         <a href="/Store/Mail" class="header__navbar-icon-link">
                             <i class="header__navbar-icon far fa-question-circle" style="font-size: 16px;"></i>
-                            Contact Us
+                            Liên hệ với chúng tôi
                         </a>
                     </li>
                     <!-- Khi đã đăng nhập -->
@@ -92,16 +92,16 @@
 
                             <ul class="header__navbar-user-menu-a">
                                 <li class="header__navbar-user-item">
-                                    <a href="/Store/Info" style="font-size: 16px;"><strong>Information</strong></a>
+                                    <a href="/Store/Info" style="font-size: 16px;"><strong>Thong tin</strong></a>
                                 </li>
                                 <li class="header__navbar-user-item">
-                                    <a href="/Store/Purchase" style="font-size: 16px"><strong>Information Order</strong></a>
+                                    <a href="/Store/Purchase" style="font-size: 16px"><strong>Thông tin đơn hàng</strong></a>
                                 </li>
                                 <li class="header__navbar-user-item">
-                                    <a href="/Users/ChangePassword" style="font-size: 16px"><strong>Change Password</strong></a>
+                                    <a href="/Users/ChangePassword" style="font-size: 16px"><strong>Đổi mật khẩu</strong></a>
                                 </li>
                                 <li class="header__navbar-user-item header__navbar-user-item--separate">
-                                    <a class="" href="/Users/logout" style="font-size: 16px"><strong class="header__navbar-user-item-a">Log out</strong></a>
+                                    <a class="" href="/Users/logout" style="font-size: 16px"><strong class="header__navbar-user-item-a">Đăng xuất</strong></a>
                                 </li>
                             </ul>
                         </li>
@@ -109,8 +109,8 @@
                     else
                     {
                         <!-- Chưa đăng nhập -->
-                        <li><a class="header__navbar-item header__navbar-item--strong header__navbar-item--separate" style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Login</a></li>
-                        <li><a class="header__navbar-item header__navbar-item--strong" style="font-size: 16px" data-toggle="modal" href="/Users/Register">Sign Up</a></li>
+                        <li><a class="header__navbar-item header__navbar-item--strong header__navbar-item--separate" style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Đăng nhập</a></li>
+                        <li><a class="header__navbar-item header__navbar-item--strong" style="font-size: 16px" data-toggle="modal" href="/Users/Register">Đăng ký</a></li>
 
                     }
                 </ul>
@@ -137,19 +137,19 @@
                     </label>
                     <ul class="nav__mobile-list">
                         <li>
-                            <a href="" class="nav__mobile-link">Home</a>
+                            <a href="" class="nav__mobile-link">Trang chủ</a>
                         </li>
                         <li>
-                            <a href="" class="nav__mobile-link">About</a>
+                            <a href="" class="nav__mobile-link">Chi tiết</a>
                         </li>
                         <li>
-                            <a href="" class="nav__mobile-link">Category</a>
+                            <a href="" class="nav__mobile-link">Loại sahcs</a>
                         </li>
                         <li>
-                            <a href="" class="nav__mobile-link">News</a>
+                            <a href="" class="nav__mobile-link">Tin tức</a>
                         </li>
                         <li>
-                            <a href="" class="nav__mobile-link">Contact</a>
+                            <a href="" class="nav__mobile-link">Liên hệ</a>
                         </li>
                     </ul>
                 </nav>
@@ -168,7 +168,7 @@
                 </div>
                 <div class="header__search">
                     <form action="/Store/Search" method="get" class="header__search-input-wrap">
-                        <input style="width: 87%; color: #e9e2e2" type="text" name="q" class="header__search-input" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required>
+                        <input style="width: 87%; color: #e9e2e2" type="text" name="q" class="header__search-input" value="Tìm sản phẩm ở đây..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required>
                         <button class="header__search-btn" type="submit">
                             <i class="header__search-btn-icon fas fa-search"></i>
                         </button>
@@ -236,15 +236,15 @@
                     <div class="w3l_fresh_vegetables_grid w3l_fresh_vegetables_grid_left">
                         <div class="w3l_fresh_vegetables_grid2">
                             <ul>
-                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Skill')">SKILL BOOKS</a></li>
-                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Comic')">COMIC BOOKS</a></li>
-                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Fiction')">FICTTION BOOKS</a></li>
-                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Economic')">ECONOMIC BOOKS</a></li>
-                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Children')">CHILDRENT'S BOOKS</a></li>
-                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Journal')">JOURNAL</a></li>
-                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Textbook')">TEXTBOOKS</a></li>
-                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('English')">ENGLISH BOOKS</a></li>
-                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Skill')">SPECIALIZED BOOKS</a></li>
+                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Skill')">SÁCH KỸ NĂNG</a></li>
+                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Comic')">TRUYỆN TRANH</a></li>
+                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Fiction')">SÁCH VIỄN TƯỞNG</a></li>
+                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Economic')">SÁCH KINH TẾ</a></li>
+                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Children')">SÁCH TRẺ EM</a></li>
+                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Journal')">TẠP CHÍ</a></li>
+                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Textbook')">SÁCH GIÁO KHOA</a></li>
+                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('English')">SÁCH TIẾNG ANH</a></li>
+                                <li class="navbar-nav-a"><i class="fa fa-check" aria-hidden="true"></i><a style="cursor: pointer" onclick="selectCategory('Skill')">SÁCH ĐẶC BIỆT</a></li>
                             </ul>
                         </div><!-- /.navbar-collapse -->
                     </div>
@@ -285,10 +285,10 @@
                 <h3>information</h3>
                 <ul class="w3_footer_grid_list">
                     <li><a href="events.html">Events</a></li>
-                    <li>@Html.ActionLink("About_", "About", "Store")</li>
-                    <li><a href="products.html">Best Deals</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="short-codes.html">Short Codes</a></li>
+                    <li>@Html.ActionLink("Chi tiết", "About", "Store")</li>
+                    <li><a href="products.html">Giao dịch tốt nhất</a></li>
+                    <li><a href="services.html">Dịch vụ</a></li>
+                    <li><a href="short-codes.html">Mã giảm giá</a></li>
                 </ul>
             </div>
             <div class="col-md-3 w3_footer_grid">
@@ -364,21 +364,21 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-                        <label for="tab-1" class="tab">Sign In</label>
+                        <label for="tab-1" class="tab">Đăng ký</label>
                     </div>
                     <form method="post" id="frm-login">
                         <div class="modal-body">
                             <div id="err_login"></div>
                             <div id="login_here">
-                                <label>Username : </label>
+                                <label>Tên đăng nhập : </label>
                                 <input type="text" class="form-control" name="account" id="username" style="background: rgba(255,255,255,.1);border: none;padding: 15px 20px;border-radius: 25px; margin: 10px 0; color:white;" />
-                                <label>Password : </label>
+                                <label>Mật khẩu : </label>
                                 <input type="password" class="form-control" name="password" id="password" style="color:white;background: rgba(255,255,255,.1);border: none;padding: 15px 20px;border-radius: 25px; margin: 10px 0;" />
                                 <br />
                                 <a href="/Users/ForgotPassword" class="text-danger">Quên mật khẩu</a>
                             </div>
                             <br />
-                            <button type="submit" class="form-control btn-primary" id="login_btn" style="border: none;padding: 5px 20px;border-radius: 25px; margin: 10px 0;height: 50px;color: #fff;display: block;">SIGN IN</button>
+                            <button type="submit" class="form-control btn-primary" id="login_btn" style="border: none;padding: 5px 20px;border-radius: 25px; margin: 10px 0;height: 50px;color: #fff;display: block;">ĐĂNG NHẬP</button>
                             <div id="waiting" style="display: none;">
                                 <div class="progress progress-striped active">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>

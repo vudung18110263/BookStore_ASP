@@ -30,7 +30,7 @@ namespace Book_Shop.Controllers
 
             // 3. Tạo truy vấn, lưu ý phải sắp xếp theo trường nào đó, ví dụ OrderBy
             // theo LinkID mới có thể phân trang.
-            var links = db.Products.Where(x=>x.isable==1).OrderByDescending(x => x.rate);
+            var links = db.Products.Where(x=>x.isable==1 && x.User.isActive == 1).OrderByDescending(x => x.rate);
 
             // 4. Tạo kích thước trang (pageSize) hay là số Link hiển thị trên 1 trang
             int pageSize = 8;

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Security.Cryptography;
+using System.Web.Helpers;
 
 namespace Book_Shop.Controllers
 {
@@ -72,9 +73,33 @@ namespace Book_Shop.Controllers
                 avatarPath = "/UploadFiles/" + username + ".PNG";
             }
             User newUser = new User() { account = username, pass_word = GetMD5(password), lever = 2, mail = email, phone = phone, avatar = avatarPath, paymentId = null, address = address };
-            db.Users.Add(newUser);
-            db.SaveChanges();
-            return Redirect("/");
+            TempData["user"] = newUser;
+            string confirmMail = RandomString(8);
+            TempData["confirmMail"] = confirmMail;
+            new MailHelper().SendMail(newUser.mail, "Confirm Gmail", "Ma xac nhan Gmail " + confirmMail, "");
+            //db.Users.Add(newUser);
+            //db.SaveChanges();
+            return RedirectToAction("ConfirmGmail");
+        }
+        public ActionResult ConfirmGmail()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ConfirmGmail(string confirm)
+        {
+            User newuser = TempData["user"] as User;
+                if(confirm == TempData["confirmMail"] as string)
+                {
+                    db.Users.Add(newuser);
+                    db.SaveChanges();
+                    return Redirect("/");
+                }
+                else
+                {
+                    ViewBag.error = "Mã xác nhận không đúng";
+                }
+            return View();
         }
         public ActionResult ChangePassword()
         {
@@ -184,16 +209,46 @@ namespace Book_Shop.Controllers
         }
         private bool SendView(string EMAIL, string newPassWord)
         {
-            //try
-            //{
-                
+            try
+            {
+
                 new MailHelper().SendMail(EMAIL, "Change Your password", "New you password " + newPassWord, "");
-                return true; 
-            ////}
-            ////catch (Exception)
-            ////{
-            //    return false;// "Problem while sending email, Please check details.";
-            ////}
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;// "Problem while sending email, Please check details.";
+            }
         }
+        private bool SendViewConfirGmail(string EMAIL, string a)
+        {
+            ViewBag.Kq = EMAIL;
+            try
+            {
+                //Configuring webMail class to send emails  
+                //gmail smtp server  
+                WebMail.SmtpServer = "smtp.gmail.com";
+                //gmail port to send emails  
+                WebMail.SmtpPort = 587;
+                WebMail.SmtpUseDefaultCredentials = true;
+                //sending emails with secure protocol  
+                WebMail.EnableSsl = true;
+                //EmailId used to send emails from application  
+                WebMail.UserName = "tiensony1505@gmail.com";
+                WebMail.Password = "scdldht1999";
+
+                //Sender email address.  
+                //WebMail.From = "tranhanam1999@gmail.com";
+
+                //Send email  
+                WebMail.Send(to: EMAIL, subject: "Xác nhận gmail", body: "Mã xác nhận: " + a, cc: null, bcc: null, isBodyHtml: true);
+                return true; //"Email Sent Successfully.";
+            }
+            catch (Exception)
+            {
+                return false;// "Problem while sending email, Please check details.";
+            }
+        }
+
     }
 }
