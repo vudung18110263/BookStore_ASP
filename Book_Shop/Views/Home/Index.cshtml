@@ -3,6 +3,25 @@
     Layout = "~/Views/Shared/_Layout_admin.cshtml";
 }
 
-<div class="jumbotron">
-    <h1>TRANG CỦA ADMIN</h1>
-</div>
+    <div class="jumbotron">
+        @if (Session["userId"] == null)
+        {
+            <<h1>CHƯA ĐĂNG NHẬP</h1>
+        }
+        else
+        {
+            string lever = Session["lever"].ToString();
+            if (lever == "1")
+            {
+                <h1>TRANG CỦA ADMIN</h1>
+            }
+            else if (lever == "2")
+            {
+               <h1>TRANG CỦA NGƯỜI BÁN</h1>
+            }
+            else if (lever == "3")
+            {
+               <h1>TRANG CỦA SHIPPER</h1>
+            }
+        }
+    </div>

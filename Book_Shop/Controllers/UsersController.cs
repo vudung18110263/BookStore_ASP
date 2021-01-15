@@ -155,6 +155,7 @@ namespace Book_Shop.Controllers
             Session["userId"] = user.id;
             Session["avatar"] = user.avatar;
             Session["fullname"] = user.fullname;
+            Session["lever"] = user.lever;
             if (user.lever == 3)
                 return Content("isShipper");
             return Content("");
@@ -164,7 +165,11 @@ namespace Book_Shop.Controllers
         {
             Session.Clear();//remove session
             return Redirect("/");
-
+        }
+        public ActionResult logoutAdmin()
+        {
+            Session.Clear();//remove session
+            return Redirect("/Home/Index");
         }
         public ActionResult UplaodImage(string image)
         {
