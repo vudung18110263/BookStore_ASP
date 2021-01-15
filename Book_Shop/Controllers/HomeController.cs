@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using Book_Shop.Models;
 namespace Book_Shop.Controllers
 {
     public class HomeController : Controller

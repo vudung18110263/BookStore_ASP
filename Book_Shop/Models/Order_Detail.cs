@@ -47,7 +47,7 @@ namespace Book_Shop.Models
             }
             else
                 promoValue = 0;
-            PriceALl = priceALl-Convert.ToInt32(promoValue);
+            PriceALl = priceALl - Convert.ToInt32(promoValue);
             shippingType = orther.shippingType;
         }
 

@@ -1,14 +1,7 @@
 ﻿using Book_Shop.Models;
-using Newtonsoft.Json.Linq;
-using PagedList;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Web.Mvc;
 namespace Book_Shop.Controllers
 {
@@ -47,7 +40,7 @@ namespace Book_Shop.Controllers
                         orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
                         listorderProJoinProducts.Add(orderProJoinProduct);
                         priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(item.shippingType) * 15000;
-                        
+
                     }
                     Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL);
                     result.Add(order_Detail);
@@ -61,7 +54,7 @@ namespace Book_Shop.Controllers
                 return View();
             }
         }
-        public ActionResult Deliveried (int? idOrder)
+        public ActionResult Deliveried(int? idOrder)
         {
             var order = db.Orders.Where(x => x.id == idOrder).FirstOrDefault();
             order.status = "DONE";

@@ -420,12 +420,14 @@
                     <label class="control-label">nhập tháng: </label>
                     <input class="form-control" type="month" name="month" placeholder="Landmark">
                     <input type="submit" value="view order" />
-                    <input type="submit" onclick="exportOrder()" value="export order" />
                 </div>
             </form>
+            <input type="submit" onclick="exportOrder()" value="export order" />
             <script>
                 function exportOrder() {
-                    $.get("/MyShop/Export");
+                    $.get("/MyShop/Export", name => {
+                        window.open("https://localhost:44327/MyShop/Download?nameExcel=" + name);
+                    })
                 };
             </script>
         }
