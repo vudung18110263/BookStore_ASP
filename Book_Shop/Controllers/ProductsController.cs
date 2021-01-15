@@ -24,7 +24,7 @@ namespace Book_Shop.Controllers
 
             // 3. Tạo truy vấn, lưu ý phải sắp xếp theo trường nào đó, ví dụ OrderBy
             // theo LinkID mới có thể phân trang.
-            var links = db.Products.Where(x=>x.isable==1).Include(p => p.User).OrderBy(x => x.id);
+            var links = db.Products.Where(x => x.isable == 1).Include(p => p.User).OrderBy(x => x.id);
 
             // 4. Tạo kích thước trang (pageSize) hay là số Link hiển thị trên 1 trang
             int pageSize = 9;
@@ -58,7 +58,7 @@ namespace Book_Shop.Controllers
             // 5. Trả về các Link được phân trang theo kích thước và số trang.
             return View(links.ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult SellAllow(int? id,int? page)
+        public ActionResult SellAllow(int? id, int? page)
         {
             var product = db.Products.Where(x => x.id == id).FirstOrDefault();
             product.isable = 1;

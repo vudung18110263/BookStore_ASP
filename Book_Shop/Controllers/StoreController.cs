@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
@@ -30,7 +29,7 @@ namespace Book_Shop.Controllers
 
             // 3. Tạo truy vấn, lưu ý phải sắp xếp theo trường nào đó, ví dụ OrderBy
             // theo LinkID mới có thể phân trang.
-            var links = db.Products.Where(x=>x.isable==1 && x.User.isActive == 1).OrderByDescending(x => x.rate);
+            var links = db.Products.Where(x => x.isable == 1 && x.User.isActive == 1).OrderByDescending(x => x.rate);
 
             // 4. Tạo kích thước trang (pageSize) hay là số Link hiển thị trên 1 trang
             int pageSize = 8;
@@ -108,7 +107,7 @@ namespace Book_Shop.Controllers
                 }
             }
             catch
-            {  }
+            { }
             return orders;
         }
         //thanh toan
@@ -121,7 +120,7 @@ namespace Book_Shop.Controllers
                 return RedirectToAction("Checkout2", "Store", new { notification = Notification });
 
 
-            string idPromo=null;
+            string idPromo = null;
 
             int Userid = Convert.ToInt32(Session["userId"]);
             string payOption = form["payOption"];
@@ -135,7 +134,7 @@ namespace Book_Shop.Controllers
 
 
             /* ======================================= chua tru ma giam gia */
-            if(promoCode!=null)
+            if (promoCode != null)
             {
                 var promode = db.PromoCodes.Where(x => x.code == promoCode).FirstOrDefault();
                 if (promode != null)
@@ -147,9 +146,9 @@ namespace Book_Shop.Controllers
             TempData["orders"] = orders;
             if (payOption == "2")
             {
-                return RedirectToAction("payMomo","Store");
+                return RedirectToAction("payMomo", "Store");
             }
-            return RedirectToAction("Pay", "Store") ;
+            return RedirectToAction("Pay", "Store");
         }
         public ActionResult Pay()
         {
@@ -208,7 +207,7 @@ namespace Book_Shop.Controllers
             int tempPromoid = 0;
             if (orders[0].promoid != null)
                 tempPromoid = (int)orders[0].promoid;
-            var promo = db.PromoCodes.Where(x => x.id ==tempPromoid).FirstOrDefault();
+            var promo = db.PromoCodes.Where(x => x.id == tempPromoid).FirstOrDefault();
             if (promo != null)
             {
                 promoValue = promo.value ?? default(int);
@@ -362,10 +361,10 @@ namespace Book_Shop.Controllers
 
             if (signature != Request["signature"].ToString())
             {
-                
+
             }
             string status_code = Request["status_code"].ToString();
-            if(status_code!="0")
+            if (status_code != "0")
             {
                 order.payment = "momo";
                 order.status = "thanh Toan that bai";//chờ xác nhận
@@ -412,9 +411,9 @@ namespace Book_Shop.Controllers
                 product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
                 orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
                 listorderProJoinProducts.Add(orderProJoinProduct);
-                priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity ;
+                priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity;
             }
-            priceALL+= Convert.ToInt32(order.shippingType) * 15000;
+            priceALL += Convert.ToInt32(order.shippingType) * 15000;
             Order_Detail order_Detail = new Order_Detail(order, listorderProJoinProducts, priceALL);
 
             return View(order_Detail);
@@ -461,7 +460,7 @@ namespace Book_Shop.Controllers
                         product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
                         orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
                         listorderProJoinProducts.Add(orderProJoinProduct);
-                        priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity ;
+                        priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity;
                     }
                     priceALL += Convert.ToInt32(item.shippingType) * 15000;
                     Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL);
@@ -487,7 +486,7 @@ namespace Book_Shop.Controllers
         [AuthorizeUserController]
         public ActionResult Single(int? id)
         {
-            var product = db.Products.Where(x => x.id == id && x.isable==1).FirstOrDefault();
+            var product = db.Products.Where(x => x.id == id && x.isable == 1).FirstOrDefault();
             return View(product);
         }
         public ActionResult Mail()
@@ -508,7 +507,7 @@ namespace Book_Shop.Controllers
         {
             var order = db.Orders.Where(x => x.id == idOrder).FirstOrDefault();
             var listOrderProduct = db.Order_Product.Where(x => x.id == idOrder).ToList();
-            foreach(var item in listOrderProduct)
+            foreach (var item in listOrderProduct)
             {
                 var product = db.Products.Where(x => x.id == item.productId).FirstOrDefault();
                 product.stock += item.quantity;
@@ -624,7 +623,7 @@ namespace Book_Shop.Controllers
             var links = db.Products.AsEnumerable();
             if (category != null)
             {
-                links = links.Where(x => x.category == category&& x.isable==1).OrderByDescending(x => x.rate);
+                links = links.Where(x => x.category == category && x.isable == 1).OrderByDescending(x => x.rate);
             }
             else
             {

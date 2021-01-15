@@ -3,10 +3,10 @@ using Common;
 using System;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Web.Mvc;
 using System.Security.Cryptography;
+using System.Text;
 using System.Web.Helpers;
+using System.Web.Mvc;
 
 namespace Book_Shop.Controllers
 {
@@ -56,7 +56,7 @@ namespace Book_Shop.Controllers
 
             var user = db.Users.SingleOrDefault(n => n.account == username);
             var user2 = db.Users.SingleOrDefault(n => n.mail == email);
-            if (user != null || user2 !=null)
+            if (user != null || user2 != null)
             {
                 ViewBag.Result = "User or Email existed ";
                 return View();
@@ -89,16 +89,16 @@ namespace Book_Shop.Controllers
         public ActionResult ConfirmGmail(string confirm)
         {
             User newuser = TempData["user"] as User;
-                if(confirm == TempData["confirmMail"] as string)
-                {
-                    db.Users.Add(newuser);
-                    db.SaveChanges();
-                    return Redirect("/");
-                }
-                else
-                {
-                    ViewBag.error = "Mã xác nhận không đúng";
-                }
+            if (confirm == TempData["confirmMail"] as string)
+            {
+                db.Users.Add(newuser);
+                db.SaveChanges();
+                return Redirect("/");
+            }
+            else
+            {
+                ViewBag.error = "Mã xác nhận không đúng";
+            }
             return View();
         }
         public ActionResult ChangePassword()

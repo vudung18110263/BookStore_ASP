@@ -1,13 +1,14 @@
 ﻿using Book_Shop.Models;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web.Mvc;
+using OfficeOpenXml;
 using PagedList;
 using System;
-using OfficeOpenXml;
 using System.Collections.Generic;
-
+using System.Data.Entity;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Book_Shop.Controllers
 {
@@ -30,7 +31,7 @@ namespace Book_Shop.Controllers
 
             // 3. Tạo truy vấn, lưu ý phải sắp xếp theo trường nào đó, ví dụ OrderBy
             // theo LinkID mới có thể phân trang.
-            var links = db.Orders.Include(o => 
+            var links = db.Orders.Include(o =>
             o.PromoCode).Include(o => o.User).OrderByDescending(x => x.date);
 
             // 4. Tạo kích thước trang (pageSize) hay là số Link hiển thị trên 1 trang
@@ -49,7 +50,7 @@ namespace Book_Shop.Controllers
             var now = DateTime.Now;
             int monthPie, yearPie;
             string monthYear = form["month"];
-            var orders=db.Orders.Include(o => o.PromoCode)
+            var orders = db.Orders.Include(o => o.PromoCode)
             .Include(o => o.User).OrderByDescending(x => x.date);
             if (monthYear != "")
             {
@@ -62,30 +63,53 @@ namespace Book_Shop.Controllers
             }
             return View(orders.ToList());
         }
+        private Dictionary<string, string> GetMineTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".xls","application/vnd.ms-excel" },
+                {".xlsx","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }
+            };
+        }
         public ActionResult Export()
         {
-            string monthYear="";
+            string monthYear = "";
             var now = DateTime.Now;
-            if (TempData["monthYear"]!=null)
+            if (TempData["monthYear"] != null)
                 monthYear = TempData["monthYear"] as string;
-            string nameExcel = "myexport" + monthYear 
-                +now.Hour.ToString() +"_"
-                +now.Minute.ToString()+"_"
-                +now.Second.ToString();
-            var result=ExportData(nameExcel, monthYear);
+            string nameExcel = "myexport" + monthYear
+                + now.Hour.ToString() + "_"
+                + now.Minute.ToString() + "_"
+                + now.Second.ToString();
+            var result = ExportData(nameExcel, monthYear);
             if (result)
                 ViewBag.message = "Export successfully";
             else
                 ViewBag.message = "Export Fail";
-            return RedirectToAction("Index");
+
+            return Json(nameExcel, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult Download(string nameExcel)
+        {
+            string filename = Server.MapPath("/") + "export\\" + nameExcel + ".xlsx";
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(filename, FileMode.Open))
+            {
+                stream.CopyTo(memory);
+            }
+            memory.Position = 0;
+            var ext = Path.GetExtension(filename).ToLowerInvariant();
+            var a = File(memory, GetMineTypes()[ext], Path.GetFileName(filename));
+            return a;
         }
 
-        private bool ExportData(string nameExcel,string monthYear)
+        private bool ExportData(string nameExcel, string monthYear)
         {
             bool result = false;
             try
             {
-                string filename = Server.MapPath("/") + "\\export\\" + nameExcel+ ".xlsx";
+                string filename = Server.MapPath("/") + "\\export\\" + nameExcel + ".xlsx";
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 ExcelPackage pck = new ExcelPackage(new System.IO.FileInfo(filename));
                 //create new sheet
@@ -96,14 +120,14 @@ namespace Book_Shop.Controllers
                 int yearPie;
                 //get month 
                 //get data from database
-                var orders = db.Orders.Where(x=>x.status == "DONE").Include(o => o.PromoCode)
+                var orders = db.Orders.Where(x => x.status == "DONE").Include(o => o.PromoCode)
                 .Include(o => o.User).OrderByDescending(x => x.date).ToList();
                 if (monthYear != "")
                 {
                     monthPie = Convert.ToInt32(monthYear.Substring(5, 2));
                     yearPie = Convert.ToInt32(monthYear.Substring(0, 4));
                     orders = db.Orders.Where(x => x.date.Month == monthPie
-                         && x.date.Year == yearPie && x.status=="DONE").Include(o => o.PromoCode)
+                         && x.date.Year == yearPie && x.status == "DONE").Include(o => o.PromoCode)
                          .Include(o => o.User).OrderByDescending(x => x.date).ToList();
                 }
 
@@ -139,7 +163,7 @@ namespace Book_Shop.Controllers
                 ws.Cells["F1"].Value = "status";
                 ws.Cells["G1"].Value = "date";
 
-            foreach (var item in result2)
+                foreach (var item in result2)
                 {
 
                     ws.Cells[string.Format("A{0}", StartRow)].Value = item.id;
@@ -148,8 +172,8 @@ namespace Book_Shop.Controllers
                     ws.Cells[string.Format("D{0}", StartRow)].Value = item.promoValue;
                     ws.Cells[string.Format("E{0}", StartRow)].Value = item.PriceALl;
                     ws.Cells[string.Format("F{0}", StartRow)].Value = item.status;
-                    ws.Cells[string.Format("G{0}", StartRow)].Value = item.date.Day.ToString() +"/"
-                        +item.date.Month.ToString()+"/" +item.date.Year.ToString();
+                    ws.Cells[string.Format("G{0}", StartRow)].Value = item.date.Day.ToString() + "/"
+                        + item.date.Month.ToString() + "/" + item.date.Year.ToString();
                     StartRow++;
                 }
                 pck.Save();

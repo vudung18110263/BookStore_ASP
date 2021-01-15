@@ -1,16 +1,12 @@
 ﻿using Book_Shop.Models;
-using Newtonsoft.Json.Linq;
-using PagedList;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Web.Mvc;
-using OfficeOpenXml;
 
 namespace Book_Shop.Controllers
 {
@@ -25,7 +21,7 @@ namespace Book_Shop.Controllers
             List<Product> listproduct = new List<Product>();
             foreach (var item in db.Products)
             {
-                if (item.authorId == id && item.isable==1)
+                if (item.authorId == id && item.isable == 1)
                 {
                     listproduct.Add(item);
                 }
@@ -122,7 +118,7 @@ namespace Book_Shop.Controllers
             if (ModelState.IsValid)
             {
                 var image = Request.Files["image"];
-                if(image.ContentLength != 0)
+                if (image.ContentLength != 0)
                 {
                     var path = Server.MapPath("~/imageProduct/" + product.name + ".png");
                     image.SaveAs(path);
@@ -166,7 +162,7 @@ namespace Book_Shop.Controllers
         {
             var a = db.Orders.ToList();
             if (Session["userId"] == null)//kiem tra dang nhập ?
-                return RedirectToAction("Index","Store");
+                return RedirectToAction("Index", "Store");
 
             //lấy userid trên session
             var temp = Session["userId"].ToString();
@@ -200,20 +196,20 @@ namespace Book_Shop.Controllers
                     {
                         product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
                         orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
-                        if(orderProJoinProduct.authorid== idUser)
+                        if (orderProJoinProduct.authorid == idUser)
                         {
                             temp2 = true;
                             listorderProJoinProducts.Add(orderProJoinProduct);
                             priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity + Convert.ToInt32(item.shippingType) * 15000;
                             temp2 = true;
-                        }                    
+                        }
                     }
-                    if(temp2==true)
+                    if (temp2 == true)
                     {
                         Order_Detail order_Detail = new Order_Detail(item, listorderProJoinProducts, priceALL);
                         result.Add(order_Detail);
                         ViewBag.Count = result.Count();
-                    }    
+                    }
                 }
                 result.Sort();
                 return View(result);
@@ -229,7 +225,7 @@ namespace Book_Shop.Controllers
             string monthYear = form["month"];
             var temp = Session["userId"].ToString();
             int idUser = int.Parse(temp);
-            var listorder = db.Orders.Where(x=> x.status == "DONE").Include(o => o.PromoCode)
+            var listorder = db.Orders.Where(x => x.status == "DONE").Include(o => o.PromoCode)
             .Include(o => o.User).OrderByDescending(x => x.date).ToList();
             if (monthYear != "")
             {
@@ -299,9 +295,29 @@ namespace Book_Shop.Controllers
                 ViewBag.message = "Export successfully";
             else
                 ViewBag.message = "Export Fail";
-            return RedirectToAction("OrderManagement");
+            return Json(nameExcel, JsonRequestBehavior.AllowGet);
         }
-
+        private Dictionary<string, string> GetMineTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".xls","application/vnd.ms-excel" },
+                {".xlsx","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }
+            };
+        }
+        [HttpGet]
+        public ActionResult Download(string nameExcel)
+        {
+            string filename = Server.MapPath("/") + "export\\" + nameExcel + ".xlsx";
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(filename, FileMode.Open))
+            {
+                stream.CopyTo(memory);
+            }
+            memory.Position = 0;
+            var ext = Path.GetExtension(filename).ToLowerInvariant();
+            return File(memory, GetMineTypes()[ext], Path.GetFileName(filename));
+        }
         private bool ExportData(string nameExcel, string monthYear)
         {
             bool result = false;

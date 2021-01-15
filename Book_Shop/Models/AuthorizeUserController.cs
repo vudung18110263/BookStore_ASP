@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,7 +18,7 @@ namespace Book_Shop.Models
             var temp = HttpContext.Current.Session["userid"].ToString();
             int id = int.Parse(temp);
             var user = db.Users.Where(x => x.id == id).FirstOrDefault();
-            if (user.lever != 1 && user.lever !=2)
+            if (user.lever != 1 && user.lever != 2)
             {
                 filterContext.Result = new RedirectResult("~/Store/Index");
                 return;
