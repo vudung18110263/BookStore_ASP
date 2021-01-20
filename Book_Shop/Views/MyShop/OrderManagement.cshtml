@@ -7,6 +7,7 @@
 @*----------------- Add model ----------------------*@
 @using PagedList.Mvc;
 @*--------------------------------------------------*@
+<link href="~/Content/store.css" rel="stylesheet" type="text/css" media="all" />
 
 <style>
     strong {
@@ -385,17 +386,26 @@
         margin-bottom: 8px;
         border-bottom: 1px solid #eee;
     }
+    a:hover {
+        text-decoration: none;
+    }
+    .btn1 {
+        background-color: #29b30e;
+        margin: 10px 10px 10px 0px;
+        color: white;
+    }
+    
 </style>
 
 <div class="container2">
     <div class="container">
-        <div class="space">
+        <h1 class="mt-4" style="font-size: 40px; font-weight:500; margin-bottom: 5px">ĐƠN HÀNG CỦA TÔI</h1>
+
+        @*<div class="space">
             <button class="btn btn-primary  btn-sm rounded-0 ">
                 <i class="fa fa-edit"></i>@Html.ActionLink(" Products Management", "Index", new { }, new { Style = "color:White;" })
             </button>
-        </div>
-        <br />
-        <br />
+        </div>*@
         <div class="purchase-list-page__wrapper boder-2 statusbar" role="main">
             <div class="purchase-list-page__tabs-container">
                 <div class="purchase-list-page__tab" id="PENDING">
@@ -417,12 +427,12 @@
         {
             <form action="/MyShop/OrderManagementDone" method="post">
                 <div class="controls">
-                    <label class="control-label">nhập tháng: </label>
+                    <label class="control-label">Nhập tháng: </label>
                     <input class="form-control" type="month" name="month" placeholder="Landmark">
-                    <input type="submit" value="view order" />
+                    <input type="submit" class="btn1" value="View order" />
                 </div>
             </form>
-            <input type="submit" onclick="exportOrder()" value="export order" />
+            <input type="submit" onclick="exportOrder()" class="btn1" value="Export order" />
             <script>
                 function exportOrder() {
                     $.get("/MyShop/Export", name => {
@@ -434,10 +444,10 @@
 
         <div>
             <div class="basket">
-                <div class="basket-module">
+                @*<div class="basket-module">
                     <input id="promo-code" type="text" name="promo-code" maxlength="5" class="promo-code-field" placeholder="Search product">
                     <button class="promo-code-cta">Search</button>
-                </div>
+                </div>*@
                 <div class="basket-labels basket-labels2">
                     <ul>
                         <li class="item item-heading">Item</li>
@@ -455,11 +465,11 @@
                             <div class="row makerelative basket-labels2">
                                 @foreach (var item2 in item.orderProduct)
                                 {
-                                    <div>người bán : @item2.author</div>
+                                    <div>Người bán : @item2.author</div>
                                     <div class="col-xs-12 itemlayout">
                                         <div class="item">
                                             <div class="product-image">
-                                                <img src="@(item2.imageProduct)" width="120" height="166" alt="Placholder Image 2" class="product-frame">
+                                                <img src="@(item2.imageProduct)" width="120" height="160" alt="Placholder Image 2" class="product-frame">
                                             </div>
                                             <div class="product-details">
                                                 <p>@item2.nameProduct</p>
@@ -480,18 +490,17 @@
                                     </div>
                                 }
                                 <section class="creditly-wrapper wthree, w3_agileits_wrapper">
-                                    <div class="information-wrapper">
-                                        <div class="checkout-right-basket">
-                                            <a href="/Store/Detail?idOrder=@(item.id)" data-toggle="modal">View order details <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                                        <div class="checkout-right-basket" style="margin: 15px 15px 15px 0px;">
+                                            <a href="/Store/Detail?idOrder=@(item.id)"  style="color: white; padding: 8px; background-color: #29b30e; line-height: 20px; height: 40px; width: 60px; margin-right: 10px;">View order details <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
                                             @if (item.status == "PENDING")
                                             {
-                                                <a href="/MyShop/ConfirmOrder?idOrder=@(item.id)" data-toggle="modal"> Confirm <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
-                                                <a href="#alo" data-toggle="modal">Cancel order <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> </a>
+                                                <a href="/MyShop/ConfirmOrder?idOrder=@(item.id)"  style="color: white; padding: 8px; background-color: #29b30e; line-height: 20px; height: 40px; width: 60px; margin-right: 10px;"> Confirm <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                                                <a href="#alo" data-toggle="modal" style="color: white; padding: 8px; background-color: #29b30e; line-height: 20px; height: 40px; width: 60px; margin-right: 10px;">Cancel order <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> </a>
                                             }
                                             else if (item.status == "GETTING")
                                             {
-                                                <a href="/MyShop/ComfirmGetedOrder?idOrder=@(item.id)" data-toggle="modal"> Confirm Geted <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
-                                                <a href="#alo" data-toggle="modal">Cancel order <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> </a>
+                                                <a href="/MyShop/ComfirmGetedOrder?idOrder=@(item.id)"  style="color: white; padding: 8px; background-color: #29b30e; line-height: 20px; height: 40px; width: 60px; margin-right: 10px;"> Confirm Geted <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                                                <a href="#alo" data-toggle="modal" style="color: white; padding: 8px; background-color: #29b30e; line-height: 20px; height: 40px; width: 60px; margin-right: 10px;">Cancel order <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> </a>
                                             }
                                             <!-- ############################ cancel ############################## -->
                                             <div class="modal fade" id="alo">
@@ -521,7 +530,6 @@
                                             </div><!-- /.modal -->
                                             <!-- Bootstrap Core JavaScript -->
                                         </div>
-                                    </div>
                                 </section>
                                 <div class="text-right">Tổng số tiền:<span class="tongsotien"> đ@(@String.Format("{0:n0}", item.PriceALl))</span></div>
                             </div>

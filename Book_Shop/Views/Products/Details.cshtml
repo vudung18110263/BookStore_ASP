@@ -2,41 +2,50 @@
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
 }
+<link href="~/Content/admintable.css" rel="stylesheet" />
+<style>
+    a:hover {
+        text-decoration: none;
+    }
+</style>
+<div class="container">
+    <h1 class="mt-4">CHI TIẾT SẢN PHẨM</h1>
+    <div class="admin__layout">
+        <table class="admin__table">
+            <thead>
+                <tr class="admin__header">
+                    <th style="text-align:center">ID</th>
+                    <th style="text-align:center">Name</th>
+                    <th style="text-align:center">Image</th>
+                    <th style="text-align:center">Description</th>
+                    <th style="text-align:center">Category</th>
+                    <th style="text-align:center">Price</th>
+                    <th style="text-align:center">Rate</th>
+                    <th style="text-align:center">Stock</th>
+                    <th style="text-align:center">Author</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(model => model.id)</td>
+                    <td>@Html.DisplayFor(model => model.name)</td>
+                    <td><img width="120px" height="120px" src="@Html.DisplayFor(model => model.image)" /></td>
+                    <td>@Html.DisplayFor(model => model.description)</td>
+                    <td>@Html.DisplayFor(model => model.category)</td>
+                    <td>@Html.DisplayFor(model => model.price)</td>
+                    <td>@Html.DisplayFor(model => model.rate)</td>
+                    <td>@Html.DisplayFor(model => model.stock)</td>
+                    <td>@Html.DisplayFor(model => model.User.account)</td>
 
-<div class="admin__layout">
-    <table class="admin__table">
-        <thead>
-            <tr class="admin__header">
-                <th style="text-align:center">ID</th>
-                <th style="text-align:center">Name</th>
-                <th style="text-align:center">Image</th>
-                <th style="text-align:center">Description</th>
-                <th style="text-align:center">Category</th>
-                <th style="text-align:center">Price</th>
-                <th style="text-align:center">Rate</th>
-                <th style="text-align:center">Stock</th>
-                <th style="text-align:center">Author</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>@Html.DisplayFor(model => model.id)</td>
-                <td>@Html.DisplayFor(model => model.name)</td>
-                <td><img width="120px" height="120px" src="@Html.DisplayFor(model => model.image)" /></td>
-                <td>@Html.DisplayFor(model => model.description)</td>
-                <td>@Html.DisplayFor(model => model.category)</td>
-                <td>@Html.DisplayFor(model => model.price)</td>
-                <td>@Html.DisplayFor(model => model.rate)</td>
-                <td>@Html.DisplayFor(model => model.stock)</td>
-                <td>@Html.DisplayFor(model => model.User.account)</td>
-
-            </tr>
-        </tbody>
-    </table>
-    <div class="pagination">
-        <a href="/Products/Edit/@Model.id" class="action-link">Edit</a>
-        <a href="/Products/Index" class="action-link">Back to list</a>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination" style="margin-top:10px; margin-bottom:10px">
+            <a href="/Products/Edit/@Model.id" class="action-link" style="color: white; line-height: 17px">Edit</a>
+            <a href="/Products/Index" class="action-link" style="margin-left: 10px; line-height: 17px">Back to list</a>
+        </div>
     </div>
+
 </div>

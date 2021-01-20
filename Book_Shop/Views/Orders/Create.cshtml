@@ -2,60 +2,64 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
 }
+<link href="~/Content/admintable.css" rel="stylesheet" />
+<div class="container">
+    <h1 class="mt-4">TẠO HÓA ĐƠN</h1>
 
-@using (Html.BeginForm("Create", "Orders", FormMethod.Post, new { encType = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    <div class="admin__layout">
-        <table class="admin__table table-vertical">
-            <tr>
-                <th class="admin__header">UserID</th>
-                <td>
-                    @Html.DropDownList("userid", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.userid, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <th class="admin__header">PromoID</th>
-                <td>
-                    @Html.DropDownList("promoid", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.promoid, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <th class="admin__header">Status</th>
-                <td>
-                    @Html.EditorFor(model => model.status, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <th class="admin__header">Date</th>
-                <td>
-                    @Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <th class="admin__header">Address</th>
-                <td>
-                    @Html.EditorFor(model => model.shippingAddess, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.shippingAddess, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <th class="admin__header">Payment</th>
-                <td>
-                    @Html.EditorFor(model => model.payment, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.payment, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-        </table>
-        <div class="pagination">
-            <a class="action-link"><input type="submit" value="Create" /></a>
-            <a href="/Orders/Index" class="action-link">Back to list</a>
+    @using (Html.BeginForm("Create", "Orders", FormMethod.Post, new { encType = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="admin__layout">
+            <table class="admin__table table-vertical">
+                <tr>
+                    <th class="admin__header">UserID</th>
+                    <td>
+                        @Html.DropDownList("userid", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.userid, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <th class="admin__header">PromoID</th>
+                    <td>
+                        @Html.DropDownList("promoid", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.promoid, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <th class="admin__header">Status</th>
+                    <td>
+                        @Html.EditorFor(model => model.status, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <th class="admin__header">Date</th>
+                    <td>
+                        @Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <th class="admin__header">Address</th>
+                    <td>
+                        @Html.EditorFor(model => model.shippingAddess, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.shippingAddess, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <th class="admin__header">Payment</th>
+                    <td>
+                        @Html.EditorFor(model => model.payment, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.payment, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+            </table>
+            <div class="pagination" style="margin-top:10px; margin-bottom:10px">
+                <a class="action-link"><input type="submit" value="Create" style="color: white" /></a>
+                <a href="/Orders/Index" class="action-link" style="margin-left: 10px">Back to list</a>
+            </div>
         </div>
-    </div>
-}
+    }
+</div>

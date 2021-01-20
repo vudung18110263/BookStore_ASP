@@ -18,12 +18,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
-    <div id="layoutSidenav_content">
+    <div id="">
         <main>
             <div class="container-fluid">
-                <button class="btn btn-primary  btn-sm rounded-0 ">
+                @*<button class="btn btn-primary  btn-sm rounded-0 ">
                     <i class="fa fa-edit"></i>@Html.ActionLink(" Order Management", "OrderManagement", new { }, new { Style = "color:White;" })
-                </button>
+                </button>*@
                 <h1 class="mt-4">QUẢN LÝ SẢN PHẨM</h1>
                 <div class="card mb-4">
                     <div class="card-header">
@@ -64,14 +64,14 @@
                                         <tr>
                                             <td>@prod.name</td>
                                             <td>@prod.price</td>
-                                            <td><img src="@prod.image" width="100" height="100" /></td>
-                                            <td>@prod.description</td>
+                                            <td><img src="@prod.image" width="100" height="150" /></td>
+                                            <td width="200px">@prod.description</td>
                                             <td>@prod.category</td>
                                             <td>@prod.stock</td>
                                             <td>
-                                                <button class="btn btn-danger  btn-sm rounded-0"><i class="fa fa-trash "></i>@Html.ActionLink("Delete", "Delete", new { id = prod.id }, new { Style = "color:White;" })</button>
-                                                <button class="btn btn-success  btn-sm rounded-0"><i class="fa fa-table"></i>@Html.ActionLink("Details", "Details", new { id = prod.id }, new { Style = "color:White;" })</button>
-                                                <button class="btn btn-primary  btn-sm rounded-0 "><i class="fa fa-edit "></i>@Html.ActionLink("Edit", "Edit", new { id = prod.id }, new { Style = "color:White;" })</button>
+                                                <button class="btn btn-danger  btn-sm rounded-0" style="width: 100px; height: 40px; margin-bottom: 5px"><i class="fa fa-trash " ></i>@Html.ActionLink("Delete", "Delete", new { id = prod.id }, new { Style = "color:White;" })</button>
+                                                <button class="btn btn-success  btn-sm rounded-0" style="width: 100px; height: 40px; margin-bottom: 5px"><i class="fa fa-table"></i>@Html.ActionLink("Details", "Details", new { id = prod.id }, new { Style = "color:White;" })</button>
+                                                <button class="btn btn-primary  btn-sm rounded-0 " style="width: 100px; height: 40px; margin-bottom: 5px"><i class="fa fa-edit "></i>@Html.ActionLink("Edit", "Edit", new { id = prod.id }, new { Style = "color:White;" })</button>
                                             </td>
                                         </tr>
                                     }

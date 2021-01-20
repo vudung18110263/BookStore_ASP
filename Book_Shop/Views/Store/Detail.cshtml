@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Detail";
-    Layout = "~/Views/Shared/_Layout_Purchase.cshtml";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
 }
 @model Book_Shop.Models.Order_Detail
 
@@ -15,7 +15,9 @@
 </style>
 @if (Model != null)
 {
-    <div class="container boders">
+<div class="container">
+    <h1 class="mt-4" style="font-size: 40px; font-weight:500">CHI TIẾT HÓA ĐƠN</h1>
+    <div class="boders">
         <div class="basket">
             <div class="basket-module">
                 <span class=""><strong>Billing Information</strong></span>
@@ -99,4 +101,5 @@
             </div>
         </div>
     </div>
+</div>
 }

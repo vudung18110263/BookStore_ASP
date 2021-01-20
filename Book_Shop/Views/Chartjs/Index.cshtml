@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
 }
 @{
     int now =Convert.ToInt32(DateTime.Now.Year);
@@ -47,20 +47,20 @@
         margin: 12px 0;
     }
 </style>
-<div class="chart__layout">
+<div class="chart__layout" style="margin-top: 10px; margin-bottom: 10px">
     <div class="chart__wrapper">
         <canvas class="chart__size" id="barcanvas"></canvas>
 
         <button type="button" onclick="backsale()">Back</button>
         <button type="button" onclick="nextsale()">Next</button>
     </div>
-    <div class="chart__wrapper">
+    @*<div class="chart__wrapper">
         <canvas class="chart__size" id="usedChart"></canvas>
         <button type="button" onclick="backused()">Back</button>
         <button type="button" onclick="nextused()">Next</button>
-    </div>
+    </div>*@
 </div>
-<div class="chart__layout">
+<div class="chart__layout" style="margin-top: 10px; margin-bottom: 10px">
     <div class="chart__wrapper">
         <canvas class="chart__size" id="barmonthcanvas"></canvas>
 

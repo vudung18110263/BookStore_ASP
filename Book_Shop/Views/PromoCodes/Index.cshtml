@@ -1,48 +1,52 @@
 ﻿@model IEnumerable<Book_Shop.Models.PromoCode>
 @*@model PagedList.IPagedList<Book_Shop.Models.PromoCode>
-@using PagedList.Mvc;*@
+    @using PagedList.Mvc;*@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
 }
+<link href="~/Content/admintable.css" rel="stylesheet" />
+<div class="container">
+    <h1 class="mt-4">QUẢN LÝ MÃ GIẢM GIÁ</h1>
 
-<br />
-<a href="/PromoCodes/Create" class="action-link">Create new promocode</a>
-<div class="admin__layout">
-    <table class="admin__table">
-        <thead class="">
-            <tr class="admin__header">
-                <th style="text-align:center">Name</th>
-                <th style="text-align:center">Value</th>
-                <th style="text-align:center">Code</th>
-                <th class="action-cell" style="text-align:center">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.name)</td>
-                    <td>@Html.DisplayFor(modelItem => item.value)</td>
-                    <td>@Html.DisplayFor(modelItem => item.code)</td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "action-link" })
-                        @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "action-link" })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "action-link" })
-                    </td>
+    <a href="/PromoCodes/Create" class="action-link" style="line-height: 17px">Create new promocode</a>
+    <div class="admin__layout">
+        <table class="admin__table">
+            <thead class="">
+                <tr class="admin__header">
+                    <th style="text-align:center">Name</th>
+                    <th style="text-align:center">Value</th>
+                    <th style="text-align:center">Code</th>
+                    <th class="action-cell" style="text-align:center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.value)</td>
+                        <td>@Html.DisplayFor(modelItem => item.code)</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "action-link" })
+                            @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "action-link" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "action-link" })
+                        </td>
 
-            </tr>
+                    </tr>
 
-            }
-        </tbody>
-    </table>
-    @*<div class="pagination">
-        <!-- Thêm mã phân trang -->
-        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                }
+            </tbody>
+        </table>
+        @*<div class="pagination">
+                <!-- Thêm mã phân trang -->
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 
-        @Html.PagedListPager(Model, page => Url.Action("Index",
-            new { page }))
-        <!-- Kết thúc -->
-    </div>*@
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+                    new { page }))
+                <!-- Kết thúc -->
+            </div>*@
+    </div>
 </div>
+

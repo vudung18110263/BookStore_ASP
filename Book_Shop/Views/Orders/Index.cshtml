@@ -2,60 +2,123 @@
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
 }
+<link href="~/Content/admintable.css" rel="stylesheet" />
+<link href="~/Content/store.css" rel="stylesheet" />
+<style>
+    .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+        z-index: 0;
+    }
 
-<h2>Index</h2>
+    .pagination {
+        margin: 20px 0px;
+    }
 
-<br />
-<form action="/Orders/ViewOrderByMonth" method="post">
-    <div class="controls">
-        <label class="control-label">nhập tháng: </label>
-        <input class="form-control" type="month" name="month" placeholder="Landmark">
-        <input type="submit" value="view order"/>
-    </div>
-    <i>@ViewBag.message</i>
-</form>
-<div class="admin__layout">
-    <table class="admin__table">
-        <thead class="">
-            <tr class="admin__header">
-                <th style="text-align:center">Status</th>
-                <th style="text-align:center">Date</th>
-                <th style="text-align:center">Address</th>
-                <th style="text-align:center">Payment</th>
-                <th style="text-align:center">Name</th>
-                <th style="text-align:center">Author</th>
-                <th class="action-cell" style="text-align:center">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.status)</td>
-                    <td>@Html.DisplayFor(modelItem => item.date)</td>
-                    <td>@Html.DisplayFor(modelItem => item.shippingAddess)</td>
-                    <td>@Html.DisplayFor(modelItem => item.payment)</td>
-                    <td>@Html.DisplayFor(modelItem => item.PromoCode.name)</td>
-                    <td>@Html.DisplayFor(modelItem => item.User.account)</td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "action-link" })
-                        @Html.ActionLink("Details", "Detail", "Store", new { idOrder = item.id }, new {@class = "action-link" })
-                        @*@Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "action-link" })*@
-                    </td>
+    ul.pagination {
+        padding: 0px;
+    }
 
+        ul.pagination li a {
+            font-size: 16px;
+            padding: 5px 11px;
+        }
+
+    .wmuSliderPagination {
+        z-index: 2;
+        position: absolute;
+        left: 47%;
+        bottom: 2%;
+    }
+
+    ul.wmuSliderPagination {
+        padding: 0;
+    }
+
+    .wmuSliderPagination li {
+        float: left;
+        margin: 0 8px 0 0;
+        list-style-type: none;
+    }
+
+    .wmuSliderPagination a {
+        display: block;
+        text-indent: -9999px;
+        width: 15px;
+        height: 15px;
+        background: #CFCFCF;
+        border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        -o-border-radius: 50px;
+        -ms-border-radius: 50px;
+    }
+
+        .wmuSliderPagination a.wmuActive {
+            background: #84C639;
+            box-shadow: 0px 0px 10px #84C639;
+            -webkit-box-shadow: 0px 0px 10px #84C639;
+            -moz-box-shadow: 0px 0px 10px #84C639;
+            -o-box-shadow: 0px 0px 10px #84C639;
+            -ms-box-shadow: 0px 0px 10px #84C639;
+        }
+
+    a:hover {
+        text-decoration: none;
+    }
+</style>
+<div class="container">
+    <h1 class="mt-4">QUẢN LÝ HÓA ĐƠN</h1>
+    <form action="/Orders/ViewOrderByMonth" method="post">
+        <div class="controls">
+            <label class="control-label">Nhập tháng: </label>
+            <input class="form-control" type="month" name="month" placeholder="Landmark">
+            <input type="submit" value="View order" style="margin-top: 10px" />
+        </div>
+        <i>@ViewBag.message</i>
+    </form>
+    <div class="admin__layout">
+        <table class="admin__table">
+            <thead class="">
+                <tr class="admin__header">
+                    <th style="text-align:center">Status</th>
+                    <th style="text-align:center">Date</th>
+                    <th style="text-align:center">Address</th>
+                    <th style="text-align:center">Payment</th>
+                    <th style="text-align:center">Name</th>
+                    <th style="text-align:center">Author</th>
+                    <th class="action-cell" style="text-align:center">Action</th>
                 </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.status)</td>
+                        <td>@Html.DisplayFor(modelItem => item.date)</td>
+                        <td>@Html.DisplayFor(modelItem => item.shippingAddess)</td>
+                        <td>@Html.DisplayFor(modelItem => item.payment)</td>
+                        <td>@Html.DisplayFor(modelItem => item.PromoCode.name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.User.account)</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "action-link" })
+                            @Html.ActionLink("Details", "Detail", "Store", new { idOrder = item.id }, new { @class = "action-link" })
+                            @*@Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "action-link" })*@
+                        </td>
 
-            }
-        </tbody>
-    </table>
-    <div class="pagination">
-        <!-- Thêm mã phân trang -->
-        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                    </tr>
 
-        @Html.PagedListPager(Model, page => Url.Action("Index",
-            new { page }))
-        <!-- Kết thúc -->
+                }
+            </tbody>
+        </table>
+        <div class="pagination">
+            <!-- Thêm mã phân trang -->
+            <div style="margin: 20px 10px 0px 0px ">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</div>
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { page }))
+            <!-- Kết thúc -->
+        </div>
     </div>
 </div>
+
+

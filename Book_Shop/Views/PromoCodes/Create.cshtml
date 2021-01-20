@@ -2,41 +2,44 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
 }
 
-<h2>Create</h2>
+<link href="~/Content/admintable.css" rel="stylesheet" />
+<div class="container">
+    <h1 class="mt-4">TẠO MÃ GIẢM GIÁ</h1>
 
-@using (Html.BeginForm("Create", "PromoCodes", FormMethod.Post, new { encType = "multipart/form-data" })) 
-{
-    @Html.AntiForgeryToken()
-    <div class="admin__layout">
-        <table class="admin__table table-vertical">
-            <tr>
-                <th class="admin__header">Name</th>
-                <td>
-                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <th class="admin__header">Value</th>
-                <td>
-                    @Html.EditorFor(model => model.value, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.value, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <th class="admin__header">Code</th>
-                <td>
-                    @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.code, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-        </table>
-        <div class="pagination">
-            <a class="action-link"><input type="submit" value="Create" /></a>
-            <a href="/PromoCodes/Index" class="action-link">Back to list</a>
+    @using (Html.BeginForm("Create", "PromoCodes", FormMethod.Post, new { encType = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="admin__layout">
+            <table class="admin__table table-vertical">
+                <tr>
+                    <th class="admin__header">Name</th>
+                    <td>
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <th class="admin__header">Value</th>
+                    <td>
+                        @Html.EditorFor(model => model.value, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.value, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <th class="admin__header">Code</th>
+                    <td>
+                        @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.code, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+            </table>
+            <div class="pagination" style="margin-top:10px; margin-bottom:10px">
+                <a class="action-link"><input type="submit" value="Create" style="color: white" /></a>
+                <a href="/PromoCodes/Index" class="action-link" style="margin-left: 10px">Back to list</a>
+            </div>
         </div>
-    </div>
-}
+    }
+</div>

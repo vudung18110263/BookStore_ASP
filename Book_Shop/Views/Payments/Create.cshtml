@@ -2,39 +2,44 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
 }
+<link href="~/Content/admintable.css" rel="stylesheet" />
+<div class="container">
+    <h1 class="mt-4">TẠO THANH TOÁN</h1>
 
-@using (Html.BeginForm("Create", "Payments", FormMethod.Post, new { encType = "multipart/form-data" })) 
-{
-    @Html.AntiForgeryToken()
-    <div class="admin__layout">
-        <table class="admin__table table-vertical">
-            <tr>
-                <th class="admin__header">Name</th>
-                <td>
-                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <th class="admin__header">CardNumber</th>
-                <td>
-                    @Html.EditorFor(model => model.cardNumber, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.cardNumber, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <th class="admin__header">Money</th>
-                <td>
-                    @Html.EditorFor(model => model.money, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.money, "", new { @class = "text-danger" })
-                </td>
-            </tr>
-        </table>
-        <div class="pagination">
-            <a class="action-link"><input type="submit" value="Create" /></a>
-            <a href="/Payments/Index" class="action-link">Back to list</a>
+    @using (Html.BeginForm("Create", "Payments", FormMethod.Post, new { encType = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="admin__layout">
+            <table class="admin__table table-vertical">
+                <tr>
+                    <th class="admin__header">Name</th>
+                    <td>
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <th class="admin__header">CardNumber</th>
+                    <td>
+                        @Html.EditorFor(model => model.cardNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.cardNumber, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <th class="admin__header">Money</th>
+                    <td>
+                        @Html.EditorFor(model => model.money, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.money, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+            </table>
+            <div class="pagination" style="margin-top:10px; margin-bottom:10px">
+                <a class="action-link"><input type="submit" value="Create" style="color: white" /></a>
+                <a href="/Payments/Index" class="action-link" style="margin-left: 10px">Back to list</a>
+            </div>
         </div>
-    </div>
-}
+    }
+
+</div>
