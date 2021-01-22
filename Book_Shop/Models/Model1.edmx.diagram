@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="12c316e1d0e94890b5d6e1ae2eb11531" Name="Diagram1">
-        <EntityTypeShape EntityType="Book_StoreModel.Category" Width="1.5" PointX="7.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Book_StoreModel.Category" Width="1.5" PointX="7.25" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Book_StoreModel.Order" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Book_StoreModel.Order_Product" Width="1.5" PointX="7.5" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="Book_StoreModel.Payment" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />

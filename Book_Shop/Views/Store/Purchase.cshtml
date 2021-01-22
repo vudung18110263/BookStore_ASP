@@ -105,7 +105,7 @@
                                 <div class="text-right tongsotien2">Tổng số tiền:<span class="tongsotien"> đ@(@String.Format("{0:n0}", item.PriceALl))</span></div>
                                 <div class="information-wrapper">
                                     <div class="checkout-right-basket">
-                                        <a href="/Store/Detail?idOrder=@(item.id)" data-toggle="modal">View order details <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                                        <a href="/Store/DetailUser?idOrder=@(item.id)" data-toggle="modal">View order details <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
                                         @if (item.status == "PENDING" || item.status == "GETTING")
                                         {
                                             <a href="#alo" data-toggle="modal">Cancel order <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> </a>

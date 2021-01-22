@@ -46,6 +46,7 @@ namespace Book_Shop.Controllers
             string email = form["email"].ToString();
             string phone = form["phone"].ToString();
             string address = form["address"].ToString();
+            string fullname = form["fullname"].ToString();
             //int payment = form["payment"];
             string avatarPath = "";
             //if (form["payment"].ToString() == null)
@@ -72,7 +73,7 @@ namespace Book_Shop.Controllers
                 avatar.SaveAs(path);
                 avatarPath = "/UploadFiles/" + username + ".PNG";
             }
-            User newUser = new User() { account = username, pass_word = GetMD5(password), lever = 2, mail = email, phone = phone, avatar = avatarPath, paymentId = null, address = address };
+            User newUser = new User() { account = username, pass_word = GetMD5(password), lever = 2, mail = email, phone = phone, avatar = avatarPath, paymentId = null, address = address, fullname=fullname , isActive=1 };
             TempData["user"] = newUser;
             string confirmMail = RandomString(8);
             TempData["confirmMail"] = confirmMail;
@@ -109,10 +110,11 @@ namespace Book_Shop.Controllers
         public ActionResult ChangePassword(FormCollection form)
         {
             string username = form["username"].ToString();
-            string password = form["password"].ToString();
+            string password =form["password"].ToString();
             string newPassword = form["newPassword"].ToString();
             string confirmPassword = form["confirmPassword"].ToString();
-            var user = db.Users.SingleOrDefault(n => n.account == username && n.pass_word == password);
+            string pass = GetMD5(password);
+            var user = db.Users.SingleOrDefault(n => n.account == username && n.pass_word == pass);
 
             if (user == null)
             {
@@ -132,7 +134,7 @@ namespace Book_Shop.Controllers
                 return View();
             }
 
-            user.pass_word = newPassword;
+            user.pass_word = GetMD5(newPassword) ;
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index", "Store");

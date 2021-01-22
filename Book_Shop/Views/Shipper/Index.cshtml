@@ -390,7 +390,7 @@
         <div class="purchase-list-page__wrapper boder-2 statusbar" role="main">
             <div class="purchase-list-page__tabs-container">
                 <div class="purchase-list-page__tab" id="SHIPPING">
-                    <a class="purchase-list-page__tab-label" href="/Shipper/Index">Shipping</a>
+        @*            <a class="purchase-list-page__tab-label" href="/Shipper/Index">Shipping</a>*@
                 </div>
             </div>
         </div>
@@ -418,7 +418,6 @@
                             <div class="row makerelative basket-labels2">
                                 @foreach (var item2 in item.orderProduct)
                                 {
-                                    <div> cái này là tên của shop, sửa cho đẹp sau, sửa cho hết vòng lặp sau: @item2.author</div>
                                     <div class="col-xs-12 itemlayout">
                                         <div class="item">
                                             <div class="product-image">
@@ -442,11 +441,11 @@
 
                                     </div>
                                 }
-                                <section class="creditly-wrapper wthree, w3_agileits_wrapper">
+                                <section class="creditly-wrapper wthree, w3_agileits_wrapper" style="margin-top: 12px;">
                                     <div class="information-wrapper">
                                         <div class="checkout-right-basket">
-                                            <a href="/Store/Detail?idOrder=@(item.id)" data-toggle="modal">View order details <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
-                                            <a href="/Shipper/Deliveried?idOrder=@(item.id)" data-toggle="modal"> Deliveried <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                                            <a href="/Shipper/DetailShipper?idOrder=@(item.id)" >View order details <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                                            <a href="/Shipper/Deliveried?idOrder=@(item.id)" style="color: white; padding: 8px; background-color: #29b30e; line-height: 20px; height: 40px; width: 60px; margin-right: 10px; margin-top: 10px; " > Deliveried <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
                                             @*<a href="#alo" data-toggle="modal">Cancel order <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> </a>*@
                                             <!-- ############################ cancel ############################## -->
                                             @*<div class="modal fade" id="alo">

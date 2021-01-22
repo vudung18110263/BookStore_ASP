@@ -27,29 +27,35 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <table class="register__table">
             <tr colspan="3">
-                <td><label for="username">Username<span class="register__required">*</span>:</label></td>
+                <td><label for="username">Tài khoản<span class="register__required">*</span>:</label></td>
                 <td>
-                    <input class="form-control" id="username" required name="username"/>
+                    <input class="form-control" id="username" required name="username" />
                 </td>
                 <td>
                     <img id="blah" width="72px" height="72px" />
                     <label for="imgInp" id="avatar-label">
-                        Choose your avatar
+                        Ảnh đại diện 
                         <input type="file" name="avatar" id="imgInp" style="display: none;" />
                     </label>
                     @Html.ValidationMessageFor(model => model.avatar, "", new { @class = "text-danger" })
                 </td>
             </tr>
             <tr>
-                <td><label for="password">Password<span class="register__required">*</span>:</label></td>
+                <td><label for="password"> Mật khẩu <span class="register__required">*</span>:</label></td>
                 <td>
                     <input class="form-control" type="password" name="password" id="password" required />
                 </td>
             </tr>
             <tr>
-                <td><label for="confirmPassword">Confirm password<span class="register__required">*</span>:</label></td>
+                <td><label for="confirmPassword"> Nhập lại mật khẩu <span class="register__required">*</span>:</label></td>
                 <td>
                     <input class="form-control" type="password" name="confirmPassword" id="confirmPassword" required />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="fullname"> Họ và tên <span class="register__required">*</span>:</label></td>
+                <td>
+                    <input class="form-control" id="fullname" required name="fullname"/>
                 </td>
             </tr>
             <tr>
@@ -59,27 +65,21 @@
                 </td>
             </tr>
             <tr>
-                <td><label for="phone">Phone<span class="register__required">*</span>:</label></td>
+                <td><label for="phone"> Số điện thoại <span class="register__required">*</span>:</label></td>
                 <td>
                     <input class="form-control" id="phone" required name="phone" type="number" />
                 </td>
             </tr>
             <tr>
-                <td><label for="address">Address<span class="register__required">*</span>:</label></td>
+                <td><label for="address"> Địa chỉ <span class="register__required">*</span>:</label></td>
                 <td>
                     <input class="form-control" id="address" required name="address" />
                 </td>
             </tr>
             <tr>
-                <td><label for="payment">Payment Card:</label></td>
-                <td>
-                    <input class="form-control" id="payment" name="payment"/>
-                </td>
-            </tr>
-            <tr>
                 <td></td>
                 <td>
-                    <button type="submit" class="btn btn-lg btn-block register__btn">Submit</button>
+                    <button type="submit" class="btn btn-lg btn-block register__btn"> Xác nhận </button>
                 </td>
             </tr>
         </table>

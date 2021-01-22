@@ -61,5 +61,31 @@ namespace Book_Shop.Controllers
             db.SaveChanges();
             return RedirectToAction("Index", "Shipper");
         }
+        public ActionResult DetailShipper(int? idOrder)
+        {
+            var order = db.Orders.Where(x => x.id == idOrder).FirstOrDefault();
+            if (order == null)
+                return RedirectToAction("Index");
+
+            //lấy ra danh sách product trong database
+            List<Order_Product> listOrderPro = new List<Order_Product>();
+            listOrderPro = db.Order_Product.Where(x => x.orderId == order.id).ToList();
+
+            int priceALL = 0;
+            List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
+            OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();
+            Product product = new Product();
+            foreach (var itemOrderPro in listOrderPro)
+            {
+                product = db.Products.Where(x => x.id == itemOrderPro.productId).FirstOrDefault();
+                orderProJoinProduct = new OrderProJoinProduct(itemOrderPro, product);
+                listorderProJoinProducts.Add(orderProJoinProduct);
+                priceALL = priceALL + itemOrderPro.price * itemOrderPro.quantity;
+            }
+            priceALL += Convert.ToInt32(order.shippingType) * 15000;
+            Order_Detail order_Detail = new Order_Detail(order, listorderProJoinProducts, priceALL);
+
+            return View(order_Detail);
+        }
     }
 }

@@ -102,7 +102,7 @@
                             <td>@Html.DisplayFor(modelItem => item.stock)</td>
                             <td>@Html.DisplayFor(modelItem => item.User.account)</td>
                             <td>
-                                @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "action-link" })
+                                @*@Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "action-link" })*@
                                 @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "action-link" })
                                 @Html.ActionLink("Allow", "SellAllow", new { id = item.id, page = ViewBag.page }, new { @class = "action-link" })
                             </td>

@@ -71,6 +71,7 @@ namespace Book_Shop.Controllers
             image.SaveAs(path);
             product.image = "/imageProduct/" + product.id + ".PNG";
             product.isable = 0;
+            product.rate = 3;
             db.Entry(product).State = EntityState.Modified;
             db.SaveChanges();
             ViewBag.authorId = new SelectList(db.Users, "id", "account", product.authorId);

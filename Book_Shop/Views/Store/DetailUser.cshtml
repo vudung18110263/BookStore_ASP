@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout_Purchase.cshtml";
+}
+@model Book_Shop.Models.Order_Detail
+
+@{
+    int PriceOfAllProdcut = 0;
+}
+<link href="~/Content/detail.css" rel="stylesheet" type="text/css" media="all" />
+
+<style>
+</style>
+@if (Model != null)
+{
+    <div class="container">
+        <h1 class="mt-4" style="font-size: 40px; font-weight:500">CHI TIẾT HÓA ĐƠN</h1>
+        <div class="boders">
+            <div class="basket">
+                <div class="basket-module">
+                    <span class=""><strong>Billing Information</strong></span>
+                    <a href=""><strong>Transaction history</strong></a>
+                </div>
+                <div class="basket-labels">
+                    <ul class="type-name">
+                        <li class="item item-heading type-name-s">Item</li>
+                        <li class="price type-name-s">Price</li>
+                        <li class="quantity type-name-s">Quantity</li>
+                        <li class="subtotal type-name-s">Subtotal</li>
+                    </ul>
+                </div>
+                <div class="products">
+                    @foreach (var item in Model.orderProduct)
+                    {
+                        <div class="basket-product">
+                            <div class="item">
+                                <div class="product-image">
+                                    <img src="@item.imageProduct" alt="Placholder Image 2" class="product-frame">
+                                </div>
+                                <div class="product-details">
+                                    <h1 class="name-product">@item.nameProduct</h1>
+                                    @*<p><strong>Navy, Size 18</strong></p>
+                                        <p>Product Code - 232321939</p>*@
+                                </div>
+                            </div>
+                            <div class="price">@(@String.Format("{0:n0}",item.price))</div>
+                            <div class="quantity">
+                                <input type="number" value="@item.quantity" min="1" disabled class="quantity-field">
+                            </div>
+                            <div class="subtotal">@(@String.Format("{0:n0}", item.quantity * item.price))</div>
+                        </div>
+                        PriceOfAllProdcut += (item.quantity * item.price);
+                    }
+                </div>
+            </div>
+            <div class="basket">
+                <div class="basket-module">
+                    <span class=""><strong>Billing of Order</strong></span>
+                </div>
+                <div class="detail products">
+                    <div class="">
+                        <p>Tổng tiền sản phẩm: </p>
+                        <p>Phí vận chuyển: </p>
+                        <p>promocode :</p>
+                        <p>Tổng tiền thanh toán: </p>
+                    </div>
+                    <div>
+                        <p>@(@String.Format("{0:n0}", PriceOfAllProdcut))đ</p>
+                        <p>@(@String.Format("{0:n0}", Convert.ToInt32(Model.shippingType)*15000 ) ) đ</p>
+                        <p>- @Model.promoValue</p>
+                        <p style="color: #ff0000">@(@String.Format("{0:n0}", Model.PriceALl))</p>
+                    </div>
+                </div>
+                <div class="products">
+                    <div>
+                        <strong>ID Order:</strong><br />
+                        <span>
+                            @Model.id
+                        </span>
+                    </div><br />
+                    <div>
+                        <strong>Date Order</strong><br />
+                        <span>
+                            @Model.date.Day / @Model.date.Month / @Model.date.Year
+                        </span>
+                    </div><br />
+                    <div>
+                        <strong>Delivery Address</strong><br />
+                        <span>
+                            @Model.shippingAddess
+                        </span>
+                    </div><br />
+                    <div>
+                        <strong>Shipping Information:</strong><br />
+                        <span>
+                            Giao hàng tiết kiệm
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

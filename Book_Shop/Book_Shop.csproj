@@ -498,6 +498,8 @@
     <Content Include="Views\ManageUser\Disable.cshtml" />
     <Content Include="Views\ManageUser\Enable.cshtml" />
     <Content Include="Views\Shared\_Layout_admin.cshtml" />
+    <Content Include="Views\Store\DetailUser.cshtml" />
+    <Content Include="Views\Shipper\DetailShipper.cshtml" />
     <None Include="Views\Store\Single.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

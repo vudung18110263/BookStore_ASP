@@ -392,7 +392,7 @@ namespace Book_Shop.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
         [AuthorizeUserController]
-        public ActionResult Detail(int? idOrder)
+        public ActionResult DetailUser(int? idOrder)
         {
             var order = db.Orders.Where(x => x.id == idOrder).FirstOrDefault();
             if (order == null)
@@ -643,10 +643,10 @@ namespace Book_Shop.Controllers
         [HttpPost]
         public ActionResult AddPromoCode(JsonPromo promo)
         {
-            var promocode = db.PromoCodes.Where(p => p.code == promo.code).First();
+            var promocode = db.PromoCodes.Where(p => p.code == promo.code).FirstOrDefault();
             if (promocode == null)
             {
-                return Json("", JsonRequestBehavior.AllowGet);
+                return Json(0, JsonRequestBehavior.AllowGet);
             }
             return Json(promocode.value, JsonRequestBehavior.AllowGet);
         }
