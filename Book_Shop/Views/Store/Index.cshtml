@@ -10,7 +10,7 @@
         <div class="container">
             <ul>
                 <li><i class="fa fa-home" aria-hidden="true"></i>@Html.ActionLink("Trang chủ", "Index", "Store")<span>|</span></li>
-                @if (Request.QueryString["category"] != null)
+                @if (Request.QueryString["category"] != null && Model.Count != 0)
                 {
                     <li>@Model[0].category</li>
                 }
@@ -97,7 +97,7 @@
         {
             <h3>Sản phẩm đề xuất</h3>
         }
-        else if (Request.QueryString["q"] == null)
+        else if (Request.QueryString["q"] == null && Model.Count !=0)
         {
             <h3>@Model[0].category</h3>
         }
