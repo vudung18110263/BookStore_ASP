@@ -533,26 +533,33 @@ namespace Book_Shop.Controllers
             {
                 Session["cart"] = new List<itemInCart>();
             }
-
-            int productId = int.Parse(result.id);
             List<itemInCart> cart = Session["cart"] as List<itemInCart>;
 
-            // Lặp qua từng phần tử trong giỏ hàng
-            foreach (var cartItem in cart)
-            {
-                // Kiểm tra nếu sản phẩm đã ở trong giỏ hàng rồi thì tăng quantity
-                if (cartItem.product.id == productId)
+            try {
+                int productId = int.Parse(result.id);
+
+
+                // Lặp qua từng phần tử trong giỏ hàng
+                foreach (var cartItem in cart)
                 {
-                    cartItem.quantity += 1;
-                    return Json(cart, JsonRequestBehavior.AllowGet);
+                    // Kiểm tra nếu sản phẩm đã ở trong giỏ hàng rồi thì tăng quantity
+                    if (cartItem.product.id == productId)
+                    {
+                        cartItem.quantity += 1;
+                        return Json(cart, JsonRequestBehavior.AllowGet);
+                    }
                 }
+                // Nếu chưa có thì thêm vào giỏ hàng
+                Product product = db.Products.SingleOrDefault(n => n.id == productId);
+                product = new Product(product);
+                itemInCart item = new itemInCart() { product = product, quantity = 1 };
+                cart.Add(item);
+                return Json(cart, JsonRequestBehavior.AllowGet);
+            } catch {
+                return Json(cart, JsonRequestBehavior.AllowGet);
             }
-            // Nếu chưa có thì thêm vào giỏ hàng
-            Product product = db.Products.SingleOrDefault(n => n.id == productId);
-            product = new Product(product);
-            itemInCart item = new itemInCart() { product = product, quantity = 1 };
-            cart.Add(item);
-            return Json(cart, JsonRequestBehavior.AllowGet);
+
+            
         }
         [HttpPost]
         public ActionResult MinusFromCart(JsonResult result)

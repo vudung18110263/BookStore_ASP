@@ -40,47 +40,63 @@ namespace Book_Shop.Controllers
         [HttpPost]
         public ActionResult Register(FormCollection form)
         {
-            string username = form["username"].ToString();
-            string password = form["password"].ToString();
-            string confirmPassword = form["confirmPassword"].ToString();
-            string email = form["email"].ToString();
-            string phone = form["phone"].ToString();
-            string address = form["address"].ToString();
-            string fullname = form["fullname"].ToString();
-            //int payment = form["payment"];
-            string avatarPath = "";
-            //if (form["payment"].ToString() == null)
-            //{
-            //    payment = null;
-            //}
-            var avatar = Request.Files["Avatar"];
+            if (form["username"] == null ||
+                form["password"] == null ||
+                form["confirmPassword"] == null ||
+                form["email"] == null ||
+                form["phone"] == null ||
+                form["address"] == null ||
+                form["fullname"] == null)
+            {
+                return RedirectToAction("Index", "Store");
+            }
+            try {
+                string username = form["username"].ToString();
+                string password = form["password"].ToString();
+                string confirmPassword = form["confirmPassword"].ToString();
+                string email = form["email"].ToString();
+                string phone = form["phone"].ToString();
+                string address = form["address"].ToString();
+                string fullname = form["fullname"].ToString();
+                //int payment = form["payment"];
+                string avatarPath = "";
+                //if (form["payment"].ToString() == null)
+                //{
+                //    payment = null;
+                //}
+                var avatar = Request.Files["Avatar"];
 
-            var user = db.Users.SingleOrDefault(n => n.account == username);
-            var user2 = db.Users.SingleOrDefault(n => n.mail == email);
-            if (user != null || user2 != null)
-            {
-                ViewBag.Result = "User or Email existed ";
-                return View();
+                var user = db.Users.SingleOrDefault(n => n.account == username);
+                var user2 = db.Users.SingleOrDefault(n => n.mail == email);
+                if (user != null || user2 != null)
+                {
+                    ViewBag.Result = "User or Email existed ";
+                    return View();
+                }
+                if (password != confirmPassword)
+                {
+                    ViewBag.Result = "Password not matched";
+                    return View();
+                }
+                //if (avatar.FileName != "" && avatar.ContentLength > 0)
+                if (avatar != null)
+                {
+                    var path = Server.MapPath("~/UploadFiles/" + username + ".PNG");
+                    avatar.SaveAs(path);
+                    avatarPath = "/UploadFiles/" + username + ".PNG";
+                }
+                User newUser = new User() { account = username, pass_word = GetMD5(password), lever = 2, mail = email, phone = phone, avatar = avatarPath, paymentId = null, address = address, fullname = fullname, isActive = 1 };
+                TempData["user"] = newUser;
+                string confirmMail = RandomString(8);
+                TempData["confirmMail"] = confirmMail;
+                new MailHelper().SendMail(newUser.mail, "Confirm Gmail", "Ma xac nhan Gmail " + confirmMail, "");
+                //db.Users.Add(newUser);
+                //db.SaveChanges();
+                return RedirectToAction("ConfirmGmail");
+            } catch {
+                return RedirectToAction("Index", "Store");
             }
-            if (password != confirmPassword)
-            {
-                ViewBag.Result = "Password not matched";
-                return View();
-            }
-            if (avatar.FileName != "" && avatar.ContentLength > 0)
-            {
-                var path = Server.MapPath("~/UploadFiles/" + username + ".PNG");
-                avatar.SaveAs(path);
-                avatarPath = "/UploadFiles/" + username + ".PNG";
-            }
-            User newUser = new User() { account = username, pass_word = GetMD5(password), lever = 2, mail = email, phone = phone, avatar = avatarPath, paymentId = null, address = address, fullname=fullname , isActive=1 };
-            TempData["user"] = newUser;
-            string confirmMail = RandomString(8);
-            TempData["confirmMail"] = confirmMail;
-            new MailHelper().SendMail(newUser.mail, "Confirm Gmail", "Ma xac nhan Gmail " + confirmMail, "");
-            //db.Users.Add(newUser);
-            //db.SaveChanges();
-            return RedirectToAction("ConfirmGmail");
+            
         }
         public ActionResult ConfirmGmail()
         {
