@@ -115,6 +115,7 @@
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <form method="post" action="/Store/CancelOrder?idOrder=@item.id">
+                                                        @Html.AntiForgeryToken()
                                                         <div class="modal-body">
                                                             <div id="err_login"></div>
                                                             <div id="login_here">

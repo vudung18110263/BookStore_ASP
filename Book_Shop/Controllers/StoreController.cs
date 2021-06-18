@@ -337,6 +337,7 @@ namespace Book_Shop.Controllers
             return RedirectToAction("Purchase", "Store", new { Status = "PENDING" });
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [AuthorizeUserController]
         public ActionResult NotifyUrl()
         {
@@ -503,6 +504,7 @@ namespace Book_Shop.Controllers
         }
         [AuthorizeUserController]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult CancelOrder(int? idOrder)
         {
             var order = db.Orders.Where(x => x.id == idOrder).FirstOrDefault();
@@ -527,6 +529,7 @@ namespace Book_Shop.Controllers
             public string id { get; set; }
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddToCart(JsonResult result)
         {
             if (Session["cart"] == null)
@@ -562,6 +565,7 @@ namespace Book_Shop.Controllers
             
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult MinusFromCart(JsonResult result)
         {
             int productId = int.Parse(result.id);
@@ -648,6 +652,7 @@ namespace Book_Shop.Controllers
         }
         [AuthorizeUserController]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddPromoCode(JsonPromo promo)
         {
             var promocode = db.PromoCodes.Where(p => p.code == promo.code).FirstOrDefault();

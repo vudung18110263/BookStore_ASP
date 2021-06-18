@@ -168,6 +168,7 @@
                 </div>
                 <div class="header__search">
                     <form action="/Store/Search" method="get" class="header__search-input-wrap">
+                        @Html.AntiForgeryToken()
                         <input style="width: 87%; color: #e9e2e2" type="text" name="q" class="header__search-input" value="Tìm sản phẩm ở đây..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required>
                         <button class="header__search-btn" type="submit">
                             <i class="header__search-btn-icon fas fa-search"></i>
@@ -270,6 +271,7 @@
             </div>
             <div class="w3agile_newsletter_right">
                 <form action="#" method="post">
+                    @Html.AntiForgeryToken()
                     <input type="email" name="Email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
                     <input type="submit" value="subscribe now">
                 </form>
@@ -366,7 +368,8 @@
                         <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
                         <label for="tab-1" class="tab">Đăng ký</label>
                     </div>
-                    <form method="post" id="frm-login">
+                    <form method="post" id="frm-login" asp-antiforgery="false">
+                        @Html.AntiForgeryToken()
                         <div class="modal-body">
                             <div id="err_login"></div>
                             <div id="login_here">
@@ -386,6 +389,7 @@
                             </div>
                         </div>
                     </form>
+                  
                 </div><!-- /.modal-content -->
             </div>
         </div><!-- /.modal-dialog -->
@@ -398,13 +402,13 @@
                 function () {
                     $('.dropdown-menu', this).stop(true, true).slideDown("fast");
                     $(this).toggleClass('open');
-                },
+                        },
                 function () {
                     $('.dropdown-menu', this).stop(true, true).slideUp("fast");
                     $(this).toggleClass('open');
-                }
+                        }
             );
-        });
+                    });
     </script>
     <!-- here stars scrolling icon -->
     <script type="text/javascript">

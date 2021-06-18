@@ -93,6 +93,7 @@ namespace Book_Shop.Controllers
 
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Products.Find(id);
@@ -114,6 +115,7 @@ namespace Book_Shop.Controllers
             return View(product);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Product product)
         {
             if (ModelState.IsValid)

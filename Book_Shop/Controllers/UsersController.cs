@@ -38,6 +38,7 @@ namespace Book_Shop.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(FormCollection form)
         {
             if (form["username"] == null ||
@@ -103,6 +104,7 @@ namespace Book_Shop.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ConfirmGmail(string confirm)
         {
             User newuser = TempData["user"] as User;
@@ -123,6 +125,7 @@ namespace Book_Shop.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ChangePassword(FormCollection form)
         {
             string username = form["username"].ToString();
@@ -160,6 +163,7 @@ namespace Book_Shop.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(FormCollection form)
         {
             string username = form["username"].ToString();

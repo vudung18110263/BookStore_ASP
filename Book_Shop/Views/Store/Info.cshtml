@@ -32,7 +32,8 @@
                 </div>
             </div>
             <div class="col-md-8 agileinfo_mail_grid_right" style="padding: 20px 0 10px 35px">
-                <form action="#" method="post" >
+                <form action="#" method="post">
+                    @Html.AntiForgeryToken()
                     <div class="form-group col-md-5">
                         <label for="inputID">ID</label>
                         <input disabled type="text" value="" class="form-control" id="inputID" placeholder="ID" style="margin-top: 7px;border-radius: 3px;">
