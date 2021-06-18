@@ -28,7 +28,7 @@
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand" href="@Url.Action("Index","Home")">Hệ thống quản lý</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
-        <!-- Navbar Search-->
+       
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
             <div class="input-group">
                 <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </form>
-        <!-- Navbar-->
+      
         <ul class="navbar-nav ml-auto ml-md-0">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -98,7 +98,7 @@
                                         <a class="nav-link" href="@Url.Action("Index","ManageUser")">Quản lý người dùng</a>
                                         <a class="nav-link" href="@Url.Action("Index","Orders")">Quản lý hóa đơn</a>
                                         <a class="nav-link" href="@Url.Action("Index","Categories")">Quản lý loại sách</a>
-                                        @*<a class="nav-link" href="@Url.Action("Index","Payments")">Quản lý thanh toán</a>*@
+                                       
                                         <a class="nav-link" href="@Url.Action("Index","Promocodes")">Quản lý mã giảm giá</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="nav-link" href="@Url.Action("Index","Myshop")">Sản phẩm của tôi</a>
@@ -116,25 +116,7 @@
                                 }
                             </nav>
                         </div>
-                        @*@if (Session["userId"] == null)
-                        { }
-                        else
-                        {
-                            string lever = Session["lever"].ToString();
-                            if (lever == "1")
-                            {
-                                <div class="sb-sidenav-menu-heading">Tác vụ</div>
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                             
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                    </nav>
-                                </div>
-                            }
-                        }*@
+                       
                         <div class="sb-sidenav-menu-heading">Thống kê</div>
                         <a class="nav-link" href="@Url.Action("Index","Chartjs")"><i class="fas fa-facebook"></i>  Doanh thu</a>
                     </div>
@@ -158,7 +140,7 @@
         </div>
     </div>
 
-    <!-- ############################ Đăng nhập ############################## -->
+    
     <div class="modal fade" id="dang_nhap">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -196,9 +178,9 @@
             </div>
                 
                 
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js" integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ==" crossorigin="anonymous"></script>
@@ -206,14 +188,11 @@
     <script src="/Content/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js" integrity="sha512-hZf9Qhp3rlDJBvAKvmiG+goaaKRZA6LKUO35oK6EsM0/kjPK32Yw7URqrq3Q+Nvbbt8Usss+IekL7CRn83dYmw==" crossorigin="anonymous"></script>
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>*@
-    @*<script src="/Content/assets/demo/chart-area-demo.js"></script>
-        <script src="/Content/assets/demo/chart-bar-demo.js"></script>*@
+    
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     <script src="/Content/assets/demo/datatables-demo.js"></script>
-    @*@RenderSection("scripts", required: false)*@
-    <!-- ===================================Ajax Login=========================-->
+  
     <script>
         $(document).ready(function () {
             $("#dang_nhap").submit(function (e) {
@@ -239,7 +218,7 @@
                         async: true,
                         data: form_data_login,
                         success: function (msg_login) {
-                            //alert(msg);
+                           
 
 
                             if (msg_login == 'false') {
@@ -257,7 +236,7 @@
 
                                 $('#err_login').html('<div class="alert alert-success"><strong>Đăng nhập thành công</strong><span> Hệ thống tự chuyển sau vài giây ...</span></div>');
                                 setTimeout(
-                                    //chuyển đến địa chỉ msg_login của controler gửi qua
+                                    
                                     function () {
                                         window.location.href = 'https://localhost:44327/Home/Index';
                                     }, 100);
@@ -268,7 +247,7 @@
                 }
             });
         })
-        //Load wating bar
+       
         $(document).ajaxStart(function () {
             $("#waiting").show();
         }).ajaxStop(function () {
@@ -276,7 +255,7 @@
         });
     </script>
     <script>
-        //Preview & Update an image before it is uploaded
+        
         $(document).ready(function () {
             $("#imgInp").change(function () {
                 readURL(this);

@@ -27,7 +27,7 @@ namespace Book_Shop.Controllers
             return byte2String;
         }
         private Book_StoreEntities2 db = new Book_StoreEntities2();
-        // GET: Users
+       
         public ActionResult Index()
         {
 
@@ -58,12 +58,9 @@ namespace Book_Shop.Controllers
                 string phone = form["phone"].ToString();
                 string address = form["address"].ToString();
                 string fullname = form["fullname"].ToString();
-                //int payment = form["payment"];
+                
                 string avatarPath = "";
-                //if (form["payment"].ToString() == null)
-                //{
-                //    payment = null;
-                //}
+               
                 var avatar = Request.Files["Avatar"];
 
                 var user = db.Users.SingleOrDefault(n => n.account == username);
@@ -78,7 +75,7 @@ namespace Book_Shop.Controllers
                     ViewBag.Result = "Password not matched";
                     return View();
                 }
-                //if (avatar.FileName != "" && avatar.ContentLength > 0)
+               
                 if (avatar != null)
                 {
                     var path = Server.MapPath("~/UploadFiles/" + username + ".PNG");
@@ -90,8 +87,7 @@ namespace Book_Shop.Controllers
                 string confirmMail = RandomString(8);
                 TempData["confirmMail"] = confirmMail;
                 new MailHelper().SendMail(newUser.mail, "Confirm Gmail", "Ma xac nhan Gmail " + confirmMail, "");
-                //db.Users.Add(newUser);
-                //db.SaveChanges();
+              
                 return RedirectToAction("ConfirmGmail");
             } catch {
                 return RedirectToAction("Index", "Store");
@@ -181,12 +177,12 @@ namespace Book_Shop.Controllers
         }
         public ActionResult logout()
         {
-            Session.Clear();//remove session
+            Session.Clear();
             return Redirect("/");
         }
         public ActionResult logoutAdmin()
         {
-            Session.Clear();//remove session
+            Session.Clear();
             return Redirect("/Home/Index");
         }
         public ActionResult UplaodImage(string image)
@@ -240,7 +236,7 @@ namespace Book_Shop.Controllers
             }
             catch (Exception)
             {
-                return false;// "Problem while sending email, Please check details.";
+                return false;
             }
         }
         private bool SendViewConfirGmail(string EMAIL, string a)
@@ -248,28 +244,26 @@ namespace Book_Shop.Controllers
             ViewBag.Kq = EMAIL;
             try
             {
-                //Configuring webMail class to send emails  
-                //gmail smtp server  
+                
                 WebMail.SmtpServer = "smtp.gmail.com";
-                //gmail port to send emails  
+              
                 WebMail.SmtpPort = 587;
                 WebMail.SmtpUseDefaultCredentials = true;
-                //sending emails with secure protocol  
+                
                 WebMail.EnableSsl = true;
-                //EmailId used to send emails from application  
+                 
                 WebMail.UserName = "tiensony1505@gmail.com";
                 WebMail.Password = "scdldht1999";
 
-                //Sender email address.  
-                //WebMail.From = "tranhanam1999@gmail.com";
+               
 
-                //Send email  
+                
                 WebMail.Send(to: EMAIL, subject: "Xác nhận gmail", body: "Mã xác nhận: " + a, cc: null, bcc: null, isBodyHtml: true);
-                return true; //"Email Sent Successfully.";
+                return true; 
             }
             catch (Exception)
             {
-                return false;// "Problem while sending email, Please check details.";
+                return false;
             }
         }
 

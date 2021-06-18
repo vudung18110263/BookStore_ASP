@@ -113,13 +113,13 @@
             </tbody>
         </table>
         <div class="pagination">
-            <!-- Thêm mã phân trang -->
+           
             <div style="margin: 20px 10px 0px 0px ">
                 Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
             </div>
             @Html.PagedListPager(Model, page => Url.Action("Index",
                 new { page }))
-            <!-- Kết thúc -->
+            
         </div>
 
     </div>

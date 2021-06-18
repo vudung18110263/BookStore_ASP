@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <!-- ############################ Đăng nhập ############################## -->
+   
     <div class="modal fade" id="dang_nhap">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -68,10 +68,9 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                     </div>
                 </form>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
+            </div>
+        </div>
+    </div>
 
     <div class="container body-content">
         @RenderBody()
@@ -84,7 +83,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    <!-- ===================================Ajax Login=========================-->
+  
     <script>
         $(document).ready(function () {
             $("#frm-login").submit(function (e) {
@@ -109,7 +108,7 @@
                         async: true,
                         data: form_data_login,
                         success: function (msg_login) {
-                            //alert(msg);
+                           
                             if (msg_login == 'false') {
                                 $('#err_login').html('<div class="alert alert-danger">Tên hoặc mật khẩu không chính xác</div>');
                                 $("#password").val("");
@@ -125,7 +124,7 @@
 
                                 $('#err_login').html('<div class="alert alert-success"><strong>Đăng nhập thành công</strong><span> Hệ thống tự chuyển sau vài giây ...</span></div>');
                                 setTimeout(
-                                    //chuyển đến địa chỉ msg_login của controler gửi qua
+                                   
                                     function () {
                                         window.location.href = window.location.pathname;
                                     }, 100);
@@ -136,7 +135,7 @@
                 }
             });
         })
-        //Load wating bar
+        
         $(document).ajaxStart(function () {
             $("#waiting").show();
         }).ajaxStop(function () {
@@ -144,7 +143,7 @@
         });
     </script>
     <script>
-        //Preview & Update an image before it is uploaded
+      
         $(document).ready(function () {
             $("#imgInp").change(function () {
                 readURL(this);

@@ -11,14 +11,14 @@ namespace Book_Shop.Controllers
     {
         private Book_StoreEntities2 db = new Book_StoreEntities2();
 
-        // GET: Order_Product
+      
         public ActionResult Index()
         {
             var order_Product = db.Order_Product.Include(o => o.Order).Include(o => o.Product);
             return View(order_Product.ToList());
         }
 
-        // GET: Order_Product/Details/5
+       
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -33,7 +33,7 @@ namespace Book_Shop.Controllers
             return View(order_Product);
         }
 
-        // GET: Order_Product/Create
+      
         public ActionResult Create()
         {
             ViewBag.orderId = new SelectList(db.Orders, "id", "status");
@@ -41,9 +41,7 @@ namespace Book_Shop.Controllers
             return View();
         }
 
-        // POST: Order_Product/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,orderId,productId,quantity,price")] Order_Product order_Product)
@@ -60,7 +58,7 @@ namespace Book_Shop.Controllers
             return View(order_Product);
         }
 
-        // GET: Order_Product/Edit/5
+       
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,9 +75,7 @@ namespace Book_Shop.Controllers
             return View(order_Product);
         }
 
-        // POST: Order_Product/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,orderId,productId,quantity,price")] Order_Product order_Product)
@@ -95,7 +91,6 @@ namespace Book_Shop.Controllers
             return View(order_Product);
         }
 
-        // GET: Order_Product/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -110,7 +105,7 @@ namespace Book_Shop.Controllers
             return View(order_Product);
         }
 
-        // POST: Order_Product/Delete/5
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
