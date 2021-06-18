@@ -22,7 +22,7 @@
         <div class="alert alert-danger">@ViewBag.Result</div>
     }
     <h2>Welcome to our website</h2>
-    <form class="register__layout" action="/Users/Register" method="post" enctype="multipart/form-data">
+    <form-action class="register__layout" action="/Users/Register" method="post" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <table class="register__table">
@@ -34,7 +34,7 @@
                 <td>
                     <img id="blah" width="72px" height="72px" />
                     <label for="imgInp" id="avatar-label">
-                        Ảnh đại diện 
+                        Ảnh đại diện
                         <input type="file" name="avatar" id="imgInp" style="display: none;" />
                     </label>
                     @Html.ValidationMessageFor(model => model.avatar, "", new { @class = "text-danger" })
@@ -55,7 +55,7 @@
             <tr>
                 <td><label for="fullname"> Họ và tên <span class="register__required">*</span>:</label></td>
                 <td>
-                    <input class="form-control" id="fullname" required name="fullname"/>
+                    <input class="form-control" id="fullname" required name="fullname" />
                 </td>
             </tr>
             <tr>
@@ -83,7 +83,7 @@
                 </td>
             </tr>
         </table>
-    </form>
+        </form-action>
 
 }
 @Scripts.Render("~/bundles/jquery")

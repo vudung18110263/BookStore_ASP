@@ -29,6 +29,7 @@ namespace Book_Shop.Controllers
 
         
         [HttpPost, ActionName("Disable")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             User user = db.Users.Find(id);
@@ -52,6 +53,7 @@ namespace Book_Shop.Controllers
 
         // POST: Products/Delete/5
         [HttpPost, ActionName("Enable")]
+        [ValidateAntiForgeryToken]
         public ActionResult Enablefirmed(int id)
         {
             User user = db.Users.Find(id);

@@ -46,11 +46,12 @@
                     <h4 class="modal-title">Đăng nhập</h4>
                 </div>
                 <form method="post" id="frm-login">
+                    @Html.AntiForgeryToken()
                     <div class="modal-body">
                         <div id="err_login"></div>
                         <div id="login_here">
                             <label>Tên tài khoản : </label>
-                            <input type="text" class="form-control" name="account" id="username" style="color: white;"/>
+                            <input type="text" class="form-control" name="account" id="username" style="color: white;" />
                             <label>Mật khẩu : </label>
                             <input type="password" class="form-control" name="password" id="password" />
                             <br />

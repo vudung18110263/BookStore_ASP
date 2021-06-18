@@ -11,6 +11,7 @@
     <h1 class="mt-4">XEM HÓA ĐƠN THÁNG</h1>
 
     <form action="/Orders/ViewOrderByMonth" method="post">
+        @Html.AntiForgeryToken()
         <div class="controls">
             <label class="control-label">Nhập tháng: </label>
             <input class="form-control" type="month" name="month" placeholder="Landmark">

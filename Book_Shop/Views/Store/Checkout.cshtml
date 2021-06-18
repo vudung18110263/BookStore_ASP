@@ -58,6 +58,7 @@
                          <a coler="red">@ViewBag.KQ</a>
                     }
                     <form action="/Store/CheckoutProdcut" method="post" class="creditly-card-form agileinfo_form">
+                        @Html.AntiForgeryToken()
                         <section class="creditly-wrapper wthree, w3_agileits_wrapper">
                             <div class="information-wrapper">
                                 <div class="first-row form-group">
@@ -80,7 +81,7 @@
                                     </div>
                                     <div class="controls">
                                         <label class="control-label">Address: </label>
-                                        <input class="form-control" type="text" name="Address" value="@Model.address" placeholder="Address" required >
+                                        <input class="form-control" type="text" name="Address" value="@Model.address" placeholder="Address" required>
                                     </div>
                                     <div class="controls">
                                         <label class="control-label"> payment options: </label>
@@ -91,7 +92,8 @@
                                     </div>
                                     <br />
                                     <div class="controls">
-                                        <label class="control-label"> shipping way :
+                                        <label class="control-label">
+                                            shipping way :
                                         </label>
                                         <select class="select" name="shippgingOption">
                                             <option value="1">Economical delivery 15.000đ</option>
@@ -109,6 +111,7 @@
                 else
                 {
                     <form action="#" method="post" class="creditly-card-form agileinfo_form">
+                        @Html.AntiForgeryToken()
                         <section class="creditly-wrapper wthree, w3_agileits_wrapper">
                             <div class="information-wrapper">
                                 <div class="checkout-right-basket">

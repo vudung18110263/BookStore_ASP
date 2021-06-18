@@ -37,6 +37,7 @@ namespace Book_Shop.Controllers
             return View(links.ToPagedList(pageNumber, pageSize));
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ViewOrderByMonth(FormCollection form)
         {
             var now = DateTime.Now;
