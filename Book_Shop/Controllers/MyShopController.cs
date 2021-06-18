@@ -28,22 +28,7 @@ namespace Book_Shop.Controllers
             }
             return View(listproduct);
         }
-        //public ActionResult Create()
-        //{
-        //    return View(db.Categories.Where(x=> x.name!=""));
-        //}
-        //[HttpPost]
-        //public ActionResult Create(Product product)
-        //{
-        //    var Image = Request.Files["image"];
-        //    var path = Server.MapPath("~/imageProduct/" + product.name + ".PNG");
-        //    Image.SaveAs(path);
-        //    product.image = "/imageProduct/" + product.name + ".PNG";
-        //    product.authorId = Convert.ToInt32(Session["userId"]);
-        //    db.Products.Add(product);
-        //    db.SaveChanges();
-        //    return Redirect("MyShop");
-        //}
+      
         public ActionResult Create()
         {
             var categories = db.Categories.ToList();
@@ -52,9 +37,7 @@ namespace Book_Shop.Controllers
             return View();
         }
 
-        // POST: Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,name,image,description,category,price,rate,stock,authorId")] Product product)
@@ -91,7 +74,6 @@ namespace Book_Shop.Controllers
             return View(product);
         }
 
-        // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -164,10 +146,10 @@ namespace Book_Shop.Controllers
         public ActionResult OrderManagement(string Status)
         {
             var a = db.Orders.ToList();
-            if (Session["userId"] == null)//kiem tra dang nhập ?
+            if (Session["userId"] == null)
                 return RedirectToAction("Index", "Store");
 
-            //lấy userid trên session
+           
             var temp = Session["userId"].ToString();
             int idUser = int.Parse(temp);
             ViewBag.done = "false";
@@ -178,16 +160,16 @@ namespace Book_Shop.Controllers
                 Status = "DONE";
             try
             {
-                //khởi tạo các đối tượng
-                List<Order> listorder = new List<Order>();//danh sách các order
+                
+                List<Order> listorder = new List<Order>();
                 int priceALL;
                 bool temp2;
                 listorder = db.Orders.Where(x => x.status == Status).ToList();
-                List<Order_Detail> result = new List<Order_Detail>();//orderDetail khởi tạo trong folder model
+                List<Order_Detail> result = new List<Order_Detail>();
 
                 foreach (var item in listorder)
                 {
-                    //khởi tạo các temp
+                    
                     List<Order_Product> listOrderPro = new List<Order_Product>();
                     List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
                     OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();
@@ -242,14 +224,14 @@ namespace Book_Shop.Controllers
             ViewBag.Done = "true";
             try
             {
-                //khởi tạo các đối tượng
+               
                 int priceALL;
                 bool temp2;
-                List<Order_Detail> result = new List<Order_Detail>();//orderDetail khởi tạo trong folder model
+                List<Order_Detail> result = new List<Order_Detail>();
 
                 foreach (var item in listorder)
                 {
-                    //khởi tạo các temp
+                  
                     List<Order_Product> listOrderPro = new List<Order_Product>();
                     List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
                     OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();
@@ -329,7 +311,7 @@ namespace Book_Shop.Controllers
                 string filename = Server.MapPath("/") + "\\export\\" + nameExcel + ".xlsx";
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 ExcelPackage pck = new ExcelPackage(new System.IO.FileInfo(filename));
-                //create new sheet
+               
                 var temp = Session["userId"].ToString();
                 int idUser = int.Parse(temp);
                 var ws = pck.Workbook.Worksheets.Add(nameExcel);
@@ -338,8 +320,7 @@ namespace Book_Shop.Controllers
                 int priceALL;
                 int monthPie;
                 int yearPie;
-                //get month 
-                //get data from database
+               
                 var orders = db.Orders.Where(x => x.status == "DONE").Include(o => o.PromoCode)
                 .Include(o => o.User).OrderByDescending(x => x.date).ToList();
                 if (monthYear != "")
@@ -352,11 +333,11 @@ namespace Book_Shop.Controllers
                     TempData["monthYear"] = monthYear;
                 }
 
-                List<Order_Detail> result2 = new List<Order_Detail>();//orderDetail khởi tạo trong folder model
+                List<Order_Detail> result2 = new List<Order_Detail>();
 
                 foreach (var item in orders)
                 {
-                    //khởi tạo các temp
+                    
                     List<Order_Product> listOrderPro = new List<Order_Product>();
                     List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
                     OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();

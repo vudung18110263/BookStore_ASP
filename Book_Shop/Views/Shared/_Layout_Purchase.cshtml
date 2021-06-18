@@ -12,7 +12,7 @@
     <script type="application/x-javascript">
         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
                function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <!-- //for-mobile-apps -->
+   
     <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Content/grid.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Content/responsive.css" rel="stylesheet" type="text/css" media="all" />
@@ -20,18 +20,17 @@
     <link href="~/Content/base.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Content/store.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Content/style.css" rel="stylesheet" type="text/css" media="all" />
-    <!-- font-awesome icons -->
-    @*<link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" media="all" />*@
+    
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
-    <!-- //font-awesome icons -->
+    
     <link href="~/Content/headercart2.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Content/register.css" rel="stylesheet" type="text/css" media="all" />
-    <!-- js -->
+    
     <script src="~/Scripts/jquery-1.11.1.min.js"></script>
-    <!-- //js -->
+   
     <link href='//fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
-    <!-- start-smoth-scrolling -->
+    
     <script type="text/javascript" src="~/Scripts/move-top.js"></script>
     <script type="text/javascript" src="~/Scripts/easing.js"></script>
     <script type="text/javascript">
@@ -42,15 +41,15 @@
             });
         });
     </script>
-    <!-- start-smoth-scrolling -->
+    
 </head>
 
 <body>
-    <!-- header -->
+  
     <header class="header agileits_header">
-        <!-- Class Grid -->
+      
         <div class="grid wide">
-            <!-- Navbar : có 2 thẻ ul-->
+         
             <nav class="header__navbar hide-on-mobile-tablet">
                 <ul class="header__navbar-list">
                     <li>
@@ -79,7 +78,7 @@
                         </a>
                     </li>
 
-                    <!-- Khi đã đăng nhập -->
+                  
                     @if (Session["userId"] != null)
                     {
                         <li class="header__navbar-item header__navbar-user">
@@ -104,7 +103,7 @@
                     }
                     else
                     {
-                        <!-- Chưa đăng nhập -->
+                    
                         <li><a class="header__navbar-item header__navbar-item--strong header__navbar-item--separate" style="font-size: 16px" data-toggle="modal" href="#dang_nhap">Đăng nhập</a></li>
                         <li><a class="header__navbar-item header__navbar-item--strong" style="font-size: 16px" data-toggle="modal" href="/Users/Register">Đăng ký</a></li>
 
@@ -112,22 +111,22 @@
                 </ul>
             </nav>
 
-            <!-- SEARCH -->
+           
             <div class="header-with-search">
-                <!-- Nav bars-btn -->
+            
                 <label for="nav-mobile-input" class="nav__bars-btn">
                     <i class="fas fa-bars"></i>
                 </label>
 
-                <!--  -->
+          
                 <input hidden type="checkbox" name="" class="nav__input" id="nav-mobile-input">
 
-                <!-- Overlay -->
+          
                 <label for="nav-mobile-input" class="nav__overlay"></label>
 
-                <!-- Nav Mobile -->
+           
                 <nav class="nav__mobile">
-                    <!-- Nút Close -->
+             
                     <label for="nav-mobile-input" class="nav__mobile-close">
                         <i class="fas fa-times"></i>
                     </label>
@@ -150,7 +149,7 @@
                     </ul>
                 </nav>
 
-                <!-- Logo tìm kiếm -->
+              
                 <input hidden class="header__search-checkbox" type="checkbox" name="" id="mobile-search-checkbox">
                 <label for="mobile-search-checkbox" class="header__mobile-search">
                     <i class="fas fa-search"></i>
@@ -172,17 +171,17 @@
                     </form>
 
                 </div>
-                <!-- Giỏ hàng -->
+          
                 <div class="header__cart">
                     <div class="header__cart-wrap">
                         <i class="header__cart-icon fas fa-shopping-cart"></i>
                         <span class="header__cart-notice">0</span>
 
                         <div class="header__cart-list ">
-                            <!--No cart:có thêm class header__cart-list--no-cart-->
+                         
                             <img src="./assets/image/no_cart.png" alt="" class="header__cart-no-cart-img">
 
-                            <!-- Có sản phẩm trong giỏ hàng -->
+                         
                             <h4 class="header__cart-heading">Sản phẩm đã thêm</h4>
                             <ul class="header__cart-list-item">
                             </ul>
@@ -193,7 +192,7 @@
             </div>
         </div>
     </header>
-    <!-- script-for sticky-nav -->
+
     <script>
         $(document).ready(function () {
             var navoffeset = $(".agileits_header").offset().top;
@@ -208,15 +207,15 @@
 
         });
     </script>
-    <!-- //script-for sticky-nav -->
+ 
     <div class="logo_products" style="margin-top: 50px; background-color: yellow">
     </div>
-    <!-- //header -->
+
     @RenderSection("products_breadcrumb", required: false)
     <div>
         @RenderBody()
     </div>
-    <!-- newsletter -->
+ 
     <div class="newsletter">
         <div class="container">
             <div class="w3agile_newsletter_left">
@@ -232,8 +231,8 @@
             <div class="clearfix"> </div>
         </div>
     </div>
-    <!-- //newsletter -->
-    <!-- footer -->
+   
+   
     <div class="footer">
         <div class="container">
             <div class="col-md-3 w3_footer_grid">
@@ -310,8 +309,7 @@
             </div>
         </div>
     </div>
-    <!-- //footer -->
-    <!-- Bootstrap Core JavaScript -->
+    
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -327,23 +325,16 @@
             );
         });
     </script>
-    <!-- here stars scrolling icon -->
+   
     <script type="text/javascript">
         $(document).ready(function () {
-            /*
-                var defaults = {
-                containerID: 'toTop', // fading element id
-                containerHoverID: 'toTopHover', // fading element hover id
-                scrollSpeed: 1200,
-                easingType: 'linear'
-                };
-            */
+          
 
             $().UItoTop({ easingType: 'easeOutQuart' });
 
         });
     </script>
-    <!-- //here ends scrolling icon -->
+    
     <script src="~/Scripts/minicart.js"></script>
     <script>
         paypal.minicart.render();
@@ -354,7 +345,7 @@
                 total = 0,
                 i;
 
-            // Count the number of each item in the cart
+           
             for (i = 0; i < len; i++) {
                 total += items[i].get('quantity');
             }
@@ -402,7 +393,7 @@
                         async: true,
                         data: form_data_login,
                         success: function (msg_login) {
-                            //alert(msg);
+                          
                             if (msg_login == 'false') {
                                 $('#err_login').html('<div class="alert alert-danger">Tên hoặc mật khẩu không chính xác</div>');
                                 $("#password").val("");
@@ -415,7 +406,7 @@
 
                                 $('#err_login').html('<div class="alert alert-success"><strong>Đăng nhập thành công</strong><span> Hệ thống tự chuyển sau vài giây ...</span></div>');
                                 setTimeout(
-                                    //chuyển đến địa chỉ msg_login của controler gửi qua
+                                
                                     function () {
                                         window.location.href = window.location.pathname;
                                     }, 100);
@@ -426,7 +417,7 @@
                 }
             });
         })
-        //Load wating bar
+      
         $(document).ajaxStart(function () {
             $("#waiting").show();
         }).ajaxStop(function () {
@@ -529,7 +520,7 @@
     <script>
         function selectCategory(category) {
             const urlParams = new URLSearchParams(window.location.search);
-            //const category = urlParams.get('category');
+          
             const page = urlParams.get('page');
             window.location.href = `/Store/Search?category=${category}`
         }

@@ -8,25 +8,25 @@ namespace Book_Shop.Controllers
     [AuthorizeShipperController]
     public class ShipperController : Controller
     {
-        // GET: Shipper
+        
         private Book_StoreEntities2 db = new Book_StoreEntities2();
         public ActionResult Index()
         {
             var a = db.Orders.ToList();
-            if (Session["userId"] == null)//kiem tra dang nhập ?
+            if (Session["userId"] == null)
                 return RedirectToAction("Index", "Store");
 
             try
             {
-                //khởi tạo các đối tượng
-                List<Order> listorder = new List<Order>();//danh sách các order
+             
+                List<Order> listorder = new List<Order>();
                 int priceALL;
                 listorder = db.Orders.Where(x => x.status == "SHIPPING").ToList();
-                List<Order_Detail> result = new List<Order_Detail>();//orderDetail khởi tạo trong folder model
+                List<Order_Detail> result = new List<Order_Detail>();
 
                 foreach (var item in listorder)
                 {
-                    //khởi tạo các temp
+                    
                     List<Order_Product> listOrderPro = new List<Order_Product>();
                     List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
                     OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();
@@ -67,7 +67,7 @@ namespace Book_Shop.Controllers
             if (order == null)
                 return RedirectToAction("Index");
 
-            //lấy ra danh sách product trong database
+           
             List<Order_Product> listOrderPro = new List<Order_Product>();
             listOrderPro = db.Order_Product.Where(x => x.orderId == order.id).ToList();
 

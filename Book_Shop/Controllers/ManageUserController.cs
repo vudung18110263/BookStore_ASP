@@ -7,7 +7,7 @@ namespace Book_Shop.Controllers
 {
     public class ManageUserController : Controller
     {
-        // GET: ManageUser
+      
         private Book_StoreEntities2 db = new Book_StoreEntities2();
         public ActionResult Index()
         {
@@ -27,7 +27,7 @@ namespace Book_Shop.Controllers
             return View(user);
         }
 
-        // POST: Products/Delete/5
+        
         [HttpPost, ActionName("Disable")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

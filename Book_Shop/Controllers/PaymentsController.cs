@@ -11,13 +11,13 @@ namespace Book_Shop.Controllers
     {
         private Book_StoreEntities2 db = new Book_StoreEntities2();
 
-        // GET: Payments
+      
         public ActionResult Index()
         {
             return View(db.Payments.ToList());
         }
 
-        // GET: Payments/Details/5
+      
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -32,15 +32,13 @@ namespace Book_Shop.Controllers
             return View(payment);
         }
 
-        // GET: Payments/Create
+       
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Payments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,name,cardNumber,money")] Payment payment)
@@ -55,7 +53,7 @@ namespace Book_Shop.Controllers
             return View(payment);
         }
 
-        // GET: Payments/Edit/5
+       
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -70,9 +68,7 @@ namespace Book_Shop.Controllers
             return View(payment);
         }
 
-        // POST: Payments/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,name,cardNumber,money")] Payment payment)
@@ -86,7 +82,7 @@ namespace Book_Shop.Controllers
             return View(payment);
         }
 
-        // GET: Payments/Delete/5
+        
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -101,7 +97,7 @@ namespace Book_Shop.Controllers
             return View(payment);
         }
 
-        // POST: Payments/Delete/5
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

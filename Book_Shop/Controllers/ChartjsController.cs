@@ -72,10 +72,10 @@ namespace Book_Shop.Controllers
             }
             int priceALL;
 
-            List<Order_Detail> result = new List<Order_Detail>();//orderDetail khởi tạo trong folder model
+            List<Order_Detail> result = new List<Order_Detail>();
             foreach (var item in ordersForBar1)
             {
-                //khởi tạo các temp
+                
                 List<Order_Product> listOrderPro = new List<Order_Product>();
                 List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
                 OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();

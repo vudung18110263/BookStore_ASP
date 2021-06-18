@@ -8,37 +8,36 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Book_Shop.Controllers
 {
     public class StoreController : Controller
     {
-        // GET: Store
+        
         private Book_StoreEntities2 db = new Book_StoreEntities2();
+       
 
-        // GET: Products
+
+        
         public ActionResult Index(int? page)
         {
 
-            // 1. Tham số int? dùng để thể hiện null và kiểu int
-            // page có thể có giá trị là null và kiểu int.
-
-            // 2. Nếu page = null thì đặt lại là 1.
+          
+           
             if (page == null) page = 1;
 
-            // 3. Tạo truy vấn, lưu ý phải sắp xếp theo trường nào đó, ví dụ OrderBy
-            // theo LinkID mới có thể phân trang.
+           
             var links = db.Products.Where(x => x.isable == 1 && x.User.isActive == 1).OrderByDescending(x => x.rate);
 
-            // 4. Tạo kích thước trang (pageSize) hay là số Link hiển thị trên 1 trang
+           
             int pageSize = 8;
 
-            // 4.1 Toán tử ?? trong C# mô tả nếu page khác null thì lấy giá trị page, còn
-            // nếu page = null thì lấy giá trị 1 cho biến pageNumber.
+           
             int pageNumber = (page ?? 1);
 
-            // 5. Trả về các Link được phân trang theo kích thước và số trang.
+            
             var kq = links.ToPagedList(pageNumber, pageSize);
             return View(kq);
         }
@@ -46,26 +45,7 @@ namespace Book_Shop.Controllers
         {
             return View();
         }
-        //public ActionResult CheckProdcutQuantity(string view)
-        //{
-        //    List<string> notification = new List<string>();
-        //    List<itemInCart> cart = Session["cart"] as List<itemInCart>;
-        //    foreach (var item in cart)
-        //    {
-        //        var product = db.Products.Where(x => x.id == item.product.id).FirstOrDefault();
-        //        if (product.stock < item.quantity)
-        //        {
-        //            notification.Add("san pham :" + product.name + " chi con lai :" + product.stock);
-        //        }
-        //    }
-        //    if (notification.Count > 0)
-        //    {
-        //        ViewBag.KQ = notification;
-        //        return View(view);
-        //    }
-        //    else
-        //        return View("Purchase");
-        //} 
+      
         private string CheckProdcutQuantity(List<itemInCart> cart)
         {
             string notification = "";
@@ -79,7 +59,7 @@ namespace Book_Shop.Controllers
             }
             return notification;
         }
-        //khỏi tạo list order trước khi thanh toán
+        
         public List<Order> checkoutListOrderNeed(string ShipAddress, string typeShipping)
         {
             List<itemInCart> cart = Session["cart"] as List<itemInCart>;
@@ -97,7 +77,7 @@ namespace Book_Shop.Controllers
                         Order order = new Order()
                         {
                             userid = Userid,
-                            status = "dang xu ly", //don hàng chưa được xử lý
+                            status = "dang xu ly", 
                             date = myDateTime.Date,
                             shippingAddess = ShipAddress,
                             shippingType = typeShipping
@@ -110,7 +90,7 @@ namespace Book_Shop.Controllers
             { }
             return orders;
         }
-        //thanh toan
+      
         [AuthorizeUserController]
         public ActionResult CheckoutProdcut(FormCollection form)
         {
@@ -133,7 +113,7 @@ namespace Book_Shop.Controllers
             List<Order> orders = checkoutListOrderNeed(ShipAddress, typeShipping);
 
 
-            /* ======================================= chua tru ma giam gia */
+           
             if (promoCode != null)
             {
                 var promode = db.PromoCodes.Where(x => x.code == promoCode).FirstOrDefault();
@@ -142,7 +122,7 @@ namespace Book_Shop.Controllers
                 if (idPromo != null)
                     orders[0].promoid = Convert.ToInt32(idPromo);
             }
-            //tao orderprodcut
+          
             TempData["orders"] = orders;
             if (payOption == "2")
             {
@@ -202,7 +182,7 @@ namespace Book_Shop.Controllers
             string returnUrl = ConfigurationManager.AppSettings["returnUrl"].ToString();
             string notifyurl = ConfigurationManager.AppSettings["notifyurl"].ToString();
 
-            //tim gia ma khuyen mai
+          
             int promoValue;
             int tempPromoid = 0;
             if (orders[0].promoid != null)
@@ -225,7 +205,7 @@ namespace Book_Shop.Controllers
             string requestId = Guid.NewGuid().ToString();
             string extraData = "";
 
-            //Before sign HMAC SHA256 signature
+            
             string rawHash = "partnerCode=" +
                 partnerCode + "&accessKey=" +
                 accessKey + "&requestId=" +
@@ -237,13 +217,13 @@ namespace Book_Shop.Controllers
                 notifyurl + "&extraData=" +
                 extraData;
 
-            //log.Debug("rawHash = " + rawHash);
+           
 
             MoMoSecurity crypto = new MoMoSecurity();
             string signature = crypto.signSHA256(rawHash, serectkey);
-            //log.Debug("Signature = " + signature);
+          
 
-            ////build body json request
+          
             JObject message = new JObject
             {
                 { "partnerCode", partnerCode },
@@ -259,7 +239,7 @@ namespace Book_Shop.Controllers
                 { "signature", signature }
 
             };
-            //log.Debug("Json request to MoMo: " + message.ToString());
+            
             string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
 
             JObject jmessage = JObject.Parse(responseFromMomo);
@@ -275,8 +255,7 @@ namespace Book_Shop.Controllers
             string serectkey = ConfigurationManager.AppSettings["serectkey"].ToString();
             string signature = crypto.signSHA256(param, serectkey);
             ViewBag.message = "";
-            //int a = Convert.ToInt32(Request["orderId"]);
-            //var order = db.Orders.Where(x => x.id == a).FirstOrDefault();
+           
             List<Order> orders = TempData["orders"] as List<Order>;
             foreach (var item in orders)
             {
@@ -368,12 +347,12 @@ namespace Book_Shop.Controllers
             if (status_code != "0")
             {
                 order.payment = "momo";
-                order.status = "thanh Toan that bai";//chờ xác nhận
+                order.status = "thanh Toan that bai";
             }
             else
             {
                 order.payment = "momo";
-                order.status = "PENDING";//chờ xác nhận
+                order.status = "PENDING";
                 List<itemInCart> cart = Session["cart"] as List<itemInCart>;
                 foreach (var item in cart)
                 {
@@ -399,7 +378,7 @@ namespace Book_Shop.Controllers
             if (order == null)
                 return RedirectToAction("Purchase");
 
-            //lấy ra danh sách product trong database
+           
             List<Order_Product> listOrderPro = new List<Order_Product>();
             listOrderPro = db.Order_Product.Where(x => x.orderId == order.id).ToList();
 
@@ -423,9 +402,8 @@ namespace Book_Shop.Controllers
         public ActionResult Purchase(string Status)
         {
             var a = db.Orders.ToList();
-            if (Session["userId"] == null)//kiem tra dang nhập ?
+            if (Session["userId"] == null)
                 return View();
-            //lấy userid trên session
             var temp = Session["userId"].ToString();
             int idUser = int.Parse(temp);
 
@@ -433,8 +411,8 @@ namespace Book_Shop.Controllers
                 Status = "ALL";
             try
             {
-                //khởi tạo các đối tượng
-                List<Order> listorder = new List<Order>();//danh sách các order
+                
+                List<Order> listorder = new List<Order>();
                 int priceALL;
                 if (Status == "ALL")
                 {
@@ -444,11 +422,11 @@ namespace Book_Shop.Controllers
                 {
                     listorder = db.Orders.Where(x => x.status == Status && x.userid == idUser).ToList();
                 }
-                List<Order_Detail> result = new List<Order_Detail>();//orderDetail khởi tạo trong folder model
+                List<Order_Detail> result = new List<Order_Detail>();
 
                 foreach (var item in listorder)
                 {
-                    //khởi tạo các temp
+                    
                     List<Order_Product> listOrderPro = new List<Order_Product>();
                     List<OrderProJoinProduct> listorderProJoinProducts = new List<OrderProJoinProduct>();
                     OrderProJoinProduct orderProJoinProduct = new OrderProJoinProduct();
@@ -541,17 +519,17 @@ namespace Book_Shop.Controllers
                 int productId = int.Parse(result.id);
 
 
-                // Lặp qua từng phần tử trong giỏ hàng
+                
                 foreach (var cartItem in cart)
                 {
-                    // Kiểm tra nếu sản phẩm đã ở trong giỏ hàng rồi thì tăng quantity
+                    
                     if (cartItem.product.id == productId)
                     {
                         cartItem.quantity += 1;
                         return Json(cart, JsonRequestBehavior.AllowGet);
                     }
                 }
-                // Nếu chưa có thì thêm vào giỏ hàng
+                
                 Product product = db.Products.SingleOrDefault(n => n.id == productId);
                 product = new Product(product);
                 itemInCart item = new itemInCart() { product = product, quantity = 1 };
@@ -569,13 +547,13 @@ namespace Book_Shop.Controllers
             int productId = int.Parse(result.id);
             List<itemInCart> cart = Session["cart"] as List<itemInCart>;
 
-            // Lặp qua từng phần tử trong giỏ hàng
+           
             foreach (var cartItem in cart)
             {
-                // Kiểm tra nếu sản phẩm đã ở trong giỏ hàng rồi thì trừ quantity
+               
                 if (cartItem.product.id == productId)
                 {
-                    //-----------------------------------------
+                    
                     cartItem.quantity = --cartItem.quantity;
                     if (cartItem.quantity == 0)
                     {

@@ -4,9 +4,9 @@
     Layout = "~/Views/Shared/_Layout_admin.cshtml";
 }
 @model List<Book_Shop.Models.Order_Detail>
-@*----------------- Add model ----------------------*@
+
 @using PagedList.Mvc;
-@*--------------------------------------------------*@
+
 <link href="~/Content/store.css" rel="stylesheet" type="text/css" media="all" />
 
 <style>
@@ -401,11 +401,7 @@
     <div class="container">
         <h1 class="mt-4" style="font-size: 40px; font-weight:500; margin-bottom: 5px">ĐƠN HÀNG CỦA TÔI</h1>
 
-        @*<div class="space">
-            <button class="btn btn-primary  btn-sm rounded-0 ">
-                <i class="fa fa-edit"></i>@Html.ActionLink(" Products Management", "Index", new { }, new { Style = "color:White;" })
-            </button>
-        </div>*@
+       
         <div class="purchase-list-page__wrapper boder-2 statusbar" role="main">
             <div class="purchase-list-page__tabs-container">
                 <div class="purchase-list-page__tab" id="PENDING">
@@ -445,10 +441,7 @@
 
         <div>
             <div class="basket">
-                @*<div class="basket-module">
-                    <input id="promo-code" type="text" name="promo-code" maxlength="5" class="promo-code-field" placeholder="Search product">
-                    <button class="promo-code-cta">Search</button>
-                </div>*@
+              
                 <div class="basket-labels basket-labels2">
                     <ul>
                         <li class="item item-heading">Item</li>
@@ -503,7 +496,7 @@
                                                 <a href="/MyShop/ComfirmGetedOrder?idOrder=@(item.id)"  style="color: white; padding: 8px; background-color: #29b30e; line-height: 20px; height: 40px; width: 60px; margin-right: 10px;"> Confirm Geted <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
                                                 <a href="#alo" data-toggle="modal" style="color: white; padding: 8px; background-color: #29b30e; line-height: 20px; height: 40px; width: 60px; margin-right: 10px;">Cancel order <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> </a>
                                             }
-                                            <!-- ############################ cancel ############################## -->
+                                            
                                             <div class="modal fade" id="alo">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -527,10 +520,10 @@
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                             </div>
                                                         </form>
-                                                    </div><!-- /.modal-content -->
-                                                </div><!-- /.modal-dialog -->
-                                            </div><!-- /.modal -->
-                                            <!-- Bootstrap Core JavaScript -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                          
                                         </div>
                                 </section>
                                 <div class="text-right">Tổng số tiền:<span class="tongsotien"> đ@(@String.Format("{0:n0}", item.PriceALl))</span></div>

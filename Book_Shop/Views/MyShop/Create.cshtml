@@ -78,11 +78,7 @@
                                 Upload file
                                 <input type="file" name="image" id="imgInp" style="display: none;" />
                             </label>
-                            @*<img src="@Html.DisplayFor(model => model.image)" height="120px" width="120px" />
-                                <label for="file-upload" class="custom-file-upload action-link">
-                                    Upload file
-                                </label>
-                                <input id="file-upload" type="file" name="image" />*@
+                           
                             @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
                         </td>
                     </tr>
@@ -109,13 +105,7 @@
                             @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
                         </td>
                     </tr>
-                    @*<tr class="kc">
-                        <th class="admin__header">Rate</th>
-                        <td>
-                            @Html.EditorFor(model => model.rate, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.rate, "", new { @class = "text-danger" })
-                        </td>
-                    </tr>*@
+                   
                     <tr class="kc">
                         <th class="admin__header">Stock</th>
                         <td>
