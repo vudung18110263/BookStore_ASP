@@ -235,9 +235,11 @@
                     return false;
                 }
                 else {
+                    var token = $('input[name ="__RequestVerificationToken"]').val();
                     var form_data_login = {
                         username: $("#username").val(),
-                        password: $("#password").val()
+                        password: $("#password").val(),
+                        __RequestVerificationToken: token
                     };
                     $.ajax({
                         url: '/Users/Login',

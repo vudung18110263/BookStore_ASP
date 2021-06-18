@@ -475,44 +475,46 @@
                     return false;
                 }
                 else {
-                    var form_data_login = {
-                        username: $("#username").val(),
-                        password: $("#password").val()
-                    };
-                    $.ajax({
-                        url: '/Users/Login',
-                        type: 'POST',
-                        async: true,
-                        data: form_data_login,
-                        success: function (msg_login) {
-                            //alert(msg);
-                            if (msg_login == 'false') {
-                                $('#err_login').html('<div class="alert alert-danger">Tên hoặc mật khẩu không chính xác</div>');
-                                $("#password").val("");
-                                $("#password").focus();
-                                return false;
-                            }
-                            else if (msg_login == 'isShipper') {
-                                setTimeout(
-                                    //chuyển đến địa chỉ msg_login của controler gửi qua
-                                    function () {
-                                        window.location.href = 'https://localhost:44327/Home/Index';
-                                    }, 100);
-                            }
-                            else {
-                                $("#login_here").hide();
-                                $(".modal-footer").hide();
+                        var token = $('input[name ="__RequestVerificationToken"]').val();
+                        var form_data_login = {
+                            username: $("#username").val(),
+                            password: $("#password").val(),
+                            __RequestVerificationToken: token
+                        };
+                        $.ajax({
+                            url: '/Users/Login',
+                            type: 'POST',
+                            async: true,
+                            data: form_data_login,
+                            success: function (msg_login) {
+                                //alert(msg);
+                                if (msg_login == 'false') {
+                                    $('#err_login').html('<div class="alert alert-danger">Tên hoặc mật khẩu không chính xác</div>');
+                                    $("#password").val("");
+                                    $("#password").focus();
+                                    return false;
+                                }
+                                else if (msg_login == 'isShipper') {
+                                    setTimeout(
+                                        //chuyển đến địa chỉ msg_login của controler gửi qua
+                                        function () {
+                                            window.location.href = 'https://localhost:44327/Home/Index';
+                                        }, 100);
+                                }
+                                else {
+                                    $("#login_here").hide();
+                                    $(".modal-footer").hide();
 
-                                $('#err_login').html('<div class="alert alert-success"><strong>Đăng nhập thành công</strong><span> Hệ thống tự chuyển sau vài giây ...</span></div>');
-                                setTimeout(
-                                    //chuyển đến địa chỉ msg_login của controler gửi qua
-                                    function () {
-                                        window.location.href = window.location.pathname;
-                                    }, 100);
+                                    $('#err_login').html('<div class="alert alert-success"><strong>Đăng nhập thành công</strong><span> Hệ thống tự chuyển sau vài giây ...</span></div>');
+                                    setTimeout(
+                                        //chuyển đến địa chỉ msg_login của controler gửi qua
+                                        function () {
+                                            window.location.href = window.location.pathname;
+                                        }, 100);
+                                }
                             }
-                        }
-                    });
-                    return false;
+                        });
+                        return false;
                 }
             });
         })
@@ -590,10 +592,12 @@
             });
         });
         function addToCart(id) {
+            var token = $('input[name ="__RequestVerificationToken"]').val();
             fetch('/Store/AddToCart', {
                 'method': 'post',
+                '__RequestVerificationToken': token,
                 'body': JSON.stringify({
-                    'id': id
+                    'id': id,
                 }),
                 'headers': {
                     'Content-Type': 'application/json'
@@ -603,10 +607,12 @@
             })
         }
         function minusFromCart(id) {
+            var token = $('input[name ="__RequestVerificationToken"]').val();
             fetch('/Store/MinusFromCart', {
                 'method': 'post',
                 'body': JSON.stringify({
-                    'id': id
+                    'id': id,
+                    
                 }),
                 'headers': {
                     'Content-Type': 'application/json'
@@ -627,11 +633,12 @@
     <script>
         function addPromoCode() {
             var code = $('#promoCode').val()
+            var token = $('input[name ="__RequestVerificationToken"]').val();
             if (!code) return 0
             fetch('/Store/AddPromoCode', {
                 'method': 'post',
                 'body': JSON.stringify({
-                    'code': code
+                    'code': code,
                 }),
                 'headers': {
                     'Content-Type': 'application/json'

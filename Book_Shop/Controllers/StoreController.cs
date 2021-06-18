@@ -529,7 +529,6 @@ namespace Book_Shop.Controllers
             public string id { get; set; }
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult AddToCart(JsonResult result)
         {
             if (Session["cart"] == null)
@@ -565,7 +564,6 @@ namespace Book_Shop.Controllers
             
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult MinusFromCart(JsonResult result)
         {
             int productId = int.Parse(result.id);
