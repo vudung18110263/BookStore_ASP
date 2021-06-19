@@ -194,6 +194,8 @@ namespace Book_Shop.Controllers
             ViewBag.image = image;
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ForgotPassword(User user)
         {
             if (user.account == null)

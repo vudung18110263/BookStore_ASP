@@ -10,7 +10,7 @@
         <div class="container">
             <ul>
                 <li><i class="fa fa-home" aria-hidden="true"></i>@Html.ActionLink("Trang chủ", "Index", "Store")<span>|</span></li>
-                @if (Request.QueryString["category"] != null && Model.Count != 0)
+                @if (HttpUtility.UrlDecode(Request.Unvalidated.QueryString["category"]) != null && Model.Count != 0)
                 {
                     <li>@Model[0].category</li>
                 }
@@ -93,15 +93,15 @@
 <!-- top-brands -->
 <div class="top-brands">
     <div class="container">
-        @if (Request.QueryString["category"] == null && Request.QueryString["q"] == null)
+        @if (HttpUtility.UrlDecode(Request.Unvalidated.QueryString["category"]) == null && HttpUtility.UrlDecode(Request.Unvalidated.QueryString["q"]) == null)
         {
             <h3>Sản phẩm đề xuất</h3>
         }
-        else if (Request.QueryString["q"] == null && Model.Count !=0)
+        else if (HttpUtility.UrlDecode(Request.Unvalidated.QueryString["q"]) == null && Model.Count !=0)
         {
             <h3>@Model[0].category</h3>
         }
-        else if (Request.QueryString["category"] == null)
+        else if (HttpUtility.UrlDecode(Request.Unvalidated.QueryString["category"]) == null)
         {
             <h3>Kết quả tìm kiếm</h3>
         }
@@ -111,9 +111,10 @@
                 <div class="col-md-3 top_brand_left" style="margin: 12px 0">
                     <div class="hover14 column ">
                         <div class="agile_top_brand_left_grid hover-tien">
-                            @if (Request.QueryString["category"] == null && Request.QueryString["q"] == null)
+                            @if (HttpUtility.UrlDecode(Request.Unvalidated.QueryString["category"]) == null
+                            && HttpUtility.UrlDecode(Request.Unvalidated.QueryString["q"]) == null)
                             {
-                                <div style="z-index: 1" class="tag"><img src="~/images/tag.png" alt=" " class="img-responsive" /></div>
+                            <div style="z-index: 1" class="tag"><img src="~/images/tag.png" alt=" " class="img-responsive" /></div>
                             }
                             <div class="agile_top_brand_left_grid1">
                                 <figure>

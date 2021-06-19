@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Book_Shop.Controllers
 {
+    [ValidateInput(true)]
     [AuthorizeAdminController]
     public class PaymentsController : Controller
     {

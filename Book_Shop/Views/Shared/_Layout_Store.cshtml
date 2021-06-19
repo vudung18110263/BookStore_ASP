@@ -461,6 +461,10 @@
                     $("#password").focus();
                     return false;
                 }
+                else if (/^[a-zA-Z0-9- ]*$/.test($("#password").val()) == false
+                    || /^[a-zA-Z0-9- ]*$/.test($("#username").val()) == false) {
+                    $('#err_login').html('<div class="alert alert-danger">Username hoặc PassWord chứa kí tự đặc biệt</div>');
+                }
                 else {
                         var token = $('input[name ="__RequestVerificationToken"]').val();
                         var form_data_login = {

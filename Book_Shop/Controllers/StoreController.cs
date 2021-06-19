@@ -604,9 +604,12 @@ namespace Book_Shop.Controllers
         }
         public ActionResult Search(int? page)
         {
-            string query = ConvertToUnSign(Request.QueryString["q"]);
+            //HttpUtility.UrlDecode(request.Unvalidated.QueryString[key]);
+            string query = HttpUtility.UrlDecode(Request.Unvalidated.QueryString["q"]);
 
-            string category = Request.QueryString["category"] ?? null;
+            query = ReplacePotentiallyDangerousSymbols(query, string.Empty);
+
+            string category = HttpUtility.HtmlDecode(Request.QueryString["category"]) ?? null;
             var links = db.Products.AsEnumerable();
             if (category != null)
             {
@@ -621,6 +624,18 @@ namespace Book_Shop.Controllers
             int pageNumber = (page ?? 1);
 
             return View("Index", links.ToPagedList(pageNumber, pageSize));
+        }
+        public static string ReplacePotentiallyDangerousSymbols(string unvalidatedValue, string valueToReplace = "")
+        {
+            if (!string.IsNullOrEmpty(unvalidatedValue))
+            {
+                //The regular expression made as result of this ASP.NET method analyzing: CrossSiteScriptingValidation.IsDangerousString http://referencesource.microsoft.com/#System.Web/CrossSiteScriptingValidation.cs,3c599cea73c5293b
+                unvalidatedValue = Regex.Replace(unvalidatedValue,
+                    "(\\<+[a-z!/\\?])|(&\\#)",
+                    new MatchEvaluator((m) => { return m.Value.Replace("<", valueToReplace)
+                        .Replace("&#", valueToReplace); }), RegexOptions.IgnoreCase);
+            }
+            return unvalidatedValue;
         }
         public class JsonPromo
         {
